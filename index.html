@@ -132,7 +132,34 @@
     .dsp-chip span { font-size:1rem; color:#ccc; font-weight:600; }
 
     /* ── Pricing ── */
-    #pricing { background:var(--bg2); padding:8rem 4rem; }
+    #pricing { background:var(--bg2); padding:8rem 4rem; position:relative; }
+
+    /* ── Voucher Side Banners ── */
+    .voucher-side-banner { position:absolute; top:50%; transform:translateY(-50%); z-index:4; display:flex; align-items:center; justify-content:center; }
+    .voucher-side-banner.left-banner { left:8px; }
+    .voucher-side-banner.right-banner { right:8px; }
+    .voucher-tape { width:42px; padding:2.8rem 0; background:linear-gradient(180deg,#92400e 0%,#d97706 25%,#fbbf24 50%,#d97706 75%,#92400e 100%); border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.8rem; box-shadow:0 0 40px rgba(245,158,11,0.4),0 8px 30px rgba(0,0,0,0.55); position:relative; }
+    .voucher-tape::before, .voucher-tape::after { content:''; position:absolute; width:16px; height:16px; background:#0d0d0d; border-radius:50%; left:50%; transform:translateX(-50%); }
+    .voucher-tape::before { top:12px; }
+    .voucher-tape::after { bottom:12px; }
+    .voucher-side-banner.left-banner .voucher-tape { transform:rotate(180deg); }
+    .voucher-text { writing-mode:vertical-rl; text-orientation:mixed; color:#1a0800; font-weight:900; text-transform:uppercase; line-height:1; }
+    .voucher-label { font-size:0.58rem; letter-spacing:2px; opacity:0.7; }
+    .voucher-code { font-size:0.8rem; letter-spacing:3px; }
+    .voucher-sep { width:22px; height:1.5px; background:rgba(0,0,0,0.3); border-radius:2px; }
+    @media (max-width:1100px) {
+      .voucher-side-banner { display:flex; width:100%; left:0; right:0; transform:none; justify-content:center; }
+      .voucher-side-banner.left-banner { top:1.2rem; bottom:auto; }
+      .voucher-side-banner.right-banner { bottom:1.2rem; top:auto; }
+      .voucher-tape { width:auto; max-width:320px; height:42px; padding:0 2.5rem; flex-direction:row; transform:none !important; }
+      .voucher-tape::before { top:50%; left:14px; transform:translateY(-50%); }
+      .voucher-tape::after { top:50%; left:auto; right:14px; bottom:auto; transform:translateY(-50%); }
+      .voucher-side-banner.left-banner .voucher-tape { transform:none !important; }
+      .voucher-text { writing-mode:horizontal-tb; font-size:0.72rem; letter-spacing:2px; }
+      .voucher-label { font-size:0.6rem; opacity:0.7; }
+      .voucher-code { font-size:0.78rem; letter-spacing:3px; }
+      .voucher-sep { width:1.5px; height:20px; }
+    }
     .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:2.5rem; align-items:stretch; }
 
     /* base card */
@@ -384,6 +411,20 @@
 
   <!-- Pricing -->
   <section id="pricing">
+    <div class="voucher-side-banner left-banner">
+      <div class="voucher-tape">
+        <span class="voucher-text voucher-label">July Voucher</span>
+        <div class="voucher-sep"></div>
+        <span class="voucher-text voucher-code">INKINGIT01</span>
+      </div>
+    </div>
+    <div class="voucher-side-banner right-banner">
+      <div class="voucher-tape">
+        <span class="voucher-text voucher-label">July Voucher</span>
+        <div class="voucher-sep"></div>
+        <span class="voucher-text voucher-code">INKINGIT01</span>
+      </div>
+    </div>
     <div class="section-inner">
       <span class="eyebrow reveal">Pricing</span>
       <h2 class="section-title reveal">Plans That <em>Scale With You</em></h2>
