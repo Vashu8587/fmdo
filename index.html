@@ -220,14 +220,22 @@
     .price-btn.solid-amber { background:linear-gradient(135deg,#f59e0b,#d97706); color:#000; font-weight:800; box-shadow:0 4px 24px rgba(245,158,11,0.45); }
     .price-btn.solid-amber:hover { background:linear-gradient(135deg,#fbbf24,#f59e0b); box-shadow:0 6px 32px rgba(245,158,11,0.60); transform:scale(1.03); }
 
-    /* ── Testimonials ── */
-    #testimonials { background:var(--black); padding:6rem 4rem; }
-    .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; margin-top:1rem; }
-    .testi-card { background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:1.6rem; display:flex; align-items:center; gap:1rem; transition:border-color .25s,transform .25s; }
-    .testi-card:hover { border-color:var(--green); transform:translateY(-3px); }
-    .testi-avatar { width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,var(--green),var(--teal)); display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff; flex-shrink:0; font-size:1.1rem; }
-    .testi-name { font-size:0.98rem; font-weight:600; color:var(--white); }
-    .testi-role { font-size:0.78rem; color:var(--dim); margin-top:2px; }
+    /* ── Testimonials (Photo Gallery Carousel) ── */
+    #testimonials { background:var(--black); padding:6rem 0 7rem; overflow:hidden; }
+    #testimonials .section-inner { padding-left:4rem; padding-right:4rem; margin-bottom:3rem; }
+    .testi-gallery-wrap { position:relative; overflow:hidden; max-width:860px; margin:0 auto; -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 15%,#000 85%,transparent 100%); mask-image:linear-gradient(to right,transparent 0%,#000 15%,#000 85%,transparent 100%); }
+    .testi-gallery { display:flex; gap:1.4rem; padding:1.5rem 0 3rem; width:max-content; will-change:transform; }
+    .testi-photo-card { flex:0 0 260px; width:260px; min-width:260px; max-width:260px; height:347px; min-height:347px; max-height:347px; border-radius:18px; overflow:hidden; position:relative; transition:transform .35s ease,box-shadow .35s ease; will-change:transform; }
+    .testi-photo-card:hover { transform:scale(1.04) translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,0.75),0 0 28px rgba(26,122,74,0.18); }
+    .testi-photo-card img { width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; }
+    .testi-vinyl { position:absolute; border-radius:50%; top:38%; left:50%; transform:translate(-50%,-50%); pointer-events:none; animation:vinyl-breathe 5s ease-in-out infinite; }
+    .testi-vinyl::after { content:''; position:absolute; width:18px; height:18px; border-radius:50%; background:rgba(0,0,0,0.55); top:50%; left:50%; transform:translate(-50%,-50%); border:2px solid rgba(255,255,255,0.1); }
+    .testi-art-initial { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:7rem; font-weight:900; letter-spacing:-4px; pointer-events:none; z-index:1; animation:initial-glow 5s ease-in-out infinite; }
+    @keyframes vinyl-breathe { 0%,100%{ opacity:1; transform:translate(-50%,-50%) scale(1); } 50%{ opacity:0.7; transform:translate(-50%,-50%) scale(1.05); } }
+    @keyframes initial-glow { 0%,100%{ filter:brightness(1); } 50%{ filter:brightness(1.35); } }
+    .testi-photo-overlay { position:absolute; bottom:0; left:0; right:0; padding:3rem 1.4rem 1.5rem; background:linear-gradient(to top,rgba(0,0,0,0.96) 0%,rgba(0,0,0,0.52) 55%,transparent 100%); }
+    .testi-photo-name { font-size:0.98rem; font-weight:700; color:var(--white); line-height:1.25; margin-bottom:0.3rem; }
+    .testi-photo-role { font-size:0.68rem; color:var(--neon); letter-spacing:1.8px; text-transform:uppercase; }
 
     /* ── Partners ── */
     #partners { background:var(--bg2); padding:5rem 4rem; }
@@ -301,8 +309,9 @@
     /* ── Responsive ── */
     @media (max-width:1024px) {
       #navbar { padding:1rem 2rem; }
-      #hero,#slogan,#stats,#why,#pricing,#testimonials,#partners,#faq,#cta { padding-left:2rem; padding-right:2rem; }
-      .why-grid,.testi-grid { grid-template-columns:1fr 1fr; }
+      #hero,#slogan,#stats,#why,#pricing,#partners,#faq,#cta { padding-left:2rem; padding-right:2rem; }
+      #testimonials .section-inner { padding-left:2rem; padding-right:2rem; }
+      .why-grid { grid-template-columns:1fr 1fr; }
       .pricing-grid { grid-template-columns:1fr; max-width:480px; margin-left:auto; margin-right:auto; }
       .stats-grid { grid-template-columns:1fr 1fr; gap:2.5rem; }
       .footer-top { grid-template-columns:1fr 1fr 1fr; }
@@ -316,11 +325,15 @@
       #hero { padding:9.5rem 1.5rem 3rem; }
       .hero-btns { flex-direction:column; align-items:center; }
       .hero-btns .btn-primary,.hero-btns .btn-secondary { width:100%; max-width:300px; text-align:center; }
-      #slogan,#stats,#why,#pricing,#testimonials,#partners,#faq,#cta { padding-left:1.5rem; padding-right:1.5rem; }
-      .why-grid,.testi-grid { grid-template-columns:1fr; }
+      #slogan,#stats,#why,#pricing,#partners,#faq,#cta { padding-left:1.5rem; padding-right:1.5rem; }
+      #testimonials .section-inner { padding-left:1.5rem; padding-right:1.5rem; }
+      .why-grid { grid-template-columns:1fr; }
       .stats-grid { grid-template-columns:1fr 1fr; gap:2rem; }
-      .footer-top { grid-template-columns:1fr 1fr; }
-      .footer-partners { grid-column:span 2; flex-direction:row; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+      .footer-top { grid-template-columns:1fr 1fr; text-align:center; }
+      .footer-partners { grid-column:span 2; flex-direction:row; align-items:center; justify-content:center; gap:1.5rem; flex-wrap:wrap; }
+      .footer-brand img { margin-left:auto; margin-right:auto; }
+      .footer-brand p { max-width:100%; }
+      .footer-col a { text-align:center; }
       /* Remove elevated transform on starter card when stacked */
       .price-card.starter { transform:none; box-shadow:0 0 40px rgba(245,158,11,0.22); }
       .price-card.starter:hover { transform:translateY(-8px); box-shadow:0 16px 60px rgba(0,0,0,0.6),0 0 60px rgba(245,158,11,0.32); }
@@ -333,16 +346,17 @@
       #navbar { top:38px; padding:0.85rem 1.2rem; }
       #hero { padding:8rem 1.2rem 2.5rem; }
       .hero-h1 { letter-spacing:-1px; }
-      #slogan,#stats,#why,#pricing,#testimonials,#partners,#faq,#cta { padding-left:1.2rem; padding-right:1.2rem; }
+      #slogan,#stats,#why,#pricing,#partners,#faq,#cta { padding-left:1.2rem; padding-right:1.2rem; }
+      #testimonials .section-inner { padding-left:1.2rem; padding-right:1.2rem; }
+      .testi-photo-card { flex:0 0 220px; width:220px; min-width:220px; max-width:220px; height:293px; min-height:293px; max-height:293px; }
       .stats-grid { grid-template-columns:1fr 1fr; gap:1.5rem; }
       .pricing-grid { max-width:100%; }
       .footer-top { grid-template-columns:1fr; }
-      .footer-partners { grid-column:span 1; flex-direction:column; align-items:flex-start; gap:1rem; }
+      .footer-partners { grid-column:span 1; flex-direction:column; align-items:center; justify-content:center; gap:1rem; }
       .footer-partner-img { height:36px; }
       #footer { padding:2.5rem 1.2rem 1.5rem; }
       section[id] { scroll-margin-top:95px; }
       .faq-q { font-size:0.95rem; }
-      .testi-card { flex-direction:column; align-items:flex-start; }
       #mobile-menu a { font-size:1.5rem; }
     }
     @media (hover:none) { #cursor-glow,#cursor-dot,#cursor-ring{display:none;} body,button,.faq-q{cursor:auto;} }
@@ -619,13 +633,102 @@
     <div class="section-inner">
       <span class="eyebrow reveal">Testimonials</span>
       <h2 class="section-title reveal">Trusted by <em>Artists &amp; Labels</em></h2>
-      <div class="testi-grid">
-        <div class="testi-card reveal"><div class="testi-avatar">H</div><div><div class="testi-name">Hosanna Ministries Official</div><div class="testi-role">Artist</div></div></div>
-        <div class="testi-card reveal"><div class="testi-avatar">R</div><div><div class="testi-name">Ramesh Hosanna Ministries</div><div class="testi-role">Artist</div></div></div>
-        <div class="testi-card reveal"><div class="testi-avatar">H</div><div><div class="testi-name">Hosanna Ministries Kurnool</div><div class="testi-role">Artist</div></div></div>
-        <div class="testi-card reveal"><div class="testi-avatar">R</div><div><div class="testi-name">RD Parmar</div><div class="testi-role">Artist</div></div></div>
-        <div class="testi-card reveal"><div class="testi-avatar">A</div><div><div class="testi-name">Ajay Salwan</div><div class="testi-role">Artist</div></div></div>
-        <div class="testi-card reveal"><div class="testi-avatar">H</div><div><div class="testi-name">Hariom Raghav</div><div class="testi-role">I Village Music</div></div></div>
+    </div>
+    <div class="testi-gallery-wrap" id="testiGalleryWrap">
+      <div class="testi-gallery" id="testiGallery">
+
+        <!-- Card 1 · Hosanna Ministries Official · Neon Green -->
+        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 60% 30%,#0d3320 0%,#051409 55%,#030d06 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:0s;background:radial-gradient(circle,rgba(74,222,128,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(74,222,128,0.18),0 0 0 30px rgba(74,222,128,0.06),0 0 0 60px rgba(74,222,128,0.035),0 0 0 90px rgba(74,222,128,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:0s;color:#4ade80;text-shadow:0 0 24px rgba(74,222,128,0.7),0 0 60px rgba(74,222,128,0.35),0 0 100px rgba(74,222,128,0.15);">H</div>
+          <div class="testi-photo-overlay">
+            <div class="testi-photo-name">Hosanna Ministries Official</div>
+            <div class="testi-photo-role">Artist</div>
+          </div>
+        </div>
+
+        <!-- Card 2 · Ramesh Hosanna · Violet -->
+        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 40% 30%,#1e0b38 0%,#0d0618 55%,#060310 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-0.83s;background:radial-gradient(circle,rgba(167,139,250,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(167,139,250,0.18),0 0 0 30px rgba(167,139,250,0.06),0 0 0 60px rgba(167,139,250,0.035),0 0 0 90px rgba(167,139,250,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:-0.83s;color:#a78bfa;text-shadow:0 0 24px rgba(167,139,250,0.7),0 0 60px rgba(167,139,250,0.35),0 0 100px rgba(167,139,250,0.15);">R</div>
+          <div class="testi-photo-overlay">
+            <div class="testi-photo-name">Ramesh Hosanna Ministries</div>
+            <div class="testi-photo-role">Artist</div>
+          </div>
+        </div>
+
+        <!-- Card 3 · Hosanna Kurnool · Cyan -->
+        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 55% 35%,#062428 0%,#031318 55%,#020a0c 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-1.67s;background:radial-gradient(circle,rgba(34,211,238,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(34,211,238,0.18),0 0 0 30px rgba(34,211,238,0.06),0 0 0 60px rgba(34,211,238,0.035),0 0 0 90px rgba(34,211,238,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:-1.67s;color:#22d3ee;text-shadow:0 0 24px rgba(34,211,238,0.7),0 0 60px rgba(34,211,238,0.35),0 0 100px rgba(34,211,238,0.15);">H</div>
+          <div class="testi-photo-overlay">
+            <div class="testi-photo-name">Hosanna Ministries Kurnool</div>
+            <div class="testi-photo-role">Artist</div>
+          </div>
+        </div>
+
+        <!-- Card 4 · RD Parmar · Blue -->
+        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 45% 30%,#081430 0%,#040a1c 55%,#02050e 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-2.5s;background:radial-gradient(circle,rgba(96,165,250,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(96,165,250,0.18),0 0 0 30px rgba(96,165,250,0.06),0 0 0 60px rgba(96,165,250,0.035),0 0 0 90px rgba(96,165,250,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:-2.5s;color:#60a5fa;text-shadow:0 0 24px rgba(96,165,250,0.7),0 0 60px rgba(96,165,250,0.35),0 0 100px rgba(96,165,250,0.15);">R</div>
+          <div class="testi-photo-overlay">
+            <div class="testi-photo-name">RD Parmar</div>
+            <div class="testi-photo-role">Artist</div>
+          </div>
+        </div>
+
+        <!-- Card 5 · Ajay Salwan · Amber -->
+        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 50% 30%,#2a1a05 0%,#180e02 55%,#0e0801 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-3.33s;background:radial-gradient(circle,rgba(251,191,36,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(251,191,36,0.18),0 0 0 30px rgba(251,191,36,0.06),0 0 0 60px rgba(251,191,36,0.035),0 0 0 90px rgba(251,191,36,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:-3.33s;color:#fbbf24;text-shadow:0 0 24px rgba(251,191,36,0.7),0 0 60px rgba(251,191,36,0.35),0 0 100px rgba(251,191,36,0.15);">A</div>
+          <div class="testi-photo-overlay">
+            <div class="testi-photo-name">Ajay Salwan</div>
+            <div class="testi-photo-role">Artist</div>
+          </div>
+        </div>
+
+        <!-- Card 6 · Hariom Raghav · Rose -->
+        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 55% 30%,#280810 0%,#180408 55%,#0e0205 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-4.17s;background:radial-gradient(circle,rgba(251,113,133,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(251,113,133,0.18),0 0 0 30px rgba(251,113,133,0.06),0 0 0 60px rgba(251,113,133,0.035),0 0 0 90px rgba(251,113,133,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:-4.17s;color:#fb7185;text-shadow:0 0 24px rgba(251,113,133,0.7),0 0 60px rgba(251,113,133,0.35),0 0 100px rgba(251,113,133,0.15);">H</div>
+          <div class="testi-photo-overlay">
+            <div class="testi-photo-name">Hariom Raghav</div>
+            <div class="testi-photo-role">I Village Music</div>
+          </div>
+        </div>
+
+        <!-- Duplicates for seamless loop -->
+        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 60% 30%,#0d3320 0%,#051409 55%,#030d06 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:0s;background:radial-gradient(circle,rgba(74,222,128,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(74,222,128,0.18),0 0 0 30px rgba(74,222,128,0.06),0 0 0 60px rgba(74,222,128,0.035),0 0 0 90px rgba(74,222,128,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:0s;color:#4ade80;text-shadow:0 0 24px rgba(74,222,128,0.7),0 0 60px rgba(74,222,128,0.35),0 0 100px rgba(74,222,128,0.15);">H</div>
+          <div class="testi-photo-overlay"><div class="testi-photo-name">Hosanna Ministries Official</div><div class="testi-photo-role">Artist</div></div>
+        </div>
+        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 40% 30%,#1e0b38 0%,#0d0618 55%,#060310 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-0.83s;background:radial-gradient(circle,rgba(167,139,250,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(167,139,250,0.18),0 0 0 30px rgba(167,139,250,0.06),0 0 0 60px rgba(167,139,250,0.035),0 0 0 90px rgba(167,139,250,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:-0.83s;color:#a78bfa;text-shadow:0 0 24px rgba(167,139,250,0.7),0 0 60px rgba(167,139,250,0.35),0 0 100px rgba(167,139,250,0.15);">R</div>
+          <div class="testi-photo-overlay"><div class="testi-photo-name">Ramesh Hosanna Ministries</div><div class="testi-photo-role">Artist</div></div>
+        </div>
+        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 55% 35%,#062428 0%,#031318 55%,#020a0c 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-1.67s;background:radial-gradient(circle,rgba(34,211,238,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(34,211,238,0.18),0 0 0 30px rgba(34,211,238,0.06),0 0 0 60px rgba(34,211,238,0.035),0 0 0 90px rgba(34,211,238,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:-1.67s;color:#22d3ee;text-shadow:0 0 24px rgba(34,211,238,0.7),0 0 60px rgba(34,211,238,0.35),0 0 100px rgba(34,211,238,0.15);">H</div>
+          <div class="testi-photo-overlay"><div class="testi-photo-name">Hosanna Ministries Kurnool</div><div class="testi-photo-role">Artist</div></div>
+        </div>
+        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 45% 30%,#081430 0%,#040a1c 55%,#02050e 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-2.5s;background:radial-gradient(circle,rgba(96,165,250,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(96,165,250,0.18),0 0 0 30px rgba(96,165,250,0.06),0 0 0 60px rgba(96,165,250,0.035),0 0 0 90px rgba(96,165,250,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:-2.5s;color:#60a5fa;text-shadow:0 0 24px rgba(96,165,250,0.7),0 0 60px rgba(96,165,250,0.35),0 0 100px rgba(96,165,250,0.15);">R</div>
+          <div class="testi-photo-overlay"><div class="testi-photo-name">RD Parmar</div><div class="testi-photo-role">Artist</div></div>
+        </div>
+        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 50% 30%,#2a1a05 0%,#180e02 55%,#0e0801 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-3.33s;background:radial-gradient(circle,rgba(251,191,36,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(251,191,36,0.18),0 0 0 30px rgba(251,191,36,0.06),0 0 0 60px rgba(251,191,36,0.035),0 0 0 90px rgba(251,191,36,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:-3.33s;color:#fbbf24;text-shadow:0 0 24px rgba(251,191,36,0.7),0 0 60px rgba(251,191,36,0.35),0 0 100px rgba(251,191,36,0.15);">A</div>
+          <div class="testi-photo-overlay"><div class="testi-photo-name">Ajay Salwan</div><div class="testi-photo-role">Artist</div></div>
+        </div>
+        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 55% 30%,#280810 0%,#180408 55%,#0e0205 100%);">
+          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-4.17s;background:radial-gradient(circle,rgba(251,113,133,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(251,113,133,0.18),0 0 0 30px rgba(251,113,133,0.06),0 0 0 60px rgba(251,113,133,0.035),0 0 0 90px rgba(251,113,133,0.018);"></div>
+          <div class="testi-art-initial" style="animation-delay:-4.17s;color:#fb7185;text-shadow:0 0 24px rgba(251,113,133,0.7),0 0 60px rgba(251,113,133,0.35),0 0 100px rgba(251,113,133,0.15);">H</div>
+          <div class="testi-photo-overlay"><div class="testi-photo-name">Hariom Raghav</div><div class="testi-photo-role">I Village Music</div></div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -846,8 +949,10 @@
     }
     staggerGroup('.why-grid .why-card', '.why-grid');
     staggerGroup('.pricing-grid .price-card', '.pricing-grid');
-    staggerGroup('.testi-grid .testi-card', '.testi-grid');
     staggerGroup('.faq-list .faq-item', '.faq-list');
+
+    /* ── Testimonial Gallery: auto-scroll marquee ── */
+    gsap.to('#testiGallery', { x: '-50%', duration: 32, ease: 'none', repeat: -1 });
 
     /* ── Scrub parallax on section headings (gsap.com feel) ── */
     if (!reduceMotion) {
