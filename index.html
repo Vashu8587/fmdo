@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FM Digital Official — Release Your Music Worldwide</title>
+  <link rel="icon" type="image/svg+xml" href="Brand%20logo/FM%20DIGITAL%20OFFICIAL%20LOGO.svg" />
+  <link rel="icon" type="image/png" href="Brand%20logo/FMDO.png" />
+
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
 
   <!-- GSAP + ScrollTrigger + TextPlugin -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -16,9 +21,9 @@
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #000;
+      background: #0d0d0d;
       color: #e0e0e0;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
       overflow-x: hidden;
       cursor: none;
     }
@@ -34,13 +39,13 @@
 
     /* ── Variables ── */
     :root {
-      --black:#000000; --bg:#080808; --bg2:#0a0f0c; --card-bg:#0f1a14;
+      --black:#0d0d0d; --bg:#0d0d0d; --bg2:#0d0d0d; --card-bg:#0f1a14;
       --teal:#0f4c4c; --green:#1a7a4a; --neon:#4ade80;
       --white:#ffffff; --muted:#888888; --dim:#555555; --border:#1a1a1a;
     }
 
     /* ── Shared ── */
-    .section-inner { max-width: 1120px; margin: 0 auto; }
+    .section-inner { max-width:1120px; margin:0 auto; }
     .eyebrow { display:block; text-align:center; font-size:0.72rem; color:var(--neon); letter-spacing:3px; text-transform:uppercase; margin-bottom:0.9rem; }
     .section-title { text-align:center; font-size:clamp(1.9rem,4vw,3rem); font-weight:800; color:var(--white); letter-spacing:-1px; line-height:1.1; margin-bottom:1rem; }
     .section-title em { font-style:normal; color:var(--neon); }
@@ -54,15 +59,20 @@
     .btn-secondary:hover { background:rgba(26,122,74,0.15); transform:translateY(-2px); }
 
     /* ── Cursor glow ── */
-    #cursor-glow { position:fixed; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(26,122,74,0.18) 0%,transparent 70%); pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:opacity .3s; }
+    #cursor-glow { position:fixed; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(26,122,74,0.18) 0%,transparent 70%); pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:opacity .3s; }
+    #cursor-dot { position:fixed; width:10px; height:10px; border-radius:50%; background:#4ade80; pointer-events:none; z-index:10001; transform:translate(-50%,-50%); }
+    #cursor-ring { position:fixed; width:38px; height:38px; border-radius:50%; border:1.5px solid rgba(74,222,128,0.55); pointer-events:none; z-index:10000; transform:translate(-50%,-50%); }
 
     /* ── Sale bar ── */
-    #sale-bar { position:fixed; top:0; left:0; right:0; z-index:101; background:linear-gradient(90deg,#0f4c4c,#1a7a4a); color:#fff; text-align:center; font-size:0.78rem; letter-spacing:0.5px; padding:0.4rem 1rem; font-weight:500; }
-    #sale-bar strong { color:#eaffea; }
+    #sale-bar { position:fixed; top:0; left:0; right:0; z-index:101; background:linear-gradient(90deg,#072828 0%,#0f4c4c 25%,#1a7a4a 50%,#0f4c4c 75%,#072828 100%); color:#fff; text-align:center; font-size:0.95rem; letter-spacing:0.8px; padding:0.85rem 1rem; font-weight:500; border-bottom:1px solid rgba(74,222,128,0.2); }
+    #sale-bar strong { color:#4ade80; font-weight:800; font-size:1.05rem; letter-spacing:1px; }
+    #sale-bar .sale-pulse { display:inline-block; font-size:1.35rem; animation:sale-pulse 1.2s ease-in-out infinite; filter:drop-shadow(0 0 6px rgba(255,120,0,0.9)) drop-shadow(0 0 14px rgba(255,60,0,0.6)); vertical-align:middle; }
+    @keyframes sale-pulse { 0%,100%{ transform:scale(1) rotate(-8deg); } 25%{ transform:scale(1.3) rotate(8deg); } 50%{ transform:scale(1.15) rotate(-5deg); } 75%{ transform:scale(1.28) rotate(6deg); } }
 
     /* ── Navbar ── */
-    #navbar { position:fixed; top:30px; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.1rem 4rem; transition:background .4s ease,border-color .4s ease; }
-    #navbar.scrolled { background:rgba(0,0,0,0.85); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid #1a7a4a33; }
+    #navbar { position:fixed; top:52px; left:0; right:0; z-index:100; padding:1.1rem 4rem; transition:background .4s ease,border-color .4s ease,box-shadow .4s ease; }
+    .nav-inner { max-width:1120px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+    #navbar.scrolled { background:rgba(8,13,8,0.96); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(26,122,74,0.35); box-shadow:0 4px 24px rgba(0,0,0,0.6); }
     .nav-links { display:flex; gap:2.2rem; align-items:center; }
     .nav-links a { font-size:0.88rem; color:var(--muted); transition:color .2s; }
     .nav-links a:hover { color:var(--white); }
@@ -70,14 +80,20 @@
     .nav-links .nav-cta:hover { background:var(--green); color:var(--white); }
 
     /* ── Hero ── */
-    #hero { position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; background:radial-gradient(ellipse at 50% 40%,#06140d 0%,#000 70%); padding:9rem 4rem 4rem; overflow:hidden; }
-    .hero-inner { max-width:920px; text-align:center; z-index:1; }
+    #hero { position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; background:radial-gradient(ellipse at 50% 40%,#06140d 0%,#0d0d0d 70%); padding:10.5rem 4rem 4rem; overflow:hidden; }
+    .hero-inner { max-width:920px; text-align:center; z-index:1; position:relative; }
     .hero-badge { display:inline-block; font-size:0.75rem; color:var(--neon); letter-spacing:3px; text-transform:uppercase; border:1px solid rgba(74,222,128,0.25); padding:0.35rem 1rem; border-radius:20px; margin-bottom:1.5rem; opacity:0; transform:translateY(10px); }
-    .hero-h1 { font-size:clamp(2.3rem,5.2vw,4.2rem); font-weight:900; color:var(--white); line-height:1.07; letter-spacing:-2px; margin-bottom:1.3rem; }
+    .hero-h1 { font-size:clamp(1rem,6vw,4.2rem); font-weight:900; color:var(--white); line-height:1.07; letter-spacing:-2px; margin-bottom:1.3rem; }
     .hero-h1 em { font-style:normal; color:var(--neon); }
+    .hero-h1 .q { color:var(--neon); }
     .hero-sub { font-size:clamp(1rem,2vw,1.25rem); color:var(--muted); max-width:620px; margin:0 auto 2rem; line-height:1.6; opacity:0; transform:translateY(20px); }
     .hero-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; opacity:0; transform:translateY(20px); }
-    .hero-glow-line { position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--neon),transparent); opacity:0; }
+    .hero-glow-line { position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--neon),transparent); opacity:0; z-index:1; }
+
+    /* ── Hero video background ── */
+    .hero-video-wrap { position:absolute; inset:0; z-index:0; overflow:hidden; }
+    #hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; user-select:none; -webkit-user-select:none; }
+    .hero-video-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(8,8,8,0.70) 0%, rgba(8,8,8,0.58) 45%, rgba(13,13,13,0.92) 100%); }
 
     /* ── Slogan ── */
     #slogan { background:var(--black); padding:6.5rem 4rem; text-align:center; position:relative; overflow:hidden; }
@@ -104,35 +120,78 @@
 
     /* ── Platforms ── */
     #platforms { background:var(--bg); padding:5rem 0; overflow:hidden; }
-    .platforms-label { text-align:center; font-size:0.8rem; color:var(--green); letter-spacing:3px; text-transform:uppercase; margin-bottom:0.4rem; }
-    .platforms-sub { text-align:center; font-size:0.85rem; color:var(--dim); margin-bottom:2.5rem; }
-    .marquee-wrapper { display:flex; flex-direction:column; gap:1rem; }
-    .marquee-row { overflow:hidden; width:100%; }
-    .marquee-inner { display:flex; gap:1rem; width:max-content; will-change:transform; }
-    .dsp-chip { display:flex; align-items:center; gap:0.5rem; background:#0e0e0e; border:1px solid var(--border); padding:0.6rem 1.2rem; border-radius:6px; white-space:nowrap; transition:border-color .2s,box-shadow .2s; flex-shrink:0; }
-    .dsp-chip:hover { border-color:var(--green); box-shadow:0 0 12px rgba(26,122,74,0.3); }
-    .dsp-chip img { width:22px; height:22px; object-fit:contain; filter:brightness(0.85); }
-    .dsp-chip span { font-size:0.78rem; color:var(--muted); }
+    .platforms-label { text-align:center; font-size:0.72rem; color:var(--neon); letter-spacing:3px; text-transform:uppercase; margin-bottom:0.9rem; text-shadow:0 0 10px rgba(74,222,128,0.7),0 0 24px rgba(74,222,128,0.35); }
+    .platforms-sub { text-align:center; font-size:clamp(1.7rem,3.5vw,2.6rem); font-weight:800; color:var(--white); letter-spacing:-1px; line-height:1.15; margin-bottom:2.5rem; }
+    .marquee-container { max-width:760px; margin:0 auto; overflow:hidden; }
+    .marquee-wrapper { display:flex; flex-direction:column; gap:1.4rem; }
+    .marquee-row { overflow:hidden; width:100%; -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 15%,#000 85%,transparent 100%); mask-image:linear-gradient(to right,transparent 0%,#000 15%,#000 85%,transparent 100%); }
+    .marquee-inner { display:flex; gap:1.2rem; width:max-content; will-change:transform; }
+    .dsp-chip { display:flex; align-items:center; gap:0.85rem; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); padding:1rem 1.8rem; border-radius:12px; white-space:nowrap; transition:border-color .25s,box-shadow .25s,transform .25s; flex-shrink:0; box-shadow:0 2px 12px rgba(0,0,0,0.4); }
+    .dsp-chip:hover { border-color:var(--green); box-shadow:0 0 20px rgba(26,122,74,0.4); transform:translateY(-2px); }
+    .dsp-chip img { width:42px; height:42px; object-fit:contain; filter:brightness(1) saturate(1.1); }
+    .dsp-chip span { font-size:1rem; color:#ccc; font-weight:600; }
 
     /* ── Pricing ── */
-    #pricing { background:var(--bg2); padding:6rem 4rem; }
-    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:1rem; align-items:stretch; }
-    .price-card { background:var(--card-bg); border:1px solid var(--border); border-radius:16px; padding:2.2rem 1.8rem; display:flex; flex-direction:column; transition:border-color .25s,transform .25s,box-shadow .25s; }
-    .price-card:hover { transform:translateY(-6px); box-shadow:0 12px 40px rgba(0,0,0,0.5); }
-    .price-card.featured { border-color:var(--green); background:linear-gradient(180deg,#0f1f15,#0a140e); box-shadow:0 0 40px rgba(26,122,74,0.18); }
-    .price-badge { display:inline-block; align-self:flex-start; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--neon); border:1px solid var(--green); border-radius:12px; padding:2px 10px; margin-bottom:1rem; }
-    .price-name { font-size:1.3rem; font-weight:800; color:var(--white); margin-bottom:0.5rem; }
-    .price-amt { font-size:2.2rem; font-weight:900; color:var(--neon); line-height:1; margin-bottom:0.2rem; }
-    .price-amt span { font-size:0.85rem; color:var(--muted); font-weight:500; }
-    .price-note { font-size:0.75rem; color:var(--dim); margin-bottom:1.4rem; }
-    .price-features { list-style:none; padding:0; margin:0 0 1.8rem; flex-grow:1; }
-    .price-features li { font-size:0.88rem; color:var(--muted); padding:0.4rem 0; display:flex; align-items:flex-start; gap:0.55rem; line-height:1.4; }
-    .price-features li::before { content:'✓'; color:var(--neon); font-weight:700; flex-shrink:0; }
-    .price-btn { text-align:center; padding:0.8rem; border-radius:25px; font-weight:600; font-size:0.95rem; transition:all .2s; }
-    .price-btn.solid { background:var(--green); color:#fff; }
-    .price-btn.solid:hover { background:var(--neon); color:#000; }
-    .price-btn.ghost { background:transparent; color:var(--neon); border:1px solid var(--green); }
-    .price-btn.ghost:hover { background:rgba(26,122,74,0.15); }
+    #pricing { background:var(--bg2); padding:8rem 4rem; }
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:2.5rem; align-items:stretch; }
+
+    /* base card */
+    .price-card { background:#0a0f0b; border:1.5px solid rgba(255,255,255,0.07); border-radius:22px; padding:3rem 2.4rem; display:flex; flex-direction:column; transition:border-color .3s,transform .3s,box-shadow .3s; position:relative; overflow:hidden; }
+    .price-card::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+    .price-card:hover { transform:translateY(-10px); }
+
+    /* Starter — amber/gold HERO CARD */
+    .price-card.starter { border-color:rgba(245,158,11,0.72); background:linear-gradient(160deg,#1e1300 0%,#0e0900 100%); box-shadow:0 0 80px rgba(245,158,11,0.28),0 0 150px rgba(245,158,11,0.09),0 24px 60px rgba(0,0,0,0.55); transform:translateY(-20px) scale(1.035); z-index:1; }
+    .price-card.starter::after { background:linear-gradient(90deg,transparent,#fbbf24,transparent); opacity:1; height:3px; }
+    .price-card.starter:hover { border-color:#fbbf24; box-shadow:0 32px 90px rgba(0,0,0,0.7),0 0 100px rgba(245,158,11,0.40); transform:translateY(-28px) scale(1.042); }
+    .price-card.starter .price-amt { color:#f59e0b; }
+    .price-card.starter .price-features li::before { color:#f59e0b; }
+    .price-card.starter .price-popular-star { filter:drop-shadow(0 0 14px rgba(245,158,11,0.70)); }
+
+    /* Artist Pro — neon green (secondary) */
+    .price-card.featured { border-color:rgba(26,122,74,0.38); background:linear-gradient(160deg,#0a1810 0%,#060d08 100%); box-shadow:0 0 28px rgba(26,122,74,0.10); }
+    .price-card.featured::after { background:linear-gradient(90deg,transparent,var(--neon),transparent); opacity:0.50; }
+    .price-card.featured:hover { border-color:var(--green); box-shadow:0 24px 70px rgba(0,0,0,0.6),0 0 40px rgba(74,222,128,0.16); }
+
+    /* Label — blue/indigo */
+    .price-card.label-card { border-color:rgba(99,102,241,0.35); background:linear-gradient(160deg,#0b0c1a 0%,#07080f 100%); }
+    .price-card.label-card::after { background:linear-gradient(90deg,transparent,#818cf8,transparent); opacity:0.7; }
+    .price-card.label-card:hover { border-color:#6366f1; box-shadow:0 24px 70px rgba(0,0,0,0.6),0 0 40px rgba(99,102,241,0.15); }
+    .price-card.label-card .price-amt { color:#818cf8; }
+    .price-card.label-card .price-features li::before { color:#818cf8; }
+    .price-card.label-card .price-btn.ghost { color:#818cf8; border-color:rgba(99,102,241,0.5); }
+    .price-card.label-card .price-btn.ghost:hover { background:rgba(99,102,241,0.1); border-color:#6366f1; }
+
+    /* Most Popular star stamp */
+    .price-popular-star { position:absolute; top:-4px; right:-4px; width:88px; height:88px; object-fit:contain; opacity:0.92; pointer-events:none; filter:drop-shadow(0 0 10px rgba(74,222,128,0.5)); }
+
+    .price-badge { display:inline-block; align-self:flex-start; font-size:0.62rem; letter-spacing:2.5px; text-transform:uppercase; color:var(--neon); border:1px solid rgba(74,222,128,0.4); border-radius:20px; padding:4px 14px; margin-bottom:1.6rem; }
+    .price-card.starter .price-badge { background:linear-gradient(135deg,#f59e0b,#d97706); color:#000; border-color:#f59e0b; font-weight:800; }
+    .price-card.featured .price-badge { color:var(--neon); border-color:rgba(74,222,128,0.4); }
+    .price-card.label-card .price-badge { color:#818cf8; border-color:rgba(99,102,241,0.4); }
+
+    .price-name { font-size:1.6rem; font-weight:900; color:var(--white); margin-bottom:1.6rem; letter-spacing:-0.5px; }
+    .price-original-row { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.4rem; }
+    .price-original { font-size:1.2rem; color:var(--dim); text-decoration:line-through; text-decoration-color:rgba(255,80,0,0.7); text-decoration-thickness:2px; font-weight:600; }
+    .price-sale-tag { display:inline-block; background:rgba(255,80,0,0.14); color:#ff7043; border:1px solid rgba(255,80,0,0.35); border-radius:6px; font-size:0.62rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:2px 8px; }
+    .price-amt { font-size:3.6rem; font-weight:900; color:var(--neon); line-height:1; margin-bottom:0.3rem; letter-spacing:-2px; }
+    .price-amt sup { font-size:1.4rem; font-weight:700; letter-spacing:0; vertical-align:super; }
+    .price-amt span { font-size:0.95rem; color:var(--muted); font-weight:500; letter-spacing:0; }
+    .price-note { font-size:0.78rem; color:var(--dim); margin-bottom:2.2rem; letter-spacing:0.3px; }
+    .price-divider { border:none; border-top:1px solid rgba(255,255,255,0.06); margin:0 0 2rem; }
+    .price-features { list-style:none; padding:0; margin:0 0 2.4rem; flex-grow:1; }
+    .price-features li { font-size:0.93rem; color:#b0b0b0; padding:0.65rem 0; display:flex; align-items:flex-start; gap:0.75rem; line-height:1.45; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .price-features li:last-child { border-bottom:none; }
+    .price-features li::before { content:'✓'; color:var(--neon); font-weight:800; flex-shrink:0; font-size:0.8rem; margin-top:2px; }
+    .price-btn { text-align:center; padding:1.05rem; border-radius:30px; font-weight:700; font-size:1rem; transition:all .25s; letter-spacing:0.3px; }
+    .price-btn.solid { background:var(--green); color:#fff; box-shadow:0 4px 20px rgba(26,122,74,0.35); }
+    .price-btn.solid:hover { background:var(--neon); color:#000; box-shadow:0 6px 28px rgba(74,222,128,0.4); transform:scale(1.02); }
+    .price-btn.ghost { background:transparent; color:var(--neon); border:1.5px solid rgba(26,122,74,0.6); }
+    .price-btn.ghost:hover { background:rgba(26,122,74,0.12); border-color:var(--green); transform:scale(1.02); }
+    .price-btn.amber { background:transparent; color:#f59e0b; border:1.5px solid rgba(245,158,11,0.5); }
+    .price-btn.amber:hover { background:rgba(245,158,11,0.1); border-color:#f59e0b; transform:scale(1.02); }
+    .price-btn.solid-amber { background:linear-gradient(135deg,#f59e0b,#d97706); color:#000; font-weight:800; box-shadow:0 4px 24px rgba(245,158,11,0.45); }
+    .price-btn.solid-amber:hover { background:linear-gradient(135deg,#fbbf24,#f59e0b); box-shadow:0 6px 32px rgba(245,158,11,0.60); transform:scale(1.03); }
 
     /* ── Testimonials ── */
     #testimonials { background:var(--black); padding:6rem 4rem; }
@@ -148,7 +207,8 @@
     .partners-row { display:flex; justify-content:center; gap:1.4rem; flex-wrap:wrap; margin-top:1rem; }
     .partner-card { background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:1.8rem 2.6rem; text-align:center; transition:border-color .25s,transform .25s; min-width:260px; }
     .partner-card:hover { border-color:var(--green); transform:translateY(-3px); }
-    .partner-name { font-size:1.8rem; font-weight:900; color:var(--white); letter-spacing:1px; }
+    .partner-logo { height:40px; width:auto; margin:0 auto 0.6rem; display:block; }
+    .partner-logo.umg { filter:brightness(0) invert(1); opacity:0.85; }
     .partner-role { font-size:0.82rem; color:var(--muted); margin-top:0.4rem; }
 
     /* ── FAQ ── */
@@ -165,7 +225,7 @@
     .faq-a-inner li { margin-bottom:0.35rem; }
 
     /* ── CTA ── */
-    #cta { background:linear-gradient(180deg,#050f08 0%,#000 100%); padding:7rem 4rem; text-align:center; position:relative; overflow:hidden; border-top:1px solid rgba(26,122,74,0.15); }
+    #cta { background:linear-gradient(180deg,#050f08 0%,#0d0d0d 100%); padding:7rem 4rem; text-align:center; position:relative; overflow:hidden; border-top:1px solid rgba(26,122,74,0.15); }
     .cta-sweep-line { position:absolute; top:0; left:0; height:1px; background:linear-gradient(90deg,transparent,var(--neon),transparent); width:0; }
     .cta-inner { position:relative; z-index:1; }
     .cta-h2 { font-size:clamp(2rem,5vw,3.6rem); font-weight:900; color:var(--white); letter-spacing:-1.5px; margin-bottom:1rem; opacity:0; transform:scale(0.92); }
@@ -174,8 +234,13 @@
     .btn-large { font-size:1.1rem; padding:1rem 2.8rem; opacity:0; transform:translateY(20px); }
 
     /* ── Footer ── */
-    #footer { background:#000; border-top:1px solid var(--border); padding:4rem 4rem 2rem; }
-    .footer-top { max-width:1120px; margin:0 auto; display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr 1fr; gap:2rem; }
+    #footer { background:#0d0d0d; border-top:1px solid var(--border); padding:4rem 4rem 2rem; }
+    .footer-top { max-width:1120px; margin:0 auto; display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr 1fr 1.2fr; gap:2rem; }
+    .footer-partners { display:flex; flex-direction:column; gap:1.3rem; padding-left:1.5rem; }
+    .footer-partners h4 { font-size:1.35rem; font-style:italic; font-weight:800; color:var(--muted); letter-spacing:0; text-transform:none; margin-bottom:0; }
+    .footer-partner-img { height:52px; width:auto; display:block; opacity:0.80; transition:opacity .2s; }
+    .footer-partner-img:hover { opacity:1; }
+    .footer-partner-img.umg { filter:brightness(0) invert(1); }
     .footer-brand img { margin-bottom:1rem; }
     .footer-brand p { font-size:0.86rem; color:var(--dim); line-height:1.6; max-width:240px; }
     .footer-col h4 { font-size:0.78rem; text-transform:uppercase; letter-spacing:1px; color:var(--white); margin-bottom:1rem; }
@@ -185,31 +250,75 @@
     .footer-copy { font-size:0.82rem; color:#555; line-height:1.6; }
     .footer-copy strong { color:var(--muted); font-weight:600; }
 
+    /* ── Hamburger ── */
+    .nav-burger { display:none; flex-direction:column; justify-content:center; gap:5px; background:none; padding:6px; z-index:200; cursor:pointer; }
+    .nav-burger span { display:block; width:24px; height:2px; background:var(--white); border-radius:2px; transition:transform .3s ease,opacity .3s ease; }
+    .nav-burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+    .nav-burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+    /* ── Mobile menu overlay ── */
+    #mobile-menu { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2.2rem; position:fixed; inset:0; background:rgba(8,13,8,0.97); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); z-index:98; opacity:0; pointer-events:none; transition:opacity .3s ease; }
+    #mobile-menu.open { opacity:1; pointer-events:all; }
+    #mobile-menu a { font-size:1.9rem; font-weight:700; color:var(--white); letter-spacing:-0.5px; transition:color .2s; text-align:center; }
+    #mobile-menu a:hover { color:var(--neon); }
+    #mobile-menu .mobile-cta { font-size:1rem; color:var(--neon); border:1px solid var(--green); padding:0.85rem 2.4rem; border-radius:30px; margin-top:0.4rem; transition:background .2s,color .2s; }
+    #mobile-menu .mobile-cta:hover { background:var(--green); color:var(--white); }
+
+    /* ── Sale bar responsive text ── */
+    .sale-mob { display:none; }
+
     /* ── Anchor offset ── */
-    section[id] { scroll-margin-top:90px; }
+    section[id] { scroll-margin-top:115px; }
 
     /* ── Responsive ── */
     @media (max-width:1024px) {
       #navbar { padding:1rem 2rem; }
       #hero,#slogan,#stats,#why,#pricing,#testimonials,#partners,#faq,#cta { padding-left:2rem; padding-right:2rem; }
       .why-grid,.testi-grid { grid-template-columns:1fr 1fr; }
-      .pricing-grid { grid-template-columns:1fr; max-width:520px; margin-left:auto; margin-right:auto; }
+      .pricing-grid { grid-template-columns:1fr; max-width:480px; margin-left:auto; margin-right:auto; }
       .stats-grid { grid-template-columns:1fr 1fr; gap:2.5rem; }
       .footer-top { grid-template-columns:1fr 1fr 1fr; }
+      .footer-partners { grid-column:span 3; flex-direction:row; align-items:center; gap:2rem; flex-wrap:wrap; }
       #footer { padding:3rem 2rem 2rem; }
     }
     @media (max-width:768px) {
-      .nav-links a:not(.nav-cta) { display:none; }
+      .nav-links { display:none; }
+      .nav-burger { display:flex; }
       #navbar { padding:1rem 1.5rem; }
-      #hero { padding:8rem 1.5rem 3rem; }
+      #hero { padding:9.5rem 1.5rem 3rem; }
       .hero-btns { flex-direction:column; align-items:center; }
-      .hero-btns .btn-primary,.hero-btns .btn-secondary { width:100%; max-width:280px; text-align:center; }
+      .hero-btns .btn-primary,.hero-btns .btn-secondary { width:100%; max-width:300px; text-align:center; }
       #slogan,#stats,#why,#pricing,#testimonials,#partners,#faq,#cta { padding-left:1.5rem; padding-right:1.5rem; }
       .why-grid,.testi-grid { grid-template-columns:1fr; }
-      .stats-grid { grid-template-columns:1fr 1fr; }
+      .stats-grid { grid-template-columns:1fr 1fr; gap:2rem; }
       .footer-top { grid-template-columns:1fr 1fr; }
+      .footer-partners { grid-column:span 2; flex-direction:row; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+      /* Remove elevated transform on starter card when stacked */
+      .price-card.starter { transform:none; box-shadow:0 0 40px rgba(245,158,11,0.22); }
+      .price-card.starter:hover { transform:translateY(-8px); box-shadow:0 16px 60px rgba(0,0,0,0.6),0 0 60px rgba(245,158,11,0.32); }
+      .partner-card { min-width:auto; width:100%; }
     }
-    @media (hover:none) { #cursor-glow{display:none;} body,button,.faq-q{cursor:auto;} }
+    @media (max-width:480px) {
+      #sale-bar { font-size:0.75rem; padding:0.6rem 0.75rem; letter-spacing:0.2px; }
+      .sale-full { display:none; }
+      .sale-mob { display:inline; }
+      #navbar { top:38px; padding:0.85rem 1.2rem; }
+      #hero { padding:8rem 1.2rem 2.5rem; }
+      .hero-h1 { letter-spacing:-1px; }
+      #slogan,#stats,#why,#pricing,#testimonials,#partners,#faq,#cta { padding-left:1.2rem; padding-right:1.2rem; }
+      .stats-grid { grid-template-columns:1fr 1fr; gap:1.5rem; }
+      .pricing-grid { max-width:100%; }
+      .footer-top { grid-template-columns:1fr; }
+      .footer-partners { grid-column:span 1; flex-direction:column; align-items:flex-start; gap:1rem; }
+      .footer-partner-img { height:36px; }
+      #footer { padding:2.5rem 1.2rem 1.5rem; }
+      section[id] { scroll-margin-top:95px; }
+      .faq-q { font-size:0.95rem; }
+      .testi-card { flex-direction:column; align-items:flex-start; }
+      #mobile-menu a { font-size:1.5rem; }
+    }
+    @media (hover:none) { #cursor-glow,#cursor-dot,#cursor-ring{display:none;} body,button,.faq-q{cursor:auto;} }
 
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity:1 !important; transform:none !important; }
@@ -219,41 +328,139 @@
 <body>
 
   <div id="cursor-glow"></div>
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
 
   <!-- Sale bar -->
-  <div id="sale-bar">🔥 <strong>Annual Sale</strong> — Live July to September · Lock in your release price now</div>
+  <div id="sale-bar"><span class="sale-pulse">🔥</span> <strong>Annual Sale</strong><span class="sale-full"> — Live July to September &nbsp;·&nbsp; Lock in your release price now</span><span class="sale-mob"> — Lock in now</span> &nbsp;<span class="sale-pulse">🔥</span></div>
 
   <!-- Navbar -->
   <nav id="navbar">
-    <a class="nav-logo" href="#hero" data-scroll>
-      <img src="Brand logo/FM DIGITAL OFFICIAL LOGO.svg" alt="FM Digital Official" height="36" />
-    </a>
-    <div class="nav-links">
-      <a href="#why" data-scroll>Services</a>
-      <a href="#pricing" data-scroll>Pricing</a>
-      <a href="#faq" data-scroll>Support</a>
-      <a href="#cta" data-scroll class="nav-cta">Start Releasing Today →</a>
+    <div class="nav-inner">
+      <a class="nav-logo" href="#hero" data-scroll>
+        <img src="Brand logo/FM DIGITAL OFFICIAL LOGO.svg" alt="FM Digital Official" height="62" />
+      </a>
+      <div class="nav-links">
+        <a href="#why" data-scroll>Services</a>
+        <a href="#pricing" data-scroll>Pricing</a>
+        <a href="#faq" data-scroll>Support</a>
+        <a href="#cta" data-scroll class="nav-cta">Start Releasing Today →</a>
+      </div>
+      <button class="nav-burger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
+  <!-- Mobile Nav Overlay -->
+  <div id="mobile-menu" aria-hidden="true">
+    <a href="#why" data-scroll data-mobile>Services</a>
+    <a href="#pricing" data-scroll data-mobile>Pricing</a>
+    <a href="#faq" data-scroll data-mobile>Support</a>
+    <a href="#cta" data-scroll data-mobile class="mobile-cta">Start Releasing Today →</a>
+  </div>
+
   <!-- Hero -->
   <section id="hero">
+    <div class="hero-video-wrap" aria-hidden="true">
+      <video id="hero-video" autoplay muted loop playsinline
+        disablePictureInPicture
+        controlsList="nodownload nofullscreen noremoteplayback"
+        oncontextmenu="return false">
+        <source src="Sell%20your%20music%20video.29c650b10c0890e18f19.mp4" type="video/mp4">
+      </video>
+      <div class="hero-video-overlay"></div>
+    </div>
     <div class="hero-inner">
-      <div class="hero-badge">🎵 FM Digital Official Distribution</div>
-      <h1 class="hero-h1">Release Your Music Worldwide With <em>FM Digital Official Distribution</em></h1>
+      <div class="hero-badge">🎵 #InkIngIt</div>
+      <h1 class="hero-h1"><span style="white-space:nowrap"><span class="q">&#8220;</span>where every <em>stream counts</em></span><br>and every <em>artist matters</em><span class="q">&#8221;</span></h1>
       <p class="hero-sub">Distribute to 190+ platforms while keeping control of your music and earnings.</p>
       <div class="hero-btns">
         <a href="#pricing" data-scroll class="btn-primary">Start Releasing Today</a>
-        <a href="#platforms" data-scroll class="btn-secondary">See All Platforms</a>
       </div>
     </div>
     <div class="hero-glow-line"></div>
   </section>
 
-  <!-- Slogan -->
-  <section id="slogan">
-    <div class="slogan-inner">
-      <p class="slogan-text reveal">"Where Every <em>Stream Counts</em><br>and every <em>artist matters</em>."</p>
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="section-inner">
+      <span class="eyebrow reveal">Pricing</span>
+      <h2 class="section-title reveal">Plans That <em>Scale With You</em></h2>
+      <p class="section-lead reveal">No upfront fees. Choose the release plan that fits where you are right now.</p>
+      <div class="pricing-grid">
+
+        <div class="price-card featured reveal">
+          <span class="price-badge">For Artists</span>
+          <div class="price-name">Artist Pro</div>
+          <div class="price-original-row">
+            <span class="price-original">₹5,999</span>
+            <span class="price-sale-tag">Annual Sale</span>
+          </div>
+          <div class="price-amt"><sup>₹</sup>2,999<span> / year</span></div>
+          <div class="price-note">Unlimited releases, zero hidden fees</div>
+          <hr class="price-divider">
+          <ul class="price-features">
+            <li>Unlimited releases</li>
+            <li>190+ DSPs &amp; stores</li>
+            <li>Advanced metadata tools</li>
+            <li>Monthly royalty report</li>
+            <li>Free UPC &amp; ISRC code</li>
+            <li>Priority delivery</li>
+            <li>Revenue: 70% / 30%</li>
+            <li>Publishing rights &amp; revenue</li>
+            <li>24/7 Support panel</li>
+            <li>Referral earnings</li>
+          </ul>
+          <a href="#" class="price-btn solid">Get Started</a>
+        </div>
+
+        <div class="price-card starter reveal">
+          <img src="Extra elements for use/star.png" alt="Most Popular" class="price-popular-star" />
+          <span class="price-badge">Most Popular</span>
+          <div class="price-name">Starter</div>
+          <div class="price-original-row">
+            <span class="price-original">₹899</span>
+            <span class="price-sale-tag">Annual Sale</span>
+          </div>
+          <div class="price-amt"><sup>₹</sup>489<span> / release</span></div>
+          <div class="price-note">Limited time offer — lock in your price now</div>
+          <hr class="price-divider">
+          <ul class="price-features">
+            <li>1 song distribution</li>
+            <li>190+ DSPs &amp; stores</li>
+            <li>Basic metadata tools</li>
+            <li>Free UPC &amp; ISRC code</li>
+            <li>Standard delivery time</li>
+            <li>Revenue: 70% / 30%</li>
+            <li>Publishing rights &amp; revenue</li>
+            <li>24/7 Support panel</li>
+          </ul>
+          <a href="#" class="price-btn solid-amber">Start Releasing Today</a>
+        </div>
+
+        <div class="price-card label-card reveal">
+          <span class="price-badge">For Labels</span>
+          <div class="price-name">Label</div>
+          <div class="price-original-row" style="visibility:hidden;">
+            <span class="price-original">—</span>
+          </div>
+          <div class="price-amt" style="font-size:2.6rem;">Custom</div>
+          <div class="price-note">Tailored to your roster &amp; volume</div>
+          <hr class="price-divider">
+          <ul class="price-features">
+            <li>Everything in Artist Pro</li>
+            <li>Manage multiple artists &amp; labels</li>
+            <li>Bulk release tools</li>
+            <li>Unlock new revenue streams</li>
+            <li>Dedicated account manager</li>
+            <li>Custom royalty splits</li>
+            <li>White-label dashboard</li>
+          </ul>
+          <a href="#" class="price-btn ghost">Contact Us</a>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -265,7 +472,7 @@
         <div class="stat-label">Songs Distributed</div>
       </div>
       <div class="stat-item reveal">
-        <div class="stat-num" data-count="1000" data-suffix="+">0</div>
+        <div class="stat-num" data-count="1" data-suffix="k+">0</div>
         <div class="stat-label">Artists Served</div>
       </div>
       <div class="stat-item reveal">
@@ -273,7 +480,7 @@
         <div class="stat-label">Labels Served</div>
       </div>
       <div class="stat-item reveal">
-        <div class="stat-num" data-count="1200" data-suffix="M">0</div>
+        <div class="stat-num" data-count="1.2" data-suffix="B">0</div>
         <div class="stat-label">Streams Till Now</div>
       </div>
     </div>
@@ -300,6 +507,7 @@
   <section id="platforms">
     <p class="platforms-label">DSPs &amp; Stores</p>
     <p class="platforms-sub">More than 190+ platforms worldwide</p>
+    <div class="marquee-container">
     <div class="marquee-wrapper">
       <div class="marquee-row" id="marquee-row-1">
         <div class="marquee-inner">
@@ -346,8 +554,6 @@
           <div class="dsp-chip"><img src="DSPs/qobuz.svg" alt="Qobuz" /><span>Qobuz</span></div>
           <div class="dsp-chip"><img src="DSPs/line music.svg" alt="Line Music" /><span>Line Music</span></div>
           <div class="dsp-chip"><img src="DSPs/tencent music.svg" alt="Tencent" /><span>Tencent</span></div>
-          <div class="dsp-chip"><img src="DSPs/7 digital.svg" alt="7digital" /><span>7digital</span></div>
-          <div class="dsp-chip"><img src="DSPs/hungama.svg" alt="Hungama" /><span>Hungama</span></div>
           <div class="dsp-chip"><img src="DSPs/youtube.svg" alt="YouTube" /><span>YouTube</span></div>
           <div class="dsp-chip"><img src="DSPs/boomplay.svg" alt="Boomplay" /><span>Boomplay</span></div>
           <div class="dsp-chip"><img src="DSPs/anghami.svg" alt="Anghami" /><span>Anghami</span></div>
@@ -360,73 +566,10 @@
           <div class="dsp-chip"><img src="DSPs/qobuz.svg" alt="Qobuz" /><span>Qobuz</span></div>
           <div class="dsp-chip"><img src="DSPs/line music.svg" alt="Line Music" /><span>Line Music</span></div>
           <div class="dsp-chip"><img src="DSPs/tencent music.svg" alt="Tencent" /><span>Tencent</span></div>
-          <div class="dsp-chip"><img src="DSPs/7 digital.svg" alt="7digital" /><span>7digital</span></div>
-          <div class="dsp-chip"><img src="DSPs/hungama.svg" alt="Hungama" /><span>Hungama</span></div>
           <div class="dsp-chip"><img src="DSPs/youtube.svg" alt="YouTube" /><span>YouTube</span></div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Pricing -->
-  <section id="pricing">
-    <div class="section-inner">
-      <span class="eyebrow reveal">Pricing</span>
-      <h2 class="section-title reveal">Plans That <em>Scale With You</em></h2>
-      <p class="section-lead reveal">No upfront fees. Choose the release plan that fits where you are right now.</p>
-      <div class="pricing-grid">
-        <div class="price-card reveal">
-          <span class="price-badge">Starter Release Plan</span>
-          <div class="price-name">Starter</div>
-          <div class="price-amt">₹489<span>+</span></div>
-          <div class="price-note">Annual Sale / Stage</div>
-          <ul class="price-features">
-            <li>1 song distribution</li>
-            <li>190+ DSPs</li>
-            <li>Basic metadata tools</li>
-            <li>Free UPC &amp; ISRC code</li>
-            <li>Standard delivery time</li>
-            <li>Revenue: 70% / 30%</li>
-            <li>Publishing rights and revenue</li>
-            <li>Get 24/7 Support panel</li>
-          </ul>
-          <a href="#" class="price-btn ghost">Start Releasing Today</a>
-        </div>
-
-        <div class="price-card featured reveal">
-          <span class="price-badge">Most Popular</span>
-          <div class="price-name">Artist Pro</div>
-          <div class="price-amt">₹2,999</div>
-          <div class="price-note">per year</div>
-          <ul class="price-features">
-            <li>Unlimited releases</li>
-            <li>190+ DSPs</li>
-            <li>Metadata tools</li>
-            <li>Monthly Report</li>
-            <li>Free UPC &amp; ISRC code</li>
-            <li>Standard delivery time</li>
-            <li>Revenue: 70% / 30%</li>
-            <li>Publishing rights and revenue</li>
-            <li>Get 24/7 Support panel</li>
-            <li>Earn from refer</li>
-          </ul>
-          <a href="#" class="price-btn solid">Get Started</a>
-        </div>
-
-        <div class="price-card reveal">
-          <span class="price-badge">Label</span>
-          <div class="price-name">Label</div>
-          <div class="price-amt">Custom</div>
-          <div class="price-note">Get Custom Plan</div>
-          <ul class="price-features">
-            <li>Everything in Artist Pro</li>
-            <li>Manage multiple artists &amp; labels</li>
-            <li>Unlock new revenue streams</li>
-            <li>Dedicated account support</li>
-          </ul>
-          <a href="#" class="price-btn ghost">Contact Us</a>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -442,18 +585,6 @@
         <div class="testi-card reveal"><div class="testi-avatar">R</div><div><div class="testi-name">RD Parmar</div><div class="testi-role">Artist</div></div></div>
         <div class="testi-card reveal"><div class="testi-avatar">A</div><div><div class="testi-name">Ajay Salwan</div><div class="testi-role">Artist</div></div></div>
         <div class="testi-card reveal"><div class="testi-avatar">H</div><div><div class="testi-name">Hariom Raghav</div><div class="testi-role">I Village Music</div></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Business Partners -->
-  <section id="partners">
-    <div class="section-inner">
-      <span class="eyebrow reveal">Business Partners</span>
-      <h2 class="section-title reveal">Backed by <em>Industry Leaders</em></h2>
-      <div class="partners-row">
-        <div class="partner-card reveal"><div class="partner-name">UMG</div><div class="partner-role">Our Music Publishing Partner</div></div>
-        <div class="partner-card reveal"><div class="partner-name">FUGA</div><div class="partner-role">Our Music Distribution Partner</div></div>
       </div>
     </div>
   </section>
@@ -548,6 +679,11 @@
         <a href="#">Investor Opportunities</a>
         <a href="#">Partnerships</a>
       </div>
+      <div class="footer-partners">
+        <h4>Powered By</h4>
+        <img src="Clients Logo/FUGA.svg" alt="FUGA" class="footer-partner-img" />
+        <img src="Clients Logo/UMG.svg" alt="Universal Music Group" class="footer-partner-img umg" />
+      </div>
     </div>
     <div class="footer-bottom">
       <p class="footer-copy"><strong>© 2024 - 2026 FM Digital Official Distribution.</strong> All rights reserved.<br>A subsidiary of Koko Advertising &amp; Marketing.</p>
@@ -556,6 +692,33 @@
 
   <script>
     gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+    /* ── Mobile nav burger ── */
+    const burger = document.querySelector('.nav-burger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    function toggleMenu(force) {
+      const isOpen = force !== undefined ? force : !burger.classList.contains('open');
+      burger.classList.toggle('open', isOpen);
+      burger.setAttribute('aria-expanded', isOpen);
+      mobileMenu.classList.toggle('open', isOpen);
+      mobileMenu.setAttribute('aria-hidden', !isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+    burger.addEventListener('click', () => toggleMenu());
+    document.querySelectorAll('#mobile-menu a[data-mobile]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        toggleMenu(false);
+        if (id && id.startsWith('#') && document.querySelector(id)) {
+          e.preventDefault();
+          setTimeout(() => {
+            if (lenis) lenis.scrollTo(id, { offset: -70 });
+            else document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+          }, 320);
+        }
+      });
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -580,11 +743,17 @@
       });
     });
 
-    /* ── Cursor glow ── */
+    /* ── Cursor glow + custom cursor ── */
     const glow = document.getElementById('cursor-glow');
-    document.addEventListener('mousemove', e => gsap.to(glow, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power2.out' }));
-    document.addEventListener('mouseleave', () => gsap.to(glow, { opacity: 0, duration: 0.3 }));
-    document.addEventListener('mouseenter', () => gsap.to(glow, { opacity: 1, duration: 0.3 }));
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+    document.addEventListener('mousemove', e => {
+      gsap.to(glow, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power2.out' });
+      gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.08, ease: 'power2.out' });
+      gsap.to(cursorRing, { x: e.clientX, y: e.clientY, duration: 0.28, ease: 'power2.out' });
+    });
+    document.addEventListener('mouseleave', () => { gsap.to(glow, { opacity: 0, duration: 0.3 }); gsap.to([cursorDot, cursorRing], { opacity: 0, duration: 0.2 }); });
+    document.addEventListener('mouseenter', () => { gsap.to(glow, { opacity: 1, duration: 0.3 }); gsap.to([cursorDot, cursorRing], { opacity: 1, duration: 0.2 }); });
 
     /* ── Navbar scrolled state ── */
     ScrollTrigger.create({
@@ -664,7 +833,8 @@
           val: target, duration: 1.6, ease: 'power2.out',
           onUpdate: () => {
             const v = obj.val;
-            el.textContent = (v >= 1000 ? Math.round(v).toLocaleString() : Math.round(v)) + suffix;
+            const isDecimal = target % 1 !== 0;
+            el.textContent = (isDecimal ? v.toFixed(1) : (v >= 1000 ? Math.round(v).toLocaleString() : Math.round(v))) + suffix;
           }
         })
       });
@@ -688,6 +858,16 @@
     gsap.to('.cta-sub', { scrollTrigger: { trigger: '#cta', start: 'top 72%', toggleActions: 'play none none none' }, opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.3 });
     gsap.to('#cta-btn', { scrollTrigger: { trigger: '#cta', start: 'top 70%', toggleActions: 'play none none none' }, opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.5)', delay: 0.45 });
     gsap.to('#cta-btn', { boxShadow: '0 0 30px rgba(74,222,128,0.5)', duration: 1.4, ease: 'power1.inOut', repeat: -1, yoyo: true, delay: 2 });
+
+    /* ── Video security ── */
+    const heroVideo = document.getElementById('hero-video');
+    if (heroVideo) {
+      heroVideo.addEventListener('contextmenu', e => e.preventDefault());
+      /* Restart video if browser pauses it (e.g. tab switch on mobile) */
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && heroVideo.paused) heroVideo.play().catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>
