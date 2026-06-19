@@ -99,14 +99,14 @@
     #slogan { background:var(--black); padding:6.5rem 4rem; text-align:center; position:relative; overflow:hidden; }
     #slogan::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(26,122,74,0.10),transparent 70%); pointer-events:none; }
     .slogan-inner { max-width:920px; margin:0 auto; position:relative; z-index:1; }
-    .slogan-text { font-size:clamp(1.8rem,4.5vw,3.4rem); font-weight:800; color:var(--white); line-height:1.28; letter-spacing:-1px; }
+    .slogan-text { font-size:clamp(1.5rem,5vw,3.4rem); font-weight:800; color:var(--white); line-height:1.28; letter-spacing:-1px; }
     .slogan-text em { font-style:normal; color:var(--neon); }
 
     /* ── Stats ── */
     #stats { background:var(--bg2); padding:4rem 4rem; border-top:1px solid #111; border-bottom:1px solid #111; }
     .stats-grid { max-width:1120px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
     .stat-item { text-align:center; }
-    .stat-num { font-size:clamp(2.2rem,4vw,3.2rem); font-weight:900; color:var(--neon); line-height:1; }
+    .stat-num { font-size:clamp(1.8rem,5vw,3.2rem); font-weight:900; color:var(--neon); line-height:1; }
     .stat-label { font-size:0.85rem; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-top:0.6rem; }
 
     /* ── Why (features) ── */
@@ -293,7 +293,7 @@
     .footer-copy strong { color:var(--muted); font-weight:600; }
 
     /* ── Hamburger ── */
-    .nav-burger { display:none; flex-direction:column; justify-content:center; gap:5px; background:none; padding:6px; z-index:200; cursor:pointer; }
+    .nav-burger { display:none; flex-direction:column; justify-content:center; gap:5px; background:none; padding:10px 8px; min-width:44px; min-height:44px; z-index:200; cursor:pointer; }
     .nav-burger span { display:block; width:24px; height:2px; background:var(--white); border-radius:2px; transition:transform .3s ease,opacity .3s ease; }
     .nav-burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
     .nav-burger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
@@ -365,6 +365,15 @@
       section[id] { scroll-margin-top:95px; }
       .faq-q { font-size:0.95rem; }
       #mobile-menu a { font-size:1.5rem; }
+      .nav-logo img { height:44px; }
+      #hero { padding-top:7.5rem; }
+      section[id] { scroll-margin-top:90px; }
+      .price-amt { font-size:clamp(2rem,8vw,3.6rem); letter-spacing:-1px; }
+      .price-name { font-size:1.25rem; margin-bottom:1.1rem; }
+      .price-card { padding:1.4rem 1.6rem; }
+      .marquee-container { max-width:100%; }
+      .testi-gallery-wrap { max-width:100%; }
+      .stats-grid { grid-template-columns:1fr 1fr; }
     }
     @media (hover:none) { #cursor-glow,#cursor-dot,#cursor-ring{display:none;} body,button,.faq-q{cursor:auto;} }
 
