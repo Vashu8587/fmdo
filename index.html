@@ -25,6 +25,7 @@
       color: #e0e0e0;
       font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
       overflow-x: hidden;
+      max-width: 100vw;
       cursor: none;
     }
     img { display: block; max-width: 100%; }
@@ -32,6 +33,7 @@
     button { cursor: none; border: none; outline: none; font-family: inherit; }
 
     /* ── Lenis ── */
+    html { overflow-x: hidden; max-width: 100%; }
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
     .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
@@ -132,7 +134,7 @@
     .dsp-chip span { font-size:1rem; color:#ccc; font-weight:600; }
 
     /* ── Pricing ── */
-    #pricing { background:var(--bg2); padding:8rem 4rem; position:relative; }
+    #pricing { background:var(--bg2); padding:8rem 4rem; position:relative; overflow:hidden; }
 
     /* ── Voucher Side Banners ── */
     .voucher-side-banner { position:absolute; top:50%; transform:translateY(-50%); z-index:4; display:flex; align-items:center; justify-content:center; }
@@ -328,7 +330,8 @@
     @media (max-width:768px) {
       .nav-links { display:none; }
       .nav-burger { display:flex; }
-      #navbar { padding:1rem 1.5rem; }
+      #navbar { padding:1rem 1.5rem; background:rgba(8,13,8,0.95); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid rgba(26,122,74,0.18); }
+      .marquee-container { max-width:100%; }
       #hero { padding:9.5rem 1.5rem 3rem; }
       .hero-btns { flex-direction:column; align-items:center; }
       .hero-btns .btn-primary,.hero-btns .btn-secondary { width:100%; max-width:300px; text-align:center; }
@@ -430,7 +433,7 @@
     </div>
     <div class="hero-inner">
       <div class="hero-badge">🎵 #InkIngIt</div>
-      <h1 class="hero-h1"><span style="white-space:nowrap"><span class="q">&#8220;</span>where every <em>stream counts</em></span><br>and every <em>artist matters</em><span class="q">&#8221;</span></h1>
+      <h1 class="hero-h1"><span class="q">&#8220;</span>where every <em>stream counts</em><br>and every <em>artist matters</em><span class="q">&#8221;</span></h1>
       <p class="hero-sub">Distribute to 190+ platforms while keeping control of your music and earnings.</p>
       <div class="hero-btns">
         <a href="#pricing" data-scroll class="btn-primary">Start Releasing Today</a>
