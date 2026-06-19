@@ -8,7 +8,7 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 
 const app = express();
-const HOST = '0.0.0.0';                       // listen on all interfaces (LAN-accessible)
+const HOST = process.env.HOST || '0.0.0.0';   // listen on all interfaces (LAN-accessible); set HOST=127.0.0.1 behind a reverse proxy
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());

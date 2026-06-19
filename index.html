@@ -1068,7 +1068,7 @@
       btn.style.pointerEvents = 'none';
 
       try {
-        const res = await fetch('/api/create-order', {
+        const res = await fetch('api/create-order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ plan }),
@@ -1089,7 +1089,7 @@
             btn.textContent = originalText;
             btn.style.pointerEvents = '';
             // Verify signature server-side
-            const vRes = await fetch('/api/verify-payment', {
+            const vRes = await fetch('api/verify-payment', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
