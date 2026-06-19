@@ -134,7 +134,7 @@
     .dsp-chip span { font-size:1rem; color:#ccc; font-weight:600; }
 
     /* ── Pricing ── */
-    #pricing { background:var(--bg2); padding:8rem 4rem; position:relative; overflow:hidden; }
+    #pricing { background:var(--bg2); padding:8rem 4rem; position:relative; }
 
     /* ── Voucher Side Banners ── */
     .voucher-side-banner { position:absolute; top:50%; transform:translateY(-50%); z-index:4; display:flex; align-items:center; justify-content:center; }
@@ -377,6 +377,9 @@
       .marquee-container { max-width:100%; }
       .testi-gallery-wrap { max-width:100%; }
       .stats-grid { grid-template-columns:1fr 1fr; }
+      #pricing { padding-top:3rem; padding-bottom:3rem; }
+      .voucher-side-banner.right-banner { display:none; }
+      .voucher-side-banner.left-banner { position:relative; width:100%; top:auto; left:auto; right:auto; transform:none; margin:0 0 1.8rem; }
     }
     @media (hover:none) { #cursor-glow,#cursor-dot,#cursor-ring{display:none;} body,button,.faq-q{cursor:auto;} }
 
