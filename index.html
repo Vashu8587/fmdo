@@ -136,16 +136,16 @@
 
     /* ── Voucher Side Banners ── */
     .voucher-side-banner { position:absolute; top:50%; transform:translateY(-50%); z-index:4; display:flex; align-items:center; justify-content:center; }
-    .voucher-side-banner.left-banner { left:8px; }
-    .voucher-side-banner.right-banner { right:8px; }
-    .voucher-tape { width:42px; padding:2.8rem 0; background:linear-gradient(180deg,#92400e 0%,#d97706 25%,#fbbf24 50%,#d97706 75%,#92400e 100%); border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.8rem; box-shadow:0 0 40px rgba(245,158,11,0.4),0 8px 30px rgba(0,0,0,0.55); position:relative; }
+    .voucher-side-banner.left-banner { left:5rem; }
+    .voucher-side-banner.right-banner { right:5rem; }
+    .voucher-tape { width:64px; padding:6.5rem 0; background:linear-gradient(180deg,#92400e 0%,#d97706 25%,#fbbf24 50%,#d97706 75%,#92400e 100%); border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.8rem; box-shadow:0 0 40px rgba(245,158,11,0.4),0 8px 30px rgba(0,0,0,0.55); position:relative; }
     .voucher-tape::before, .voucher-tape::after { content:''; position:absolute; width:16px; height:16px; background:#0d0d0d; border-radius:50%; left:50%; transform:translateX(-50%); }
     .voucher-tape::before { top:12px; }
     .voucher-tape::after { bottom:12px; }
     .voucher-side-banner.left-banner .voucher-tape { transform:rotate(180deg); }
-    .voucher-text { writing-mode:vertical-rl; text-orientation:mixed; color:#1a0800; font-weight:900; text-transform:uppercase; line-height:1; }
-    .voucher-label { font-size:0.58rem; letter-spacing:2px; opacity:0.7; }
-    .voucher-code { font-size:0.8rem; letter-spacing:3px; }
+    .voucher-text { writing-mode:vertical-rl; text-orientation:mixed; color:#1a0800; font-weight:900; text-transform:uppercase; line-height:1; text-shadow:0 1px 2px rgba(255,255,255,0.3); }
+    .voucher-label { font-size:0.78rem; letter-spacing:3px; opacity:1; }
+    .voucher-code { font-size:1.05rem; letter-spacing:4px; }
     .voucher-sep { width:22px; height:1.5px; background:rgba(0,0,0,0.3); border-radius:2px; }
     @media (max-width:1100px) {
       .voucher-side-banner { display:flex; width:100%; left:0; right:0; transform:none; justify-content:center; }
@@ -163,7 +163,7 @@
     .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:2.5rem; align-items:stretch; }
 
     /* base card */
-    .price-card { background:#0a0f0b; border:1.5px solid rgba(255,255,255,0.07); border-radius:22px; padding:3rem 2.4rem; display:flex; flex-direction:column; transition:border-color .3s,transform .3s,box-shadow .3s; position:relative; overflow:hidden; }
+    .price-card { background:#0a0f0b; border:1.5px solid rgba(255,255,255,0.07); border-radius:22px; padding:1.8rem 2.4rem; display:flex; flex-direction:column; transition:border-color .3s,transform .3s,box-shadow .3s; position:relative; overflow:hidden; }
     .price-card::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
     .price-card:hover { transform:translateY(-10px); }
 
@@ -175,10 +175,17 @@
     .price-card.starter .price-features li::before { color:#f59e0b; }
     .price-card.starter .price-popular-star { filter:drop-shadow(0 0 14px rgba(245,158,11,0.70)); }
 
+    /* 20% OFF ribbon on Artist Pro */
+    .price-off-ribbon { position:absolute; top:20px; right:-46px; width:176px; background:linear-gradient(to bottom,#e74c3c,#c0392b); color:#fff; font-size:0.78rem; font-weight:900; letter-spacing:2px; text-transform:uppercase; padding:10px 0; transform:rotate(45deg); text-align:center; z-index:10; pointer-events:none; text-shadow:0 1px 3px rgba(0,0,0,0.5); box-shadow:0 3px 10px rgba(0,0,0,0.45),0 0 0 1px rgba(255,255,255,0.12) inset; line-height:1; }
+    .price-off-ribbon::before, .price-off-ribbon::after { content:''; position:absolute; top:100%; border:5px solid #8b0000; }
+    .price-off-ribbon::before { left:0; border-right-color:transparent; border-bottom-color:transparent; }
+    .price-off-ribbon::after { right:0; border-left-color:transparent; border-bottom-color:transparent; }
+
     /* Artist Pro — neon green (secondary) */
-    .price-card.featured { border-color:rgba(26,122,74,0.38); background:linear-gradient(160deg,#0a1810 0%,#060d08 100%); box-shadow:0 0 28px rgba(26,122,74,0.10); }
+    .price-card.featured { border-color:rgba(26,122,74,0.38); background:linear-gradient(160deg,#0a1810 0%,#060d08 100%); box-shadow:0 0 28px rgba(26,122,74,0.10); overflow:hidden; }
     .price-card.featured::after { background:linear-gradient(90deg,transparent,var(--neon),transparent); opacity:0.50; }
     .price-card.featured:hover { border-color:var(--green); box-shadow:0 24px 70px rgba(0,0,0,0.6),0 0 40px rgba(74,222,128,0.16); }
+
 
     /* Label — blue/indigo */
     .price-card.label-card { border-color:rgba(99,102,241,0.35); background:linear-gradient(160deg,#0b0c1a 0%,#07080f 100%); }
@@ -276,7 +283,7 @@
     .footer-partner-img { height:52px; width:auto; display:block; opacity:0.80; transition:opacity .2s; }
     .footer-partner-img:hover { opacity:1; }
     .footer-partner-img.umg { filter:brightness(0) invert(1); }
-    .footer-brand img { margin-bottom:1rem; }
+    .footer-brand img { margin-bottom:0; }
     .footer-brand p { font-size:0.86rem; color:var(--dim); line-height:1.6; max-width:240px; }
     .footer-col h4 { font-size:0.78rem; text-transform:uppercase; letter-spacing:1px; color:var(--white); margin-bottom:1rem; }
     .footer-col a { display:block; font-size:0.84rem; color:var(--dim); margin-bottom:0.6rem; transition:color .2s; }
@@ -373,13 +380,13 @@
   <div id="cursor-ring"></div>
 
   <!-- Sale bar -->
-  <div id="sale-bar"><span class="sale-pulse">🔥</span> <strong>Annual Sale</strong><span class="sale-full"> — Live July to September &nbsp;·&nbsp; Lock in your release price now</span><span class="sale-mob"> — Lock in now</span> &nbsp;<span class="sale-pulse">🔥</span></div>
+  <div id="sale-bar"><span class="sale-pulse">🔥</span> <strong>Annual Offer</strong><span class="sale-full"> — Live July to September &nbsp;·&nbsp; Lock in your release price now</span><span class="sale-mob"> — Lock in now</span> &nbsp;<span class="sale-pulse">🔥</span></div>
 
   <!-- Navbar -->
   <nav id="navbar">
     <div class="nav-inner">
       <a class="nav-logo" href="#hero" data-scroll>
-        <img src="Brand logo/FM DIGITAL OFFICIAL LOGO.svg" alt="FM Digital Official" height="62" />
+        <img src="Brand logo/FM DIGITAL OFFICIAL LOGO.svg" alt="FM Digital Official" height="88" />
       </a>
       <div class="nav-links">
         <a href="#why" data-scroll>Services</a>
@@ -446,13 +453,14 @@
       <div class="pricing-grid">
 
         <div class="price-card featured reveal">
+          <div class="price-off-ribbon">20% OFF</div>
           <span class="price-badge">For Artists</span>
           <div class="price-name">Artist Pro</div>
           <div class="price-original-row">
-            <span class="price-original">₹5,999</span>
-            <span class="price-sale-tag">Annual Sale</span>
+            <span class="price-original">₹2,999</span>
+            <span class="price-sale-tag">Limited Offer</span>
           </div>
-          <div class="price-amt"><sup>₹</sup>2,999<span> / year</span></div>
+          <div class="price-amt"><sup>₹</sup>2,399<span> / year</span></div>
           <div class="price-note">Unlimited releases, zero hidden fees</div>
           <hr class="price-divider">
           <ul class="price-features">
@@ -467,7 +475,7 @@
             <li>24/7 Support panel</li>
             <li>Referral earnings</li>
           </ul>
-          <a href="#" class="price-btn solid">Get Started</a>
+          <a href="#" class="price-btn solid" data-plan="artist_pro">Get Started</a>
         </div>
 
         <div class="price-card starter reveal">
@@ -476,7 +484,7 @@
           <div class="price-name">Starter</div>
           <div class="price-original-row">
             <span class="price-original">₹899</span>
-            <span class="price-sale-tag">Annual Sale</span>
+            <span class="price-sale-tag">Annual Offer</span>
           </div>
           <div class="price-amt"><sup>₹</sup>489<span> / release</span></div>
           <div class="price-note">Limited time offer — lock in your price now</div>
@@ -491,7 +499,7 @@
             <li>Publishing rights &amp; revenue</li>
             <li>24/7 Support panel</li>
           </ul>
-          <a href="#" class="price-btn solid-amber">Start Releasing Today</a>
+          <a href="#" class="price-btn solid-amber" data-plan="starter">Start Releasing Today</a>
         </div>
 
         <div class="price-card label-card reveal">
@@ -512,7 +520,7 @@
             <li>Custom royalty splits</li>
             <li>White-label dashboard</li>
           </ul>
-          <a href="#" class="price-btn ghost">Contact Us</a>
+          <a href="https://wa.me/918512893854" target="_blank" rel="noopener noreferrer" class="price-btn ghost">Contact Us</a>
         </div>
 
       </div>
@@ -790,38 +798,38 @@
   <footer id="footer">
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="Brand logo/FM DIGITAL OFFICIAL LOGO.svg" alt="FM Digital Official" height="34" />
+        <img src="Brand logo/FM DIGITAL OFFICIAL LOGO.svg" alt="FM Digital Official" style="width:120px; height:auto;" />
         <p>Release your music worldwide while keeping control of your music and earnings.</p>
       </div>
       <div class="footer-col">
         <h4>Artist &amp; Label Services</h4>
-        <a href="#">Sell Your Music</a>
-        <a href="#">Playlisting</a>
-        <a href="#">Royalty Advances</a>
-        <a href="#">Marketing</a>
+        <a href="https://fmdigitalofficial.com/sell-your-music">Sell Your Music</a>
+        <a href="https://fmdigitalofficial.com/services/featured-playlists">Playlisting</a>
+        <a href="https://fmdigitalofficial.com/services/royalty-advances">Royalty Advances</a>
+        <a href="https://fmdigitalofficial.com/services/music-marketing">Marketing</a>
         <a href="#pricing" data-scroll>Pricing</a>
       </div>
       <div class="footer-col">
         <h4>About</h4>
-        <a href="#">Our Story</a>
-        <a href="#">Our Mission</a>
-        <a href="#">Why Choose Us?</a>
-        <a href="#">Contact</a>
+        <a href="https://fmdigitalofficial.com/about?section=1">Our Story</a>
+        <a href="https://fmdigitalofficial.com/about?section=2">Our Mission</a>
+        <a href="https://fmdigitalofficial.com/about?section=3">Why Choose Us?</a>
+        <a href="https://fmdigitalofficial.com/about?section=4">Contact</a>
       </div>
       <div class="footer-col">
         <h4>Legal</h4>
-        <a href="#">Terms of service</a>
-        <a href="#">Distro Agreement</a>
-        <a href="#">Analytics Disclosure</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Anti-Fraud Policy</a>
-        <a href="#">Exclusive artist</a>
+        <a href="https://fmdigitalofficial.com/support/legal-documents?section=0">Terms of service</a>
+        <a href="https://fmdigitalofficial.com/support/legal-documents?section=1">Distro Agreement</a>
+        <a href="https://fmdigitalofficial.com/support/legal-documents?section=2">Analytics Disclosure</a>
+        <a href="https://fmdigitalofficial.com/support/legal-documents?section=3">Privacy Policy</a>
+        <a href="https://fmdigitalofficial.com/support/legal-documents?section=4">Anti-Fraud Policy</a>
+        <a href="https://fmdigitalofficial.com/support/legal-documents?section=5">Exclusive artist</a>
       </div>
       <div class="footer-col">
         <h4>Join us</h4>
-        <a href="#">Career</a>
-        <a href="#">Investor Opportunities</a>
-        <a href="#">Partnerships</a>
+        <a href="https://mail.google.com/mail/?view=cm&to=fmdigitalofficial@gmail.com&su=Career%20Inquiry" target="_blank" rel="noopener noreferrer">Career</a>
+        <a href="https://mail.google.com/mail/?view=cm&to=fmdigitalofficial@gmail.com&su=Investor%20Opportunities" target="_blank" rel="noopener noreferrer">Investor Opportunities</a>
+        <a href="https://mail.google.com/mail/?view=cm&to=fmdigitalofficial@gmail.com&su=Partnership%20Inquiry" target="_blank" rel="noopener noreferrer">Partnerships</a>
       </div>
       <div class="footer-partners">
         <h4>Powered By</h4>
@@ -1014,6 +1022,90 @@
         if (!document.hidden && heroVideo.paused) heroVideo.play().catch(() => {});
       });
     }
+  </script>
+
+  <!-- Razorpay Payment Integration -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    const PLAN_META = {
+      artist_pro: { name: 'FMDO Artist Pro – Annual Plan', amount: 239900 },
+      starter:    { name: 'FMDO Starter – Per Release',    amount:  48900 },
+    };
+
+    async function openRazorpay(plan) {
+      const btn = document.querySelector(`[data-plan="${plan}"]`);
+      const originalText = btn.textContent;
+      btn.textContent = 'Processing…';
+      btn.style.pointerEvents = 'none';
+
+      try {
+        const res = await fetch('/api/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ plan }),
+        });
+        const data = await res.json();
+        if (!data.order_id) throw new Error(data.error || 'Order creation failed');
+
+        const meta = PLAN_META[plan];
+        const options = {
+          key: data.key_id,
+          amount: data.amount,
+          currency: data.currency,
+          name: 'FMDO – FM Digital Operations',
+          description: meta.name,
+          order_id: data.order_id,
+          theme: { color: '#ff6b00' },
+          handler: async function (response) {
+            btn.textContent = originalText;
+            btn.style.pointerEvents = '';
+            // Verify signature server-side
+            const vRes = await fetch('/api/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id:   response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature:  response.razorpay_signature,
+              }),
+            });
+            const vData = await vRes.json();
+            if (vData.verified) {
+              alert('Payment successful! Click OK to complete your sign-up.');
+              window.location.href = 'https://app.fmdigitalofficial.com/sign-up';
+            } else {
+              alert('Payment received but verification failed. Please contact support with Payment ID: ' + response.razorpay_payment_id);
+            }
+          },
+          modal: {
+            ondismiss: function () {
+              btn.textContent = originalText;
+              btn.style.pointerEvents = '';
+            },
+          },
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.on('payment.failed', function (response) {
+          alert('Payment failed: ' + response.error.description + '. Please try again.');
+          btn.textContent = originalText;
+          btn.style.pointerEvents = '';
+        });
+        rzp.open();
+      } catch (err) {
+        console.error(err);
+        alert('Could not initiate payment. Please try again or contact support.');
+        btn.textContent = originalText;
+        btn.style.pointerEvents = '';
+      }
+    }
+
+    document.querySelectorAll('[data-plan]').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        openRazorpay(this.dataset.plan);
+      });
+    });
   </script>
 </body>
 </html>

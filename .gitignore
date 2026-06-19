@@ -12,3 +12,6 @@ docs/superpowers/
 # os/editor
 Thumbs.db
 .DS_Store
+
+# secrets
+.env
