@@ -230,7 +230,7 @@
     .price-btn.solid-amber:hover { background:linear-gradient(135deg,#fbbf24,#f59e0b); box-shadow:0 6px 32px rgba(245,158,11,0.60); transform:scale(1.03); }
 
     /* ── Testimonials (Photo Gallery Carousel) ── */
-    #testimonials { background:var(--black); padding:4.5rem 0 5rem; overflow:hidden; }
+    #testimonials { background:var(--black); padding:4.5rem 0 2rem; overflow:hidden; }
     #testimonials .section-inner { padding-left:4rem; padding-right:4rem; margin-bottom:3rem; }
     .testi-gallery-wrap { position:relative; overflow:hidden; max-width:860px; margin:0 auto; -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 15%,#000 85%,transparent 100%); mask-image:linear-gradient(to right,transparent 0%,#000 15%,#000 85%,transparent 100%); }
     .testi-gallery { display:flex; gap:1.4rem; padding:1.5rem 0 3rem; width:max-content; will-change:transform; }
@@ -256,7 +256,7 @@
     .partner-role { font-size:0.82rem; color:var(--muted); margin-top:0.4rem; }
 
     /* ── FAQ ── */
-    #faq { background:var(--black); padding:4.5rem 4rem; }
+    #faq { background:var(--black); padding:2.5rem 4rem 4.5rem; }
     .faq-list { max-width:820px; margin:1rem auto 0; }
     .faq-item { border-bottom:1px solid var(--border); }
     .faq-q { width:100%; text-align:left; background:none; padding:1.4rem 0; display:flex; justify-content:space-between; align-items:center; gap:1rem; font-size:1.05rem; color:var(--white); font-weight:600; cursor:none; }
@@ -333,10 +333,11 @@
       #navbar { padding:1rem 1.5rem; background:rgba(8,13,8,0.95); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid rgba(26,122,74,0.18); }
       .marquee-container { max-width:100%; }
       #hero { padding:9.5rem 1.5rem 3rem; }
-      #slogan,#why,#faq { padding-top:4rem; padding-bottom:4rem; }
+      #slogan,#why { padding-top:4rem; padding-bottom:4rem; }
+      #faq { padding-top:2rem; padding-bottom:4rem; }
       #stats { padding-top:2.5rem; padding-bottom:2.5rem; }
       #platforms { padding-top:3.5rem; padding-bottom:3.5rem; }
-      #testimonials { padding-top:4rem; padding-bottom:4.5rem; }
+      #testimonials { padding-top:4rem; padding-bottom:1.5rem; }
       #testimonials .section-inner { margin-bottom:2rem; }
       #partners { padding-top:3rem; padding-bottom:3rem; }
       #cta { padding-top:4rem; padding-bottom:4rem; }
@@ -387,10 +388,11 @@
       .marquee-container { max-width:100%; }
       .testi-gallery-wrap { max-width:100%; }
       .stats-grid { grid-template-columns:1fr 1fr; }
-      #slogan,#why,#faq,#cta { padding-top:2.5rem; padding-bottom:2.5rem; }
+      #slogan,#why,#cta { padding-top:2.5rem; padding-bottom:2.5rem; }
+      #faq { padding-top:1.2rem; padding-bottom:2.5rem; }
       #stats { padding-top:1.8rem; padding-bottom:1.8rem; }
       #platforms,#partners { padding-top:2rem; padding-bottom:2rem; }
-      #testimonials { padding-top:2.5rem; padding-bottom:2.5rem; }
+      #testimonials { padding-top:2.5rem; padding-bottom:1rem; }
       #pricing { padding-top:2.5rem; padding-bottom:2.5rem; }
     }
     @media (hover:none) { #cursor-glow,#cursor-dot,#cursor-ring{display:none;} body,button,.faq-q{cursor:auto;} }
