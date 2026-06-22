@@ -400,6 +400,72 @@
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity:1 !important; transform:none !important; }
     }
+
+    /* ── Application form modal (light theme, matches Razorpay checkout) ── */
+    #app-modal { position:fixed; inset:0; z-index:200; display:none; align-items:flex-start; justify-content:center;
+      background:rgba(15,23,18,0.55); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+      overflow-y:auto; padding:3rem 1rem; cursor:auto; }
+    #app-modal.open { display:flex; }
+    #app-modal * { cursor:auto; }
+    .app-card { width:100%; max-width:540px; background:#ffffff; border:1px solid #e6e8eb;
+      border-radius:16px; padding:2rem 1.8rem 1.8rem; box-shadow:0 20px 60px rgba(15,23,18,0.35); position:relative; }
+    .app-card h3 { font-size:1.4rem; font-weight:700; color:#1a1f24; margin-bottom:.2rem; }
+    .app-card .app-sub { color:#6b7280; font-size:.88rem; margin-bottom:1.3rem; }
+    .app-close { position:absolute; top:1rem; right:1.1rem; background:none; color:#9aa1a9; font-size:1.6rem; line-height:1; }
+    .app-close:hover { color:#1a1f24; }
+    .app-field { margin-bottom:1rem; }
+    .app-row { display:flex; gap:.9rem; }
+    .app-row .app-field { flex:1; }
+    .app-field label { display:block; font-size:.82rem; color:#4b5563; margin-bottom:.35rem; font-weight:500; }
+    .app-field label .req { color:#e11d48; }
+    .app-field input, .app-field textarea { width:100%; background:#f7f8fa; border:1px solid #dfe3e8;
+      border-radius:10px; padding:.7rem .85rem; color:#1a1f24; font-size:.92rem; font-family:inherit; transition:border-color .2s, box-shadow .2s, background .2s; }
+    .app-field input::placeholder { color:#9aa1a9; }
+    .app-field input:focus, .app-field textarea:focus { background:#fff; border-color:#1a7a4a; box-shadow:0 0 0 3px rgba(26,122,74,0.12); }
+    .app-field input[type=file] { padding:.5rem; font-size:.82rem; color:#6b7280; background:#f7f8fa; }
+    .app-field input[type=file]::file-selector-button { border:1px solid #dfe3e8; background:#fff; color:#1a1f24;
+      border-radius:8px; padding:.35rem .7rem; margin-right:.6rem; font-family:inherit; font-size:.8rem; }
+    .app-field textarea { resize:vertical; min-height:60px; }
+    .app-error { color:#dc2626; font-size:.85rem; margin:.4rem 0 .2rem; display:none; }
+    .app-actions { display:flex; gap:.8rem; margin-top:1.2rem; }
+    .app-btn { flex:1; padding:.85rem 1rem; border-radius:10px; font-weight:600; font-size:.95rem; transition:opacity .2s, transform .15s, box-shadow .2s; }
+    .app-btn:active { transform:scale(.98); }
+    .app-btn-primary { background:linear-gradient(135deg,#1a7a4a,#22a05a); color:#fff; box-shadow:0 4px 14px rgba(26,122,74,0.3); }
+    .app-btn-primary:hover { box-shadow:0 6px 18px rgba(26,122,74,0.4); }
+    .app-btn-ghost { background:#fff; border:1px solid #dfe3e8; color:#6b7280; flex:0 0 auto; padding:.85rem 1.3rem; }
+    .app-btn-ghost:hover { background:#f7f8fa; }
+    .app-btn:disabled { opacity:.55; pointer-events:none; }
+    .app-saved-note { display:none; background:#ecfdf3; border:1px solid #abefc6;
+      color:#067647; border-radius:10px; padding:.7rem .9rem; font-size:.86rem; margin-bottom:1rem; }
+    @media (max-width:520px){ .app-row{flex-direction:column; gap:0;} .app-card{padding:1.6rem 1.2rem;} }
+
+    /* ── Payment success modal ── */
+    #success-modal { position:fixed; inset:0; z-index:300; display:none; align-items:center; justify-content:center;
+      background:rgba(15,23,18,0.65); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); padding:1.2rem; cursor:auto; }
+    #success-modal.open { display:flex; }
+    #success-modal * { cursor:auto; }
+    .success-card { width:100%; max-width:430px; background:#ffffff; border-radius:20px; padding:2.6rem 2rem 2rem;
+      box-shadow:0 24px 70px rgba(15,23,18,0.45); text-align:center; position:relative;
+      transform:translateY(18px) scale(.96); opacity:0; transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease; }
+    #success-modal.open .success-card { transform:translateY(0) scale(1); opacity:1; }
+    .success-icon { width:84px; height:84px; margin:0 auto 1.3rem; border-radius:50%;
+      background:linear-gradient(135deg,#1a7a4a,#22a05a); display:flex; align-items:center; justify-content:center;
+      box-shadow:0 10px 30px rgba(26,122,74,0.4); animation:successPop .45s cubic-bezier(.18,.9,.32,1.4) .12s both; }
+    .success-icon svg { width:42px; height:42px; }
+    .success-icon svg path { stroke-dasharray:48; stroke-dashoffset:48; animation:successCheck .45s ease .45s forwards; }
+    @keyframes successPop { 0%{transform:scale(0);} 100%{transform:scale(1);} }
+    @keyframes successCheck { to{stroke-dashoffset:0;} }
+    .success-card h3 { font-size:1.5rem; font-weight:800; color:#1a1f24; margin-bottom:.5rem; }
+    .success-card p { color:#6b7280; font-size:.95rem; line-height:1.55; margin-bottom:1.6rem; }
+    .success-card .success-pid { display:block; font-size:.78rem; color:#9aa1a9; margin-top:.4rem; }
+    .success-btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; width:100%;
+      padding:.95rem 1rem; border-radius:12px; font-weight:700; font-size:1rem; color:#fff;
+      background:linear-gradient(135deg,#1a7a4a,#22a05a); box-shadow:0 6px 20px rgba(26,122,74,0.35);
+      transition:transform .15s, box-shadow .2s; }
+    .success-btn:hover { transform:translateY(-2px); box-shadow:0 10px 26px rgba(26,122,74,0.45); }
+    .success-btn:active { transform:translateY(0) scale(.99); }
+    .success-btn svg { width:18px; height:18px; transition:transform .2s; }
+    .success-btn:hover svg { transform:translateX(3px); }
   </style>
 </head>
 <body>
@@ -1053,25 +1119,243 @@
     }
   </script>
 
+  <!-- Payment success modal -->
+  <div id="success-modal" aria-hidden="true">
+    <div class="success-card" role="dialog" aria-modal="true" aria-labelledby="success-title">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 id="success-title">Payment Successful!</h3>
+      <p>Welcome aboard 🎉 Your payment is confirmed. Let's set up your account so you can start releasing your music.
+        <span class="success-pid" id="success-pid"></span>
+      </p>
+      <a href="#" class="success-btn" id="success-signup">
+        Continue to Sign Up
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Application form modal -->
+  <div id="app-modal" aria-hidden="true" data-lenis-prevent>
+    <div class="app-card" role="dialog" aria-modal="true" aria-labelledby="app-title">
+      <button type="button" class="app-close" id="app-close" aria-label="Close">&times;</button>
+      <h3 id="app-title">Start Releasing Today</h3>
+      <p class="app-sub">Fill in your details to generate your B2B licensing letter, then continue to payment.</p>
+
+      <div class="app-saved-note" id="app-saved-note">
+        ✓ Your details are saved. Your B2B letter is on its way to your email. Click <strong>Next</strong> to pay.
+      </div>
+
+      <form id="app-form" novalidate>
+        <div class="app-field">
+          <label>Name <span class="req">*</span></label>
+          <input type="text" name="name" required autocomplete="name" />
+        </div>
+        <div class="app-row">
+          <div class="app-field">
+            <label>Email <span class="req">*</span></label>
+            <input type="email" name="email" required autocomplete="email" />
+          </div>
+          <div class="app-field">
+            <label>Phone <span class="req">*</span></label>
+            <input type="tel" name="phone" required autocomplete="tel" />
+          </div>
+        </div>
+        <div class="app-field">
+          <label>Address <span class="req">*</span></label>
+          <textarea name="address" required></textarea>
+        </div>
+        <div class="app-row">
+          <div class="app-field">
+            <label>Pincode <span class="req">*</span></label>
+            <input type="text" name="pincode" required inputmode="numeric" />
+          </div>
+          <div class="app-field">
+            <label>YT Channel Name</label>
+            <input type="text" name="yt_channel" />
+          </div>
+        </div>
+        <div class="app-field">
+          <label>YouTube Link</label>
+          <input type="url" name="yt_link" placeholder="https://youtube.com/@..." />
+        </div>
+        <div class="app-row">
+          <div class="app-field">
+            <label>Start Date <span class="req">*</span></label>
+            <input type="date" name="start_date" required />
+          </div>
+          <div class="app-field">
+            <label>End Date <span class="req">*</span></label>
+            <input type="date" name="end_date" required readonly title="Automatically set to 2 years after the start date" />
+          </div>
+        </div>
+        <div class="app-field">
+          <label>Signature Upload <span class="req">*</span></label>
+          <input type="file" name="signature" accept="image/png,image/jpeg,image/webp" required />
+        </div>
+        <div class="app-row">
+          <div class="app-field">
+            <label>Aadhaar Front <span class="req">*</span></label>
+            <input type="file" name="aadhaar_front" accept="image/*,application/pdf" required />
+          </div>
+          <div class="app-field">
+            <label>Aadhaar Back <span class="req">*</span></label>
+            <input type="file" name="aadhaar_back" accept="image/*,application/pdf" required />
+          </div>
+        </div>
+
+        <p class="app-error" id="app-error"></p>
+
+        <div class="app-actions">
+          <button type="button" class="app-btn app-btn-ghost" id="app-cancel">Cancel</button>
+          <button type="submit" class="app-btn app-btn-primary" id="app-save">Save</button>
+          <button type="button" class="app-btn app-btn-primary" id="app-next" style="display:none;">Next → Pay</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Razorpay Payment Integration -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script>
     const PLAN_META = {
       artist_pro: { name: 'FMDO Artist Pro – Annual Plan', amount: 239900 },
-      starter:    { name: 'FMDO Starter – Per Release',    amount:  48900 },
+      starter:    { name: 'FMDO Starter – Per Release',    amount:  48900 }, // ₹489
     };
 
-    async function openRazorpay(plan) {
+    // ── Application modal state ──
+    const modal     = document.getElementById('app-modal');
+    const form      = document.getElementById('app-form');
+    const errorEl   = document.getElementById('app-error');
+    const savedNote = document.getElementById('app-saved-note');
+    const saveBtn   = document.getElementById('app-save');
+    const nextBtn   = document.getElementById('app-next');
+    let currentPlan = null;
+    let applicationId = null;
+
+    function openModal(plan) {
+      currentPlan = plan;
+      applicationId = null;
+      form.reset();
+      errorEl.style.display = 'none';
+      savedNote.style.display = 'none';
+      saveBtn.style.display = '';
+      nextBtn.style.display = 'none';
+      form.querySelectorAll('input,textarea').forEach(el => el.disabled = false);
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (lenis) lenis.stop();   // lock page scroll → only the modal scrolls (no double scrollbar)
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lenis) lenis.start();
+    }
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.style.display = 'block';
+    }
+
+    // ── Payment success modal ──
+    const SIGNUP_URL = 'https://app.fmdigitalofficial.com/sign-up';
+    function showSuccessModal(paymentId) {
+      closeModal();
+      const sm   = document.getElementById('success-modal');
+      const pid  = document.getElementById('success-pid');
+      const link = document.getElementById('success-signup');
+      pid.textContent = paymentId ? 'Payment ID: ' + paymentId : '';
+      link.href = SIGNUP_URL;
+      sm.classList.add('open');
+      sm.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (lenis) lenis.stop();
+      link.focus();
+    }
+
+    document.getElementById('app-close').addEventListener('click', closeModal);
+    document.getElementById('app-cancel').addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+    // Auto-set End Date to exactly 2 years after the chosen Start Date (read-only).
+    form.start_date.addEventListener('change', function () {
+      if (!form.start_date.value) {
+        form.end_date.value = '';
+        return;
+      }
+      const d = new Date(form.start_date.value);
+      d.setFullYear(d.getFullYear() + 2);
+      // Handle Feb 29 → Mar 1 rollover gracefully (already handled by Date).
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      form.end_date.value = `${yyyy}-${mm}-${dd}`;
+    });
+
+    // Save → submit application (store + email letter)
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      errorEl.style.display = 'none';
+
+      if (!form.checkValidity()) {
+        showError('Please fill in all required fields and uploads.');
+        form.reportValidity();
+        return;
+      }
+      if (form.start_date.value > form.end_date.value) {
+        showError('End date must be on or after the start date.');
+        return;
+      }
+
+      const fd = new FormData(form);
+      fd.append('plan', currentPlan);
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving…';
+      try {
+        const res = await fetch('api/submit-application', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (!res.ok || !data.applicationId) throw new Error(data.error || 'Submission failed');
+
+        applicationId = data.applicationId;
+        savedNote.style.display = 'block';
+        savedNote.querySelector('strong')?.scrollIntoView?.();
+        form.querySelectorAll('input,textarea').forEach(el => el.disabled = true);
+        saveBtn.style.display = 'none';
+        nextBtn.style.display = '';
+      } catch (err) {
+        console.error(err);
+        showError(err.message || 'Could not save your details. Please try again.');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save';
+      }
+    });
+
+    // Next → open Razorpay
+    nextBtn.addEventListener('click', () => {
+      if (!applicationId) return;
+      closeModal();
+      openRazorpay(currentPlan, applicationId);
+    });
+
+    async function openRazorpay(plan, applicationId) {
       const btn = document.querySelector(`[data-plan="${plan}"]`);
-      const originalText = btn.textContent;
-      btn.textContent = 'Processing…';
-      btn.style.pointerEvents = 'none';
+      const originalText = btn ? btn.textContent : '';
+      if (btn) { btn.textContent = 'Processing…'; btn.style.pointerEvents = 'none'; }
+      const restore = () => { if (btn) { btn.textContent = originalText; btn.style.pointerEvents = ''; } };
 
       try {
         const res = await fetch('api/create-order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ plan }),
+          body: JSON.stringify({ plan, applicationId }),
         });
         const data = await res.json();
         if (!data.order_id) throw new Error(data.error || 'Order creation failed');
@@ -1086,8 +1370,7 @@
           order_id: data.order_id,
           theme: { color: '#ff6b00' },
           handler: async function (response) {
-            btn.textContent = originalText;
-            btn.style.pointerEvents = '';
+            restore();
             // Verify signature server-side
             const vRes = await fetch('api/verify-payment', {
               method: 'POST',
@@ -1100,39 +1383,32 @@
             });
             const vData = await vRes.json();
             if (vData.verified) {
-              alert('Payment successful! Click OK to complete your sign-up.');
-              window.location.href = 'https://app.fmdigitalofficial.com/sign-up';
+              showSuccessModal(response.razorpay_payment_id);
             } else {
               alert('Payment received but verification failed. Please contact support with Payment ID: ' + response.razorpay_payment_id);
             }
           },
-          modal: {
-            ondismiss: function () {
-              btn.textContent = originalText;
-              btn.style.pointerEvents = '';
-            },
-          },
+          modal: { ondismiss: restore },
         };
 
         const rzp = new Razorpay(options);
         rzp.on('payment.failed', function (response) {
           alert('Payment failed: ' + response.error.description + '. Please try again.');
-          btn.textContent = originalText;
-          btn.style.pointerEvents = '';
+          restore();
         });
         rzp.open();
       } catch (err) {
         console.error(err);
         alert('Could not initiate payment. Please try again or contact support.');
-        btn.textContent = originalText;
-        btn.style.pointerEvents = '';
+        restore();
       }
     }
 
+    // Pricing buttons now open the application form first.
     document.querySelectorAll('[data-plan]').forEach(btn => {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-        openRazorpay(this.dataset.plan);
+        openModal(this.dataset.plan);
       });
     });
   </script>

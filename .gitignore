@@ -15,3 +15,25 @@ Thumbs.db
 
 # secrets
 .env
+
+# user uploads (signatures, Aadhaar) — sensitive PII, never commit
+uploads/
+
+# sqlite database + WAL
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# server logs
+*.log
+
+# scratch / private files (not for the public repo) — NOTE: "B2B Letter.docx" IS tracked (runtime letter template)
+Ashish_FMDO_Razorpay_keys.txt
+Mehta Ludhianvi B2B Letter.docx
+Screenshot *.png
+WhatsApp Image *.jpeg
+WhatsApp Image *.jpg
+image.png
+image copy.png
+fmdo-3d.html
