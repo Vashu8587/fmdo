@@ -7,8 +7,12 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "better-sqlite3": "^12.11.1",
     "dotenv": "^17.4.2",
     "express": "^4.21.2",
+    "multer": "^2.2.0",
+    "nodemailer": "^9.0.1",
+    "pizzip": "^3.2.0",
     "razorpay": "^2.9.6"
   }
 }
