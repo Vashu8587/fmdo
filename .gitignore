@@ -36,4 +36,12 @@ WhatsApp Image *.jpeg
 WhatsApp Image *.jpg
 image.png
 image copy.png
+image copy *.png
 fmdo-3d.html
+
+# design-reference screenshots (not part of the deployed site)
+pricing-*.png
+testi-desktop.png
+testi-mobile.png
+testi-tablet.png
+pinterest-*.png

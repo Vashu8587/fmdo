@@ -71,6 +71,54 @@
     #sale-bar .sale-pulse { display:inline-block; font-size:1.35rem; animation:sale-pulse 1.2s ease-in-out infinite; filter:drop-shadow(0 0 6px rgba(255,120,0,0.9)) drop-shadow(0 0 14px rgba(255,60,0,0.6)); vertical-align:middle; }
     @keyframes sale-pulse { 0%,100%{ transform:scale(1) rotate(-8deg); } 25%{ transform:scale(1.3) rotate(8deg); } 50%{ transform:scale(1.15) rotate(-5deg); } 75%{ transform:scale(1.28) rotate(6deg); } }
 
+    /* ── Annual Offer Confetti Popup ── */
+    #offer-popup-overlay {
+      position:fixed; inset:0; z-index:9999;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,0.72);
+      backdrop-filter:blur(4px);
+      opacity:0; pointer-events:none;
+      transition:opacity 0.4s ease;
+    }
+    #offer-popup-overlay.visible { opacity:1; pointer-events:auto; }
+    #offer-popup-card {
+      position:relative; z-index:1;
+      background:linear-gradient(145deg,#081a10 0%,#0a1f14 40%,#071510 100%);
+      border:1.5px solid rgba(74,222,128,0.35);
+      border-radius:24px; padding:2.4rem 2.8rem 2rem;
+      max-width:420px; width:90%; text-align:center;
+      box-shadow:0 0 60px rgba(74,222,128,0.18), 0 24px 60px rgba(0,0,0,0.7);
+      transform:scale(0.82) translateY(24px);
+      transition:transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+      opacity:0;
+    }
+    #offer-popup-overlay.visible #offer-popup-card { transform:scale(1) translateY(0); opacity:1; }
+    .offer-popup-fire { font-size:2.6rem; display:block; margin-bottom:0.5rem; animation:sale-pulse 1.2s ease-in-out infinite; }
+    .offer-popup-label { font-size:0.72rem; color:var(--neon); letter-spacing:3px; text-transform:uppercase; margin-bottom:0.5rem; display:block; }
+    .offer-popup-title { font-size:clamp(1.5rem,5vw,2rem); font-weight:900; color:#fff; letter-spacing:-0.5px; margin-bottom:0.3rem; line-height:1.1; }
+    .offer-popup-title em { font-style:normal; color:var(--neon); }
+    .offer-popup-sub { font-size:0.9rem; color:#999; margin-bottom:1.4rem; line-height:1.5; }
+    .offer-popup-deal { display:flex; justify-content:center; gap:1.2rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+    .offer-popup-chip {
+      background:rgba(74,222,128,0.1); border:1px solid rgba(74,222,128,0.25);
+      border-radius:30px; padding:0.38rem 1rem; font-size:0.82rem; color:var(--neon); font-weight:600;
+    }
+    .offer-popup-progress { height:3px; background:rgba(74,222,128,0.12); border-radius:3px; overflow:hidden; margin-bottom:1.2rem; }
+    .offer-popup-progress-bar { height:100%; background:var(--neon); border-radius:3px; width:100%; transform-origin:left; animation:offer-drain 3.6s linear forwards; }
+    @keyframes offer-drain { from{transform:scaleX(1)} to{transform:scaleX(0)} }
+    .offer-popup-dismiss { font-size:0.78rem; color:#555; }
+    /* Confetti pieces */
+    .confetti-piece {
+      position:fixed; top:-14px; width:9px; height:14px; border-radius:2px;
+      opacity:0.9; pointer-events:none; z-index:10000;
+      animation:confetti-fall linear forwards;
+    }
+    @keyframes confetti-fall {
+      0%   { transform:translateY(0) rotate(0deg); opacity:1; }
+      85%  { opacity:1; }
+      100% { transform:translateY(110vh) rotate(720deg); opacity:0; }
+    }
+
     /* ── Navbar ── */
     #navbar { position:fixed; top:52px; left:0; right:0; z-index:100; padding:1.1rem 4rem; transition:background .4s ease,border-color .4s ease,box-shadow .4s ease; }
     .nav-inner { max-width:1120px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
@@ -85,7 +133,7 @@
     #hero { position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; background:radial-gradient(ellipse at 50% 40%,#06140d 0%,#0d0d0d 70%); padding:10.5rem 4rem 4rem; overflow:hidden; }
     .hero-inner { max-width:920px; text-align:center; z-index:1; position:relative; }
     .hero-badge { display:inline-block; font-size:0.75rem; color:var(--neon); letter-spacing:3px; text-transform:uppercase; border:1px solid rgba(74,222,128,0.25); padding:0.35rem 1rem; border-radius:20px; margin-bottom:1.5rem; opacity:0; transform:translateY(10px); }
-    .hero-h1 { font-size:clamp(1rem,6vw,4.2rem); font-weight:900; color:var(--white); line-height:1.07; letter-spacing:-2px; margin-bottom:1.3rem; }
+    .hero-h1 { font-size:clamp(1.8rem,6vw,4.2rem); font-weight:900; color:var(--white); line-height:1.07; letter-spacing:-2px; margin-bottom:1.3rem; }
     .hero-h1 em { font-style:normal; color:var(--neon); }
     .hero-h1 .q { color:var(--neon); }
     .hero-sub { font-size:clamp(1rem,2vw,1.25rem); color:var(--muted); max-width:620px; margin:0 auto 2rem; line-height:1.6; opacity:0; transform:translateY(20px); }
@@ -134,48 +182,39 @@
     .dsp-chip span { font-size:1rem; color:#ccc; font-weight:600; }
 
     /* ── Pricing ── */
-    #pricing { background:var(--bg2); padding:5rem 4rem; position:relative; }
+    #pricing { background:radial-gradient(ellipse 28% 45% at 50% -3%, rgba(139,92,246,0.12) 0%, transparent 68%), radial-gradient(ellipse 72% 65% at 50% 8%, rgba(109,40,217,0.06) 0%, transparent 65%), var(--bg2); padding:5rem 4rem; position:relative; }
 
-    /* ── Voucher Side Banners ── */
-    .voucher-side-banner { position:absolute; top:50%; transform:translateY(-50%); z-index:4; display:flex; align-items:center; justify-content:center; }
-    .voucher-side-banner.left-banner { left:5rem; }
-    .voucher-side-banner.right-banner { right:5rem; }
-    .voucher-tape { width:64px; padding:6.5rem 0; background:linear-gradient(180deg,#92400e 0%,#d97706 25%,#fbbf24 50%,#d97706 75%,#92400e 100%); border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.8rem; box-shadow:0 0 40px rgba(245,158,11,0.4),0 8px 30px rgba(0,0,0,0.55); position:relative; }
-    .voucher-tape::before, .voucher-tape::after { content:''; position:absolute; width:16px; height:16px; background:#0d0d0d; border-radius:50%; left:50%; transform:translateX(-50%); }
-    .voucher-tape::before { top:12px; }
-    .voucher-tape::after { bottom:12px; }
-    .voucher-side-banner.left-banner .voucher-tape { transform:rotate(180deg); }
-    .voucher-text { writing-mode:vertical-rl; text-orientation:mixed; color:#1a0800; font-weight:900; text-transform:uppercase; line-height:1; text-shadow:0 1px 2px rgba(255,255,255,0.3); }
-    .voucher-label { font-size:0.78rem; letter-spacing:3px; opacity:1; }
-    .voucher-code { font-size:1.05rem; letter-spacing:4px; }
-    .voucher-sep { width:22px; height:1.5px; background:rgba(0,0,0,0.3); border-radius:2px; }
-    @media (max-width:1100px) {
-      .voucher-side-banner { display:flex; width:100%; left:0; right:0; transform:none; justify-content:center; }
-      .voucher-side-banner.left-banner { top:1.2rem; bottom:auto; }
-      .voucher-side-banner.right-banner { bottom:1.2rem; top:auto; }
-      .voucher-tape { width:auto; max-width:320px; height:42px; padding:0 2.5rem; flex-direction:row; transform:none !important; }
-      .voucher-tape::before { top:50%; left:14px; transform:translateY(-50%); }
-      .voucher-tape::after { top:50%; left:auto; right:14px; bottom:auto; transform:translateY(-50%); }
-      .voucher-side-banner.left-banner .voucher-tape { transform:none !important; }
-      .voucher-text { writing-mode:horizontal-tb; font-size:0.72rem; letter-spacing:2px; }
-      .voucher-label { font-size:0.6rem; opacity:0.7; }
-      .voucher-code { font-size:0.78rem; letter-spacing:3px; }
-      .voucher-sep { width:1.5px; height:20px; }
-    }
-    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:2.5rem; align-items:stretch; }
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:2.5rem; align-items:stretch; position:relative; }
 
     /* base card */
     .price-card { background:#0a0f0b; border:1.5px solid rgba(255,255,255,0.07); border-radius:22px; padding:1.8rem 2.4rem; display:flex; flex-direction:column; transition:border-color .3s,transform .3s,box-shadow .3s; position:relative; overflow:hidden; }
     .price-card::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
     .price-card:hover { transform:translateY(-10px); }
 
-    /* Starter — amber/gold HERO CARD */
-    .price-card.starter { border-color:rgba(245,158,11,0.72); background:linear-gradient(160deg,#1e1300 0%,#0e0900 100%); box-shadow:0 0 80px rgba(245,158,11,0.28),0 0 150px rgba(245,158,11,0.09),0 24px 60px rgba(0,0,0,0.55); transform:translateY(-20px) scale(1.035); z-index:1; }
-    .price-card.starter::after { background:linear-gradient(90deg,transparent,#fbbf24,transparent); opacity:1; height:3px; }
-    .price-card.starter:hover { border-color:#fbbf24; box-shadow:0 32px 90px rgba(0,0,0,0.7),0 0 100px rgba(245,158,11,0.40); transform:translateY(-28px) scale(1.042); }
-    .price-card.starter .price-amt { color:#f59e0b; }
-    .price-card.starter .price-features li::before { color:#f59e0b; }
-    .price-card.starter .price-popular-star { filter:drop-shadow(0 0 14px rgba(245,158,11,0.70)); }
+    /* Starter — purple HERO CARD */
+    .price-card.starter { border-color:rgba(139,92,246,0.7); background:linear-gradient(155deg,#080f2e 0%,#0f1d5c 25%,#2e2399 55%,#5b21b6 80%,#4c1d95 100%); box-shadow:0 0 85px rgba(124,58,237,0.55),0 0 180px rgba(124,58,237,0.2),0 28px 65px rgba(0,0,0,0.75); transform:translateY(-20px) scale(1.05); z-index:2; padding-top:calc(1.8rem + 42px); }
+    .price-card.starter::after { background:linear-gradient(90deg,transparent,#a78bfa,transparent); opacity:1; height:3px; }
+    .price-card.starter:hover { border-color:#a78bfa; box-shadow:0 36px 100px rgba(0,0,0,0.8),0 0 110px rgba(124,58,237,0.6),0 0 200px rgba(124,58,237,0.22); transform:translateY(-28px) scale(1.055); }
+    .price-card.starter .price-amt { color:#ffffff; }
+    .price-card.starter .price-features li::before { color:#c4b5fd; }
+
+    /* Starter card redesign */
+    .starter-popular-row { display:flex; align-items:center; gap:0.6rem; margin-bottom:1.4rem; }
+    .starter-popular-row .price-badge { margin-bottom:0; }
+    .starter-green-dot { width:10px; height:10px; background:#4ade80; border-radius:50%; flex-shrink:0; box-shadow:0 0 7px #4ade80; }
+    .price-card.starter .price-note { margin-bottom:1rem; color:rgba(255,255,255,0.6); }
+    .price-card.starter .price-original { color:rgba(255,255,255,0.42); }
+    .price-card.starter .price-gst { color:rgba(255,255,255,0.45); }
+    .price-card.starter .price-divider { border-top-color:rgba(255,255,255,0.14); }
+    .price-card.starter .starter-trust { color:rgba(255,255,255,0.45); }
+    .price-card.starter .price-amt { font-size:4.4rem; letter-spacing:-3px; }
+    .starter-save-pill { display:inline-block; color:#4ade80; border:1.5px solid #4ade80; border-radius:20px; font-size:0.75rem; font-weight:700; padding:3px 10px; }
+    .starter-monthly { font-size:0.85rem; color:#4ade80; font-weight:700; margin:0.15rem 0 1.1rem; }
+    .starter-countdown { display:flex; align-items:center; gap:0.5rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:30px; padding:10px 18px; margin-bottom:1.2rem; font-size:0.78rem; color:#aaa; white-space:nowrap; overflow:hidden; }
+    .countdown-time { font-weight:900; color:#fff; font-size:0.88rem; letter-spacing:1px; margin-left:0.15rem; }
+    .starter-claim-btn { display:block !important; background:linear-gradient(135deg,#7c3aed,#9333ea) !important; color:#fff !important; font-size:1.05rem !important; font-weight:900 !important; letter-spacing:0.3px; text-align:center; padding:15px 24px !important; border-radius:12px !important; text-decoration:none; transition:all 0.3s; box-shadow:0 0 22px rgba(124,58,237,0.5); border:none !important; }
+    .starter-claim-btn:hover { box-shadow:0 0 38px rgba(124,58,237,0.72) !important; transform:translateY(-2px); }
+    .starter-trust { display:flex; justify-content:center; margin-top:0.9rem; font-size:0.72rem; color:#666; }
 
     /* 20% OFF ribbon on Artist Pro */
     .price-off-ribbon { position:absolute; top:20px; right:-46px; width:176px; background:linear-gradient(to bottom,#e74c3c,#c0392b); color:#fff; font-size:0.78rem; font-weight:900; letter-spacing:2px; text-transform:uppercase; padding:10px 0; transform:rotate(45deg); text-align:center; z-index:10; pointer-events:none; text-shadow:0 1px 3px rgba(0,0,0,0.5); box-shadow:0 3px 10px rgba(0,0,0,0.45),0 0 0 1px rgba(255,255,255,0.12) inset; line-height:1; }
@@ -198,11 +237,16 @@
     .price-card.label-card .price-btn.ghost { color:#818cf8; border-color:rgba(99,102,241,0.5); }
     .price-card.label-card .price-btn.ghost:hover { background:rgba(99,102,241,0.1); border-color:#6366f1; }
 
-    /* Most Popular star stamp */
-    .price-popular-star { position:absolute; top:-4px; right:-4px; width:88px; height:88px; object-fit:contain; opacity:0.92; pointer-events:none; filter:drop-shadow(0 0 10px rgba(74,222,128,0.5)); }
+    /* Spotlight: Starter is center of attraction — dim the flanking cards */
+    .price-card.featured, .price-card.label-card { opacity:0.38; filter:brightness(0.55) saturate(0.7); transition:border-color .3s,transform .3s,box-shadow .3s,opacity .4s,filter .4s; }
+    .price-card.featured:hover, .price-card.label-card:hover { opacity:0.72; filter:brightness(0.88) saturate(1); }
+
+    /* Only for July ribbon */
+    .july-ribbon { position:absolute; top:0; left:0; right:0; margin:0; padding:12px 24px; background:linear-gradient(90deg,#b83000 0%,#ff4500 28%,#ff6820 55%,#ff4500 78%,#b83000 100%); color:#fff; font-size:0.8rem; font-weight:900; text-transform:uppercase; letter-spacing:0.18em; text-align:center; border-radius:22px 22px 0 0; animation:july-pulse 2s ease-in-out infinite; z-index:10; pointer-events:none; transform:none; width:auto; border:none; }
+    @keyframes july-pulse { 0%,100% { box-shadow:0 4px 16px rgba(200,60,0,0.4); } 50% { box-shadow:0 4px 28px rgba(255,80,0,0.7); } }
 
     .price-badge { display:inline-block; align-self:flex-start; font-size:0.62rem; letter-spacing:2.5px; text-transform:uppercase; color:var(--neon); border:1px solid rgba(74,222,128,0.4); border-radius:20px; padding:4px 14px; margin-bottom:1.6rem; }
-    .price-card.starter .price-badge { background:linear-gradient(135deg,#f59e0b,#d97706); color:#000; border-color:#f59e0b; font-weight:800; }
+    .price-card.starter .price-badge { background:rgba(139,92,246,0.2); color:#fff; border-color:rgba(139,92,246,0.5); font-weight:700; letter-spacing:1.5px; }
     .price-card.featured .price-badge { color:var(--neon); border-color:rgba(74,222,128,0.4); }
     .price-card.label-card .price-badge { color:#818cf8; border-color:rgba(99,102,241,0.4); }
 
@@ -214,6 +258,7 @@
     .price-amt sup { font-size:1.4rem; font-weight:700; letter-spacing:0; vertical-align:super; }
     .price-amt span { font-size:0.95rem; color:var(--muted); font-weight:500; letter-spacing:0; }
     .price-note { font-size:0.78rem; color:var(--dim); margin-bottom:2.2rem; letter-spacing:0.3px; }
+    .price-gst { font-size:0.7rem; color:var(--dim); margin-bottom:0.4rem; letter-spacing:0.3px; }
     .price-divider { border:none; border-top:1px solid rgba(255,255,255,0.06); margin:0 0 2rem; }
     .price-features { list-style:none; padding:0; margin:0 0 2.4rem; flex-grow:1; }
     .price-features li { font-size:0.93rem; color:#b0b0b0; padding:0.65rem 0; display:flex; align-items:flex-start; gap:0.75rem; line-height:1.45; border-bottom:1px solid rgba(255,255,255,0.04); }
@@ -232,19 +277,46 @@
     /* ── Testimonials (Photo Gallery Carousel) ── */
     #testimonials { background:var(--black); padding:4.5rem 0 2rem; overflow:hidden; }
     #testimonials .section-inner { padding-left:4rem; padding-right:4rem; margin-bottom:3rem; }
-    .testi-gallery-wrap { position:relative; overflow:hidden; max-width:860px; margin:0 auto; -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 15%,#000 85%,transparent 100%); mask-image:linear-gradient(to right,transparent 0%,#000 15%,#000 85%,transparent 100%); }
-    .testi-gallery { display:flex; gap:1.4rem; padding:1.5rem 0 3rem; width:max-content; will-change:transform; }
-    .testi-photo-card { flex:0 0 260px; width:260px; min-width:260px; max-width:260px; height:347px; min-height:347px; max-height:347px; border-radius:18px; overflow:hidden; position:relative; transition:transform .35s ease,box-shadow .35s ease; will-change:transform; }
-    .testi-photo-card:hover { transform:scale(1.04) translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,0.75),0 0 28px rgba(26,122,74,0.18); }
-    .testi-photo-card img { width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; }
-    .testi-vinyl { position:absolute; border-radius:50%; top:38%; left:50%; transform:translate(-50%,-50%); pointer-events:none; animation:vinyl-breathe 5s ease-in-out infinite; }
-    .testi-vinyl::after { content:''; position:absolute; width:18px; height:18px; border-radius:50%; background:rgba(0,0,0,0.55); top:50%; left:50%; transform:translate(-50%,-50%); border:2px solid rgba(255,255,255,0.1); }
-    .testi-art-initial { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:7rem; font-weight:900; letter-spacing:-4px; pointer-events:none; z-index:1; animation:initial-glow 5s ease-in-out infinite; }
-    @keyframes vinyl-breathe { 0%,100%{ opacity:1; transform:translate(-50%,-50%) scale(1); } 50%{ opacity:0.7; transform:translate(-50%,-50%) scale(1.05); } }
-    @keyframes initial-glow { 0%,100%{ filter:brightness(1); } 50%{ filter:brightness(1.35); } }
-    .testi-photo-overlay { position:absolute; bottom:0; left:0; right:0; padding:3rem 1.4rem 1.5rem; background:linear-gradient(to top,rgba(0,0,0,0.96) 0%,rgba(0,0,0,0.52) 55%,transparent 100%); }
-    .testi-photo-name { font-size:0.98rem; font-weight:700; color:var(--white); line-height:1.25; margin-bottom:0.3rem; }
-    .testi-photo-role { font-size:0.68rem; color:var(--neon); letter-spacing:1.8px; text-transform:uppercase; }
+    /* Testimonial Slider */
+    .testi-slider-wrap { position:relative; max-width:900px; margin:0 auto; padding:0 3.5rem 3rem; }
+    .testi-viewport { overflow:hidden; }
+    .testi-track { display:flex; will-change:transform; }
+    .testi-slide { flex:0 0 33.3333%; padding:0 0.7rem; box-sizing:border-box; position:relative; z-index:1; }
+    .testi-slide.is-center { z-index:2; }
+    .testi-slide-inner { height:340px; border-radius:18px; overflow:hidden; position:relative; cursor:pointer; transition:transform 0.5s cubic-bezier(0.25,0.1,0.25,1),box-shadow 0.5s ease,opacity 0.5s ease,filter 0.5s ease; }
+    .testi-slide.is-center .testi-slide-inner { transform:scale(1.1); opacity:1; filter:brightness(1); box-shadow:0 32px 72px rgba(0,0,0,0.85),0 0 44px rgba(74,222,128,0.2); }
+    .testi-slide.is-side .testi-slide-inner { transform:scale(0.82); opacity:0.38; filter:brightness(0.5); }
+    .testi-slide.is-center .testi-slide-inner:hover { transform:scale(1.13) translateY(-5px); box-shadow:0 40px 80px rgba(0,0,0,0.9),0 0 56px rgba(74,222,128,0.28); }
+    .testi-slide-inner img { width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; }
+    .testi-slide-overlay { position:absolute; bottom:0; left:0; right:0; z-index:2; padding:3rem 1.3rem 1.3rem; background:linear-gradient(to top,rgba(0,0,0,0.95) 0%,rgba(0,0,0,0.5) 55%,transparent 100%); }
+    .testi-slide-name { font-size:0.95rem; font-weight:700; color:var(--white); line-height:1.25; margin-bottom:0.25rem; }
+    .testi-slide-label { font-size:0.65rem; letter-spacing:1.8px; text-transform:uppercase; margin-bottom:0.3rem; }
+    .testi-slide-type { display:inline-block; font-size:0.6rem; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; border-radius:20px; padding:0.15rem 0.5rem; }
+    .testi-slide-type-label { color:#f59e0b; border:1px solid rgba(245,158,11,0.45); }
+    .testi-slide-type-artist { color:#38bdf8; border:1px solid rgba(56,189,248,0.45); }
+    .testi-tap-hint { position:absolute; top:0.75rem; right:0.75rem; z-index:2; background:rgba(0,0,0,0.55); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:0.22rem 0.55rem; font-size:0.62rem; color:rgba(255,255,255,0.65); pointer-events:none; }
+    .testi-arrow { position:absolute; top:50%; transform:translateY(-60%); z-index:5; width:38px; height:38px; border-radius:50%; border:1px solid rgba(255,255,255,0.14); background:rgba(255,255,255,0.05); color:var(--white); font-size:1.1rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s,border-color 0.2s; }
+    .testi-arrow:hover { background:rgba(74,222,128,0.12); border-color:rgba(74,222,128,0.35); }
+    .testi-prev { left:0; }
+    .testi-next { right:0; }
+    .testi-dots { display:flex; justify-content:center; gap:8px; margin-top:1.6rem; }
+    .testi-dot { width:8px; height:8px; border-radius:50%; border:none; padding:0; background:rgba(255,255,255,0.2); cursor:pointer; transition:background 0.3s,transform 0.3s,width 0.3s; }
+    .testi-dot.active { background:var(--neon); transform:scale(1.2); width:20px; border-radius:4px; }
+    /* Testimonial modal */
+    .testi-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+    .testi-modal.open { opacity:1; pointer-events:all; }
+    .testi-modal-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+    .testi-modal-box { position:relative; z-index:1; display:flex; max-width:660px; width:92vw; max-height:88vh; background:#111; border:1px solid rgba(255,255,255,0.08); border-radius:22px; overflow:hidden; box-shadow:0 40px 80px rgba(0,0,0,0.85); transform:translateY(20px) scale(0.96); transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+    .testi-modal.open .testi-modal-box { transform:translateY(0) scale(1); }
+    .testi-modal-photo-col { flex:0 0 220px; position:relative; overflow:hidden; }
+    .testi-modal-photo-col img { width:100%; height:100%; object-fit:cover; display:block; }
+    .testi-modal-body { padding:2rem 1.8rem; overflow-y:auto; flex:1; display:flex; flex-direction:column; }
+    .testi-modal-close { position:absolute; top:1rem; right:1rem; z-index:10; width:34px; height:34px; border-radius:50%; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.15); color:#fff; font-size:0.95rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s; }
+    .testi-modal-close:hover { background:rgba(255,255,255,0.12); }
+    .testi-modal-name { font-size:1.25rem; font-weight:800; color:var(--white); margin-bottom:0.15rem; }
+    .testi-modal-role { font-size:0.7rem; letter-spacing:1.8px; text-transform:uppercase; margin-bottom:0.5rem; }
+    .testi-modal-years { font-size:0.82rem; color:rgba(255,255,255,0.4); margin-bottom:1.4rem; }
+    .testi-modal-text { font-size:0.93rem; color:rgba(255,255,255,0.72); line-height:1.78; flex:1; }
 
     /* ── Partners ── */
     #partners { background:var(--bg2); padding:3.5rem 4rem; }
@@ -288,7 +360,7 @@
     .footer-brand img { margin-bottom:0; }
     .footer-brand p { font-size:0.86rem; color:var(--dim); line-height:1.6; max-width:240px; }
     .footer-col h4 { font-size:0.78rem; text-transform:uppercase; letter-spacing:1px; color:var(--white); margin-bottom:1rem; }
-    .footer-col a { display:block; font-size:0.84rem; color:var(--dim); margin-bottom:0.6rem; transition:color .2s; }
+    .footer-col a { display:block; font-size:0.84rem; color:#aaaaaa; margin-bottom:0.6rem; transition:color .2s; }
     .footer-col a:hover { color:var(--neon); }
     .footer-bottom { max-width:1120px; margin:3rem auto 0; padding-top:1.5rem; border-top:1px solid var(--border); text-align:center; }
     .footer-copy { font-size:0.82rem; color:#555; line-height:1.6; }
@@ -322,6 +394,8 @@
       #testimonials .section-inner { padding-left:2rem; padding-right:2rem; }
       .why-grid { grid-template-columns:1fr 1fr; }
       .pricing-grid { grid-template-columns:1fr; max-width:480px; margin-left:auto; margin-right:auto; }
+      /* Restore side cards when stacked — spotlight only works side-by-side */
+      .price-card.featured, .price-card.label-card { opacity:1; filter:none; }
       .stats-grid { grid-template-columns:1fr 1fr; gap:2.5rem; }
       .footer-top { grid-template-columns:1fr 1fr 1fr; }
       .footer-partners { grid-column:span 3; flex-direction:row; align-items:center; gap:2rem; flex-wrap:wrap; }
@@ -331,8 +405,11 @@
       .nav-links { display:none; }
       .nav-burger { display:flex; }
       #navbar { padding:1rem 1.5rem; background:rgba(8,13,8,0.95); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid rgba(26,122,74,0.18); }
+      .nav-logo img { height:56px; }
       .marquee-container { max-width:100%; }
       #hero { padding:9.5rem 1.5rem 3rem; }
+      .hero-h1 { letter-spacing:-1.5px; }
+      .hero-video-overlay { background:linear-gradient(to bottom, rgba(8,8,8,0.82) 0%, rgba(8,8,8,0.72) 45%, rgba(13,13,13,0.96) 100%); }
       #slogan,#why { padding-top:4rem; padding-bottom:4rem; }
       #faq { padding-top:2rem; padding-bottom:4rem; }
       #stats { padding-top:2.5rem; padding-bottom:2.5rem; }
@@ -342,13 +419,11 @@
       #partners { padding-top:3rem; padding-bottom:3rem; }
       #cta { padding-top:4rem; padding-bottom:4rem; }
       #pricing { padding-top:4rem; padding-bottom:4rem; }
-      .voucher-side-banner.right-banner { display:none; }
-      .voucher-side-banner.left-banner { position:relative; width:100%; top:auto; left:auto; right:auto; transform:none; margin:0 0 1.8rem; }
       .hero-btns { flex-direction:column; align-items:center; }
       .hero-btns .btn-primary,.hero-btns .btn-secondary { width:100%; max-width:300px; text-align:center; }
       #slogan,#stats,#why,#pricing,#partners,#faq,#cta { padding-left:1.5rem; padding-right:1.5rem; }
       #testimonials .section-inner { padding-left:1.5rem; padding-right:1.5rem; }
-      .why-grid { grid-template-columns:1fr; }
+      .why-grid { grid-template-columns:1fr; gap:1rem; }
       .stats-grid { grid-template-columns:1fr 1fr; gap:2rem; }
       .footer-top { grid-template-columns:1fr 1fr; text-align:center; }
       .footer-partners { grid-column:span 2; flex-direction:row; align-items:center; justify-content:center; gap:1.5rem; flex-wrap:wrap; }
@@ -356,9 +431,16 @@
       .footer-brand p { max-width:100%; }
       .footer-col a { text-align:center; }
       /* Remove elevated transform on starter card when stacked */
-      .price-card.starter { transform:none; box-shadow:0 0 40px rgba(245,158,11,0.22); }
-      .price-card.starter:hover { transform:translateY(-8px); box-shadow:0 16px 60px rgba(0,0,0,0.6),0 0 60px rgba(245,158,11,0.32); }
+      .price-card.starter { transform:none; box-shadow:0 0 40px rgba(124,58,237,0.3); }
+      .price-card.starter:hover { transform:translateY(-8px); box-shadow:0 16px 60px rgba(0,0,0,0.6),0 0 60px rgba(124,58,237,0.42); }
       .partner-card { min-width:auto; width:100%; }
+      /* Tighter section sub-headings on mobile */
+      .section-lead { font-size:0.97rem; margin-bottom:2rem; }
+      /* Testimonial slider: 1 card on mobile */
+      .testi-slide { flex:0 0 100%; }
+      .testi-slider-wrap { padding:0 2.5rem 2.5rem; }
+      .testi-modal-box { flex-direction:column; }
+      .testi-modal-photo-col { flex:0 0 200px; }
     }
     @media (max-width:480px) {
       #sale-bar { font-size:0.75rem; padding:0.6rem 0.75rem; letter-spacing:0.2px; }
@@ -366,27 +448,32 @@
       .sale-mob { display:inline; }
       #navbar { top:38px; padding:0.85rem 1.2rem; }
       #hero { padding:8rem 1.2rem 2.5rem; }
-      .hero-h1 { letter-spacing:-1px; }
+      .hero-h1 { letter-spacing:-1px; line-height:1.1; }
+      .hero-sub { font-size:0.97rem; }
       #slogan,#stats,#why,#pricing,#partners,#faq,#cta { padding-left:1.2rem; padding-right:1.2rem; }
       #testimonials .section-inner { padding-left:1.2rem; padding-right:1.2rem; }
-      .testi-photo-card { flex:0 0 220px; width:220px; min-width:220px; max-width:220px; height:293px; min-height:293px; max-height:293px; }
+      .testi-slide { flex:0 0 100%; }
+      .testi-slider-wrap { padding:0 2.5rem 2.5rem; }
+      .testi-modal-box { flex-direction:column; }
+      .testi-modal-photo-col { flex:0 0 200px; }
       .stats-grid { grid-template-columns:1fr 1fr; gap:1.5rem; }
       .pricing-grid { max-width:100%; }
       .footer-top { grid-template-columns:1fr; }
       .footer-partners { grid-column:span 1; flex-direction:column; align-items:center; justify-content:center; gap:1rem; }
       .footer-partner-img { height:36px; }
       #footer { padding:2.5rem 1.2rem 1.5rem; }
-      section[id] { scroll-margin-top:95px; }
+      section[id] { scroll-margin-top:90px; }
       .faq-q { font-size:0.95rem; }
       #mobile-menu a { font-size:1.5rem; }
-      .nav-logo img { height:44px; }
+      .nav-logo img { height:40px; }
       #hero { padding-top:7.5rem; }
-      section[id] { scroll-margin-top:90px; }
       .price-amt { font-size:clamp(2rem,8vw,3.6rem); letter-spacing:-1px; }
       .price-name { font-size:1.25rem; margin-bottom:1.1rem; }
       .price-card { padding:1.4rem 1.6rem; }
+      .price-card.starter { padding-top:calc(1.4rem + 42px); }
       .marquee-container { max-width:100%; }
-      .testi-gallery-wrap { max-width:100%; }
+      .testi-slider-wrap { max-width:100%; padding:0 2rem 2rem; }
+      .testi-slide-inner { height:300px; }
       .stats-grid { grid-template-columns:1fr 1fr; }
       #slogan,#why,#cta { padding-top:2.5rem; padding-bottom:2.5rem; }
       #faq { padding-top:1.2rem; padding-bottom:2.5rem; }
@@ -394,7 +481,37 @@
       #platforms,#partners { padding-top:2rem; padding-bottom:2rem; }
       #testimonials { padding-top:2.5rem; padding-bottom:1rem; }
       #pricing { padding-top:2.5rem; padding-bottom:2.5rem; }
+      /* Starter card countdown - prevent overflow on small screens */
+      .starter-countdown { font-size:0.7rem; padding:8px 12px; gap:0.35rem; }
+      .countdown-time { font-size:0.78rem; }
+      /* Starter monthly line */
+      .starter-monthly { font-size:0.8rem; }
+      /* Chip size on popup */
+      .offer-popup-chip { font-size:0.75rem; padding:0.3rem 0.85rem; }
+      /* Button tap targets */
+      .btn-primary, .btn-secondary { padding:0.9rem 2rem; }
+      /* FAQ spacing */
+      .faq-q { padding:1.1rem 0; }
+      /* Section heading */
+      .section-title { letter-spacing:-0.5px; }
     }
+    /* ── Very small phones (≤360px) ── */
+    @media (max-width:360px) {
+      .hero-badge { font-size:0.65rem; padding:0.28rem 0.8rem; }
+      .starter-countdown { flex-wrap:wrap; justify-content:center; white-space:normal; text-align:center; }
+      .price-card { padding:1.2rem 1.1rem; }
+      .price-name { font-size:1.15rem; }
+      .price-btn { font-size:0.9rem; padding:0.9rem; }
+      .starter-claim-btn { font-size:0.95rem !important; padding:12px 16px !important; }
+      .stat-num { font-size:clamp(1.6rem,8vw,2.5rem); }
+      .stat-label { font-size:0.78rem; }
+      .why-icon { width:40px; height:40px; font-size:1.2rem; }
+      .why-title { font-size:1.05rem; }
+      #mobile-menu a { font-size:1.35rem; gap:1.8rem; }
+      .footer-col h4 { font-size:0.72rem; }
+      .footer-col a { font-size:0.8rem; }
+    }
+
     @media (hover:none) { #cursor-glow,#cursor-dot,#cursor-ring{display:none;} body,button,.faq-q{cursor:auto;} }
 
     @media (prefers-reduced-motion: reduce) {
@@ -475,7 +592,7 @@
   <div id="cursor-ring"></div>
 
   <!-- Sale bar -->
-  <div id="sale-bar"><span class="sale-pulse">🔥</span> <strong>Annual Offer</strong><span class="sale-full"> — Live July to September &nbsp;·&nbsp; Lock in your release price now</span><span class="sale-mob"> — Lock in now</span> &nbsp;<span class="sale-pulse">🔥</span></div>
+  <div id="sale-bar"><span class="sale-pulse">🔥</span> <strong>Annual Special Offer</strong><span class="sale-full"> — Live July to September &nbsp;·&nbsp; Lock in your release price now</span><span class="sale-mob"> — Lock in now</span> &nbsp;<span class="sale-pulse">🔥</span></div>
 
   <!-- Navbar -->
   <nav id="navbar">
@@ -527,20 +644,6 @@
 
   <!-- Pricing -->
   <section id="pricing">
-    <div class="voucher-side-banner left-banner">
-      <div class="voucher-tape">
-        <span class="voucher-text voucher-label">July Voucher</span>
-        <div class="voucher-sep"></div>
-        <span class="voucher-text voucher-code">INKINGIT01</span>
-      </div>
-    </div>
-    <div class="voucher-side-banner right-banner">
-      <div class="voucher-tape">
-        <span class="voucher-text voucher-label">July Voucher</span>
-        <div class="voucher-sep"></div>
-        <span class="voucher-text voucher-code">INKINGIT01</span>
-      </div>
-    </div>
     <div class="section-inner">
       <span class="eyebrow reveal">Pricing</span>
       <h2 class="section-title reveal">Plans That <em>Scale With You</em></h2>
@@ -556,6 +659,7 @@
             <span class="price-sale-tag">Limited Offer</span>
           </div>
           <div class="price-amt"><sup>₹</sup>2,399<span> / year</span></div>
+          <div class="price-gst">incl. GST</div>
           <div class="price-note">Unlimited releases, zero hidden fees</div>
           <hr class="price-divider">
           <ul class="price-features">
@@ -574,15 +678,25 @@
         </div>
 
         <div class="price-card starter reveal">
-          <img src="Extra elements for use/star.png" alt="Most Popular" class="price-popular-star" />
-          <span class="price-badge">Most Popular</span>
+          <div class="july-ribbon">✦ ONLY FOR JULY ✦</div>
+          <div class="starter-popular-row">
+            <span class="starter-green-dot"></span>
+            <span class="price-badge">Most Popular</span>
+          </div>
           <div class="price-name">Starter</div>
+          <div class="price-note">Annual special offer — lock in your price now</div>
           <div class="price-original-row">
             <span class="price-original">₹899</span>
-            <span class="price-sale-tag">Annual Offer</span>
+            <span class="starter-save-pill">Save ₹450</span>
           </div>
-          <div class="price-amt"><sup>₹</sup>489<span> / release</span></div>
-          <div class="price-note">Limited time offer — lock in your price now</div>
+          <div class="price-amt"><sup>₹</sup>449<span> / release</span></div>
+          <div class="price-gst">incl. GST</div>
+          <div class="starter-monthly">That's just ₹37/month billed annually</div>
+          <div class="starter-countdown">
+            <span>⏱</span>
+            <span>Offer ends in</span>
+            <span class="countdown-time" id="starter-countdown">--d : --h : --m</span>
+          </div>
           <hr class="price-divider">
           <ul class="price-features">
             <li>1 song distribution</li>
@@ -594,7 +708,8 @@
             <li>Publishing rights &amp; revenue</li>
             <li>24/7 Support panel</li>
           </ul>
-          <a href="#" class="price-btn solid-amber" data-plan="starter">Start Releasing Today</a>
+          <a href="#" class="price-btn starter-claim-btn" data-plan="starter">Claim 50% off →</a>
+          <div class="starter-trust"><span>🔒 Secure payment</span></div>
         </div>
 
         <div class="price-card label-card reveal">
@@ -737,104 +852,32 @@
       <span class="eyebrow reveal">Testimonials</span>
       <h2 class="section-title reveal">Trusted by <em>Artists &amp; Labels</em></h2>
     </div>
-    <div class="testi-gallery-wrap" id="testiGalleryWrap">
-      <div class="testi-gallery" id="testiGallery">
-
-        <!-- Card 1 · Hosanna Ministries Official · Neon Green -->
-        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 60% 30%,#0d3320 0%,#051409 55%,#030d06 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:0s;background:radial-gradient(circle,rgba(74,222,128,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(74,222,128,0.18),0 0 0 30px rgba(74,222,128,0.06),0 0 0 60px rgba(74,222,128,0.035),0 0 0 90px rgba(74,222,128,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:0s;color:#4ade80;text-shadow:0 0 24px rgba(74,222,128,0.7),0 0 60px rgba(74,222,128,0.35),0 0 100px rgba(74,222,128,0.15);">H</div>
-          <div class="testi-photo-overlay">
-            <div class="testi-photo-name">Hosanna Ministries Official</div>
-            <div class="testi-photo-role">Artist</div>
-          </div>
-        </div>
-
-        <!-- Card 2 · Ramesh Hosanna · Violet -->
-        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 40% 30%,#1e0b38 0%,#0d0618 55%,#060310 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-0.83s;background:radial-gradient(circle,rgba(167,139,250,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(167,139,250,0.18),0 0 0 30px rgba(167,139,250,0.06),0 0 0 60px rgba(167,139,250,0.035),0 0 0 90px rgba(167,139,250,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:-0.83s;color:#a78bfa;text-shadow:0 0 24px rgba(167,139,250,0.7),0 0 60px rgba(167,139,250,0.35),0 0 100px rgba(167,139,250,0.15);">R</div>
-          <div class="testi-photo-overlay">
-            <div class="testi-photo-name">Ramesh Hosanna Ministries</div>
-            <div class="testi-photo-role">Artist</div>
-          </div>
-        </div>
-
-        <!-- Card 3 · Hosanna Kurnool · Cyan -->
-        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 55% 35%,#062428 0%,#031318 55%,#020a0c 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-1.67s;background:radial-gradient(circle,rgba(34,211,238,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(34,211,238,0.18),0 0 0 30px rgba(34,211,238,0.06),0 0 0 60px rgba(34,211,238,0.035),0 0 0 90px rgba(34,211,238,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:-1.67s;color:#22d3ee;text-shadow:0 0 24px rgba(34,211,238,0.7),0 0 60px rgba(34,211,238,0.35),0 0 100px rgba(34,211,238,0.15);">H</div>
-          <div class="testi-photo-overlay">
-            <div class="testi-photo-name">Hosanna Ministries Kurnool</div>
-            <div class="testi-photo-role">Artist</div>
-          </div>
-        </div>
-
-        <!-- Card 4 · RD Parmar · Blue -->
-        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 45% 30%,#081430 0%,#040a1c 55%,#02050e 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-2.5s;background:radial-gradient(circle,rgba(96,165,250,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(96,165,250,0.18),0 0 0 30px rgba(96,165,250,0.06),0 0 0 60px rgba(96,165,250,0.035),0 0 0 90px rgba(96,165,250,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:-2.5s;color:#60a5fa;text-shadow:0 0 24px rgba(96,165,250,0.7),0 0 60px rgba(96,165,250,0.35),0 0 100px rgba(96,165,250,0.15);">R</div>
-          <div class="testi-photo-overlay">
-            <div class="testi-photo-name">RD Parmar</div>
-            <div class="testi-photo-role">Artist</div>
-          </div>
-        </div>
-
-        <!-- Card 5 · Ajay Salwan · Amber -->
-        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 50% 30%,#2a1a05 0%,#180e02 55%,#0e0801 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-3.33s;background:radial-gradient(circle,rgba(251,191,36,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(251,191,36,0.18),0 0 0 30px rgba(251,191,36,0.06),0 0 0 60px rgba(251,191,36,0.035),0 0 0 90px rgba(251,191,36,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:-3.33s;color:#fbbf24;text-shadow:0 0 24px rgba(251,191,36,0.7),0 0 60px rgba(251,191,36,0.35),0 0 100px rgba(251,191,36,0.15);">A</div>
-          <div class="testi-photo-overlay">
-            <div class="testi-photo-name">Ajay Salwan</div>
-            <div class="testi-photo-role">Artist</div>
-          </div>
-        </div>
-
-        <!-- Card 6 · Hariom Raghav · Rose -->
-        <div class="testi-photo-card" style="background:radial-gradient(ellipse at 55% 30%,#280810 0%,#180408 55%,#0e0205 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-4.17s;background:radial-gradient(circle,rgba(251,113,133,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(251,113,133,0.18),0 0 0 30px rgba(251,113,133,0.06),0 0 0 60px rgba(251,113,133,0.035),0 0 0 90px rgba(251,113,133,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:-4.17s;color:#fb7185;text-shadow:0 0 24px rgba(251,113,133,0.7),0 0 60px rgba(251,113,133,0.35),0 0 100px rgba(251,113,133,0.15);">H</div>
-          <div class="testi-photo-overlay">
-            <div class="testi-photo-name">Hariom Raghav</div>
-            <div class="testi-photo-role">I Village Music</div>
-          </div>
-        </div>
-
-        <!-- Duplicates for seamless loop -->
-        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 60% 30%,#0d3320 0%,#051409 55%,#030d06 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:0s;background:radial-gradient(circle,rgba(74,222,128,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(74,222,128,0.18),0 0 0 30px rgba(74,222,128,0.06),0 0 0 60px rgba(74,222,128,0.035),0 0 0 90px rgba(74,222,128,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:0s;color:#4ade80;text-shadow:0 0 24px rgba(74,222,128,0.7),0 0 60px rgba(74,222,128,0.35),0 0 100px rgba(74,222,128,0.15);">H</div>
-          <div class="testi-photo-overlay"><div class="testi-photo-name">Hosanna Ministries Official</div><div class="testi-photo-role">Artist</div></div>
-        </div>
-        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 40% 30%,#1e0b38 0%,#0d0618 55%,#060310 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-0.83s;background:radial-gradient(circle,rgba(167,139,250,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(167,139,250,0.18),0 0 0 30px rgba(167,139,250,0.06),0 0 0 60px rgba(167,139,250,0.035),0 0 0 90px rgba(167,139,250,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:-0.83s;color:#a78bfa;text-shadow:0 0 24px rgba(167,139,250,0.7),0 0 60px rgba(167,139,250,0.35),0 0 100px rgba(167,139,250,0.15);">R</div>
-          <div class="testi-photo-overlay"><div class="testi-photo-name">Ramesh Hosanna Ministries</div><div class="testi-photo-role">Artist</div></div>
-        </div>
-        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 55% 35%,#062428 0%,#031318 55%,#020a0c 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-1.67s;background:radial-gradient(circle,rgba(34,211,238,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(34,211,238,0.18),0 0 0 30px rgba(34,211,238,0.06),0 0 0 60px rgba(34,211,238,0.035),0 0 0 90px rgba(34,211,238,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:-1.67s;color:#22d3ee;text-shadow:0 0 24px rgba(34,211,238,0.7),0 0 60px rgba(34,211,238,0.35),0 0 100px rgba(34,211,238,0.15);">H</div>
-          <div class="testi-photo-overlay"><div class="testi-photo-name">Hosanna Ministries Kurnool</div><div class="testi-photo-role">Artist</div></div>
-        </div>
-        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 45% 30%,#081430 0%,#040a1c 55%,#02050e 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-2.5s;background:radial-gradient(circle,rgba(96,165,250,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(96,165,250,0.18),0 0 0 30px rgba(96,165,250,0.06),0 0 0 60px rgba(96,165,250,0.035),0 0 0 90px rgba(96,165,250,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:-2.5s;color:#60a5fa;text-shadow:0 0 24px rgba(96,165,250,0.7),0 0 60px rgba(96,165,250,0.35),0 0 100px rgba(96,165,250,0.15);">R</div>
-          <div class="testi-photo-overlay"><div class="testi-photo-name">RD Parmar</div><div class="testi-photo-role">Artist</div></div>
-        </div>
-        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 50% 30%,#2a1a05 0%,#180e02 55%,#0e0801 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-3.33s;background:radial-gradient(circle,rgba(251,191,36,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(251,191,36,0.18),0 0 0 30px rgba(251,191,36,0.06),0 0 0 60px rgba(251,191,36,0.035),0 0 0 90px rgba(251,191,36,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:-3.33s;color:#fbbf24;text-shadow:0 0 24px rgba(251,191,36,0.7),0 0 60px rgba(251,191,36,0.35),0 0 100px rgba(251,191,36,0.15);">A</div>
-          <div class="testi-photo-overlay"><div class="testi-photo-name">Ajay Salwan</div><div class="testi-photo-role">Artist</div></div>
-        </div>
-        <div aria-hidden="true" class="testi-photo-card" style="background:radial-gradient(ellipse at 55% 30%,#280810 0%,#180408 55%,#0e0205 100%);">
-          <div class="testi-vinyl" style="width:170px;height:170px;animation-delay:-4.17s;background:radial-gradient(circle,rgba(251,113,133,0.10) 0%,transparent 65%);box-shadow:0 0 0 1px rgba(251,113,133,0.18),0 0 0 30px rgba(251,113,133,0.06),0 0 0 60px rgba(251,113,133,0.035),0 0 0 90px rgba(251,113,133,0.018);"></div>
-          <div class="testi-art-initial" style="animation-delay:-4.17s;color:#fb7185;text-shadow:0 0 24px rgba(251,113,133,0.7),0 0 60px rgba(251,113,133,0.35),0 0 100px rgba(251,113,133,0.15);">H</div>
-          <div class="testi-photo-overlay"><div class="testi-photo-name">Hariom Raghav</div><div class="testi-photo-role">I Village Music</div></div>
-        </div>
-
+    <div class="testi-slider-wrap">
+      <button class="testi-arrow testi-prev" id="testiPrev" aria-label="Previous testimonial">&#10094;</button>
+      <div class="testi-viewport" id="testiViewport">
+        <div class="testi-track" id="testiTrack"></div>
       </div>
+      <button class="testi-arrow testi-next" id="testiNext" aria-label="Next testimonial">&#10095;</button>
+      <div class="testi-dots" id="testiDots"></div>
     </div>
   </section>
+
+  <!-- Testimonial detail modal -->
+  <div class="testi-modal" id="testiModal" aria-hidden="true">
+    <div class="testi-modal-overlay" id="testiModalOverlay"></div>
+    <div class="testi-modal-box">
+      <button class="testi-modal-close" id="testiModalClose" aria-label="Close">&#x2715;</button>
+      <div class="testi-modal-photo-col">
+        <img id="testiModalImg" src="" alt="">
+      </div>
+      <div class="testi-modal-body">
+        <div class="testi-modal-name" id="testiModalName"></div>
+        <div class="testi-modal-role" id="testiModalRole"></div>
+        <div class="testi-modal-years" id="testiModalYears"></div>
+        <p class="testi-modal-text" id="testiModalText"></p>
+      </div>
+    </div>
+  </div>
 
   <!-- FAQ -->
   <section id="faq">
@@ -1021,9 +1064,10 @@
 
     /* ── Hero scroll-away parallax (gsap.com feel) ── */
     if (!reduceMotion) {
+      const heroParallaxY = window.innerWidth > 768 ? 120 : 60;
       gsap.to('.hero-inner', {
         scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
-        y: 120, opacity: 0.2, scale: 0.96, ease: 'none'
+        y: heroParallaxY, opacity: 0.2, scale: 0.96, ease: 'none'
       });
     }
 
@@ -1054,19 +1098,189 @@
     staggerGroup('.pricing-grid .price-card', '.pricing-grid');
     staggerGroup('.faq-list .faq-item', '.faq-list');
 
-    /* ── Testimonial Gallery: auto-scroll marquee ── */
-    gsap.to('#testiGallery', { x: '-50%', duration: 32, ease: 'none', repeat: -1 });
+    /* ── Testimonial Slider ── */
+    (function() {
+      var TDATA = [
+        {
+          img:'Testimonials/Hosanna Ministries Official.png', name:'Kalyan Babu',
+          label:'Hosanna Ministries Official', type:'Label', years:'1 Year',
+          bg:'radial-gradient(ellipse at 60% 30%,#0d3320 0%,#051409 55%,#030d06 100%)', color:'#4ade80',
+          text:'My name is Kalyan Babu (Hosanna Ministries Official), and I have been working with FM Digital Official for the past 1 Year. My experience with their team has been truly amazing. They provide a smooth and hassle-free music distribution service with a highly professional, supportive, and polite team. FM Digital Official offers affordable plans that are perfect for independent artists and music labels, especially those who are just starting their journey in the music industry. I highly recommend FM Digital Official to anyone looking for a reliable and trusted music distribution partner.'
+        },
+        {
+          img:'Testimonials/Ramesh Hosanna Ministries.png', name:'Bhanu',
+          label:'Ramesh Hosanna Ministries', type:'Label', years:'5 Years',
+          bg:'radial-gradient(ellipse at 40% 30%,#1e0b38 0%,#0d0618 55%,#060310 100%)', color:'#a78bfa',
+          text:'I am Bhanu (Ramesh Hosanna Ministries), and I have been working with FM Digital Official for 5 years. My journey with them has been very satisfying. The team is humble, supportive, and always ensures that the process is easy and transparent. Their budget-friendly plans and excellent service make FM Digital Official a perfect partner for emerging artists and new music labels.'
+        },
+        {
+          img:'Testimonials/Hosanna Ministries Kurnool.png', name:'Yamanni Arun',
+          label:'Hosanna Ministries Kurnool', type:'Label', years:'5 Years',
+          bg:'radial-gradient(ellipse at 55% 35%,#062428 0%,#031318 55%,#020a0c 100%)', color:'#22d3ee',
+          text:'My name is Yamanni Arun (Hosanna Ministries Kurnool), and I have been a partner with FM Digital Official for 5 Years. I truly appreciate the professionalism and kindness of their team. They have made music distribution simple, efficient, and stress-free for us. I would recommend FM Digital Official to independent artists and labels who are looking for quality services at reasonable pricing.'
+        },
+        {
+          img:'Testimonials/RD Parmar.png', name:'RD Parmar',
+          label:'Sunday Fun Production', type:'Label', years:'4 Years',
+          bg:'radial-gradient(ellipse at 45% 30%,#081430 0%,#040a1c 55%,#02050e 100%)', color:'#60a5fa',
+          text:'I am RD Parmar (Sunday Fun Production), and I have been associated with FM Digital Official for 4 Years. Choosing them as our music distribution partner has been one of the best decisions for our music journey. The entire team is friendly and supportive, the process is seamless, and their affordable plans are especially beneficial for independent artists and upcoming labels.'
+        },
+        {
+          img:'Testimonials/Ajay Salwan.png', name:'Ajay Salwan',
+          label:'Ajay Salwan', type:'Artist', years:'5 Years',
+          bg:'radial-gradient(ellipse at 50% 30%,#2a1a05 0%,#180e02 55%,#0e0801 100%)', color:'#fbbf24',
+          text:'My name is Ajay Salwan (Ajay Salwan), and I have been working with FM Digital Official for 5 Years. Their services have always been dependable and easy to use. The team is professional, cooperative, and treats every artist and label with great respect. For anyone starting their career in the music field, FM Digital Official offers the right combination of affordability, support, and reliable distribution.'
+        },
+        {
+          img:'Testimonials/Bobby Karra.png', name:'Bobby Karra',
+          label:'Bobby Karra', type:'Label', years:'2 Years',
+          bg:'radial-gradient(ellipse at 55% 30%,#280810 0%,#180408 55%,#0e0205 100%)', color:'#fb7185',
+          text:'I am Bobby Karra, and my association with FM Digital Official has been for 2 Years. It has been a smooth and positive experience from the beginning. The team is very polite, responsive, and always ready to provide support. With their affordable plans and artist-friendly approach, FM Digital Official is a great platform for new talents and growing music labels.'
+        }
+      ];
+
+      var N = TDATA.length;
+      var CLONES = 3;
+      var viewport = document.getElementById('testiViewport');
+      var track = document.getElementById('testiTrack');
+      var dotsEl = document.getElementById('testiDots');
+      var prevBtn = document.getElementById('testiPrev');
+      var nextBtn = document.getElementById('testiNext');
+      var modal = document.getElementById('testiModal');
+      var modalOverlay = document.getElementById('testiModalOverlay');
+      var modalClose = document.getElementById('testiModalClose');
+      var trackPos = CLONES;
+      var transitioning = false;
+      var autoTimer = null;
+
+      function getVisible() { return window.innerWidth > 768 ? 3 : 1; }
+      function getSlideW() { return viewport.clientWidth / getVisible(); }
+
+      function buildCard(t, realIdx, hidden) {
+        var slide = document.createElement('div');
+        slide.className = 'testi-slide';
+        if (hidden) slide.setAttribute('aria-hidden', 'true');
+        var inner = document.createElement('div');
+        inner.className = 'testi-slide-inner';
+        inner.style.background = t.bg;
+        inner.innerHTML =
+          '<img src="' + t.img + '" alt="' + t.name + '" loading="lazy">' +
+          '<div class="testi-tap-hint">Tap to read</div>' +
+          '<div class="testi-slide-overlay">' +
+            '<div class="testi-slide-name">' + t.name + '</div>' +
+            '<div class="testi-slide-label" style="color:' + t.color + '">' + t.label + '</div>' +
+            '<div class="testi-slide-type testi-slide-type-' + t.type.toLowerCase() + '">' + t.type + '</div>' +
+          '</div>';
+        inner.addEventListener('click', (function(i){ return function(){ openModal(i); }; })(realIdx));
+        slide.appendChild(inner);
+        return slide;
+      }
+
+      function buildSlides() {
+        track.innerHTML = '';
+        for (var i = N - CLONES; i < N; i++) track.appendChild(buildCard(TDATA[i], i, true));
+        for (var j = 0; j < N; j++) track.appendChild(buildCard(TDATA[j], j, false));
+        for (var k = 0; k < CLONES; k++) track.appendChild(buildCard(TDATA[k], k, true));
+      }
+
+      function buildDots() {
+        dotsEl.innerHTML = '';
+        for (var i = 0; i < N; i++) {
+          var dot = document.createElement('button');
+          dot.className = 'testi-dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Go to testimonial ' + (i + 1));
+          (function(idx) {
+            dot.addEventListener('click', function() { clearAuto(); goTo(idx); startAuto(); });
+          })(i);
+          dotsEl.appendChild(dot);
+        }
+      }
+
+      function updatePos(animate) {
+        track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.25,0.1,0.25,1)' : 'none';
+        track.style.transform = 'translateX(' + (-trackPos * getSlideW()) + 'px)';
+        var realIdx = ((trackPos - CLONES) % N + N) % N;
+        dotsEl.querySelectorAll('.testi-dot').forEach(function(d, i) { d.classList.toggle('active', i === realIdx); });
+        // Spotlight: center card big+bright, sides faded
+        var visible = getVisible();
+        var centerIdx = visible === 3 ? trackPos + 1 : trackPos;
+        track.querySelectorAll('.testi-slide').forEach(function(slide, i) {
+          slide.classList.toggle('is-center', i === centerIdx);
+          slide.classList.toggle('is-side', i !== centerIdx);
+        });
+      }
+
+      function goTo(i) { trackPos = CLONES + i; updatePos(true); }
+
+      function next() {
+        if (transitioning) return;
+        transitioning = true;
+        trackPos++;
+        updatePos(true);
+        var wrap = trackPos >= CLONES + N;
+        setTimeout(function() {
+          if (wrap) { trackPos = CLONES; updatePos(false); }
+          transitioning = false;
+        }, 530);
+      }
+
+      function prev() {
+        if (transitioning) return;
+        transitioning = true;
+        trackPos--;
+        updatePos(true);
+        var wrap = trackPos < CLONES;
+        setTimeout(function() {
+          if (wrap) { trackPos = CLONES + N - 1; updatePos(false); }
+          transitioning = false;
+        }, 530);
+      }
+
+      function startAuto() { autoTimer = setInterval(next, 3000); }
+      function clearAuto() { clearInterval(autoTimer); }
+
+      function openModal(i) {
+        var t = TDATA[i];
+        document.getElementById('testiModalImg').src = t.img;
+        document.getElementById('testiModalImg').alt = t.name;
+        document.getElementById('testiModalName').textContent = t.name;
+        document.getElementById('testiModalRole').textContent = t.label;
+        document.getElementById('testiModalRole').style.color = t.color;
+        document.getElementById('testiModalYears').textContent = t.years + ' with FM Digital Official';
+        document.getElementById('testiModalText').textContent = t.text;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      buildSlides();
+      buildDots();
+      updatePos(false);
+      startAuto();
+
+      prevBtn.addEventListener('click', function() { clearAuto(); prev(); startAuto(); });
+      nextBtn.addEventListener('click', function() { clearAuto(); next(); startAuto(); });
+      modalOverlay.addEventListener('click', closeModal);
+      modalClose.addEventListener('click', closeModal);
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+      window.addEventListener('resize', function() { updatePos(false); });
+    })();
 
     /* ── Scrub parallax on section headings (gsap.com feel) ── */
-    if (!reduceMotion) {
+    if (!reduceMotion && window.innerWidth > 768) {
       gsap.utils.toArray('.section-title').forEach(title => {
-        gsap.fromTo(title, { y: 40 }, {
-          y: -40, ease: 'none',
+        gsap.fromTo(title, { y: 30 }, {
+          y: -30, ease: 'none',
           scrollTrigger: { trigger: title, start: 'top bottom', end: 'bottom top', scrub: true }
         });
       });
-      gsap.fromTo('.slogan-text', { y: 60 }, {
-        y: -60, ease: 'none',
+      gsap.fromTo('.slogan-text', { y: 50 }, {
+        y: -50, ease: 'none',
         scrollTrigger: { trigger: '#slogan', start: 'top bottom', end: 'bottom top', scrub: true }
       });
     }
@@ -1108,6 +1322,38 @@
     gsap.to('#cta-btn', { scrollTrigger: { trigger: '#cta', start: 'top 70%', toggleActions: 'play none none none' }, opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.5)', delay: 0.45 });
     gsap.to('#cta-btn', { boxShadow: '0 0 30px rgba(74,222,128,0.5)', duration: 1.4, ease: 'power1.inOut', repeat: -1, yoyo: true, delay: 2 });
 
+    /* ── Starter plan countdown (July 1 – July 31) ── */
+    (function() {
+      var start = new Date('2026-07-01T00:00:00');
+      var end   = new Date('2026-07-31T23:59:59');
+      var labelEl = document.querySelector('.starter-countdown span:nth-child(2)');
+
+      function fmt(diff) {
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        return String(d).padStart(2,'0') + 'd : ' + String(h).padStart(2,'0') + 'h : ' + String(m).padStart(2,'0') + 'm';
+      }
+
+      function tick() {
+        var el = document.getElementById('starter-countdown');
+        if (!el) return;
+        var now = new Date();
+        if (now < start) {
+          if (labelEl) labelEl.textContent = 'Offer starts in';
+          el.textContent = fmt(start - now);
+        } else if (now <= end) {
+          if (labelEl) labelEl.textContent = 'Offer ends in';
+          el.textContent = fmt(end - now);
+        } else {
+          if (labelEl) labelEl.textContent = '';
+          el.textContent = 'Offer expired';
+        }
+      }
+      tick();
+      setInterval(tick, 60000);
+    })();
+
     /* ── Video security ── */
     const heroVideo = document.getElementById('hero-video');
     if (heroVideo) {
@@ -1139,6 +1385,69 @@
       </a>
     </div>
   </div>
+
+  <!-- Annual Special Offer Confetti Popup -->
+  <div id="offer-popup-overlay" role="dialog" aria-modal="true" aria-label="Annual Special Offer">
+    <div id="offer-popup-card">
+      <span class="offer-popup-fire">🎉</span>
+      <span class="offer-popup-label">Limited Time</span>
+      <h2 class="offer-popup-title">Annual <em>Special Offer</em></h2>
+      <p class="offer-popup-sub">Live July – September · Lock in your release price now before it's gone.</p>
+      <div class="offer-popup-deal">
+        <span class="offer-popup-chip">🔥 20% OFF Artist Pro</span>
+        <span class="offer-popup-chip">⚡ 50% OFF Starter</span>
+        <span class="offer-popup-chip">💰 Save up to ₹450</span>
+      </div>
+      <div class="offer-popup-progress"><div class="offer-popup-progress-bar"></div></div>
+      <p class="offer-popup-dismiss">Auto-closing in a moment…</p>
+    </div>
+  </div>
+  <script>
+  (function() {
+    var COLORS = ['#4ade80','#22c55e','#fbbf24','#f97316','#60a5fa','#e879f9','#ffffff','#34d399','#fb923c'];
+    var overlay = document.getElementById('offer-popup-overlay');
+    if (!overlay) return;
+
+    function spawnConfetti(count) {
+      for (var i = 0; i < count; i++) {
+        (function(delay) {
+          setTimeout(function() {
+            var el = document.createElement('span');
+            el.className = 'confetti-piece';
+            var color = COLORS[Math.floor(Math.random() * COLORS.length)];
+            var left = Math.random() * 100;
+            var duration = 2.2 + Math.random() * 2.2;
+            var width = 7 + Math.random() * 7;
+            var height = 10 + Math.random() * 8;
+            el.style.cssText = [
+              'left:' + left + 'vw',
+              'background:' + color,
+              'width:' + width + 'px',
+              'height:' + height + 'px',
+              'animation-duration:' + duration + 's',
+              'animation-delay:0s'
+            ].join(';');
+            document.body.appendChild(el);
+            setTimeout(function() { el.remove(); }, (duration + 0.1) * 1000);
+          }, delay);
+        })(i * 28);
+      }
+    }
+
+    function dismissPopup() {
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+      setTimeout(function() { overlay.remove(); }, 450);
+    }
+
+    setTimeout(function() {
+      overlay.classList.add('visible');
+      spawnConfetti(70);
+      overlay.addEventListener('click', dismissPopup, { once: true });
+      setTimeout(dismissPopup, 3800);
+    }, 400);
+  })();
+  </script>
 
   <!-- Application form modal -->
   <div id="app-modal" aria-hidden="true" data-lenis-prevent>
@@ -1225,7 +1534,7 @@
   <script>
     const PLAN_META = {
       artist_pro: { name: 'FMDO Artist Pro – Annual Plan', amount: 239900 },
-      starter:    { name: 'FMDO Starter – Per Release',    amount:  48900 }, // ₹489
+      starter:    { name: 'FMDO Starter – Per Release',    amount:  44900 }, // ₹449
     };
 
     // ── Application modal state ──
@@ -1282,6 +1591,10 @@
     document.getElementById('app-close').addEventListener('click', closeModal);
     document.getElementById('app-cancel').addEventListener('click', closeModal);
     modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+    // Prevent selecting past dates for Start Date.
+    const todayStr = new Date().toISOString().split('T')[0];
+    form.start_date.min = todayStr;
 
     // Auto-set End Date to exactly 2 years after the chosen Start Date (read-only).
     form.start_date.addEventListener('change', function () {
@@ -1412,5 +1725,36 @@
       });
     });
   </script>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/918512893854" target="_blank" rel="noopener noreferrer" id="whatsapp-float" aria-label="Chat on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="28" height="28" fill="none">
+      <path fill="#fff" d="M24 4C13 4 4 13 4 24c0 3.6 1 7 2.7 10L4 44l10.3-2.7C17.1 43 20.5 44 24 44c11 0 20-9 20-20S35 4 24 4z"/>
+      <path fill="#25D366" d="M24 6C14.1 6 6 14.1 6 24c0 3.4.9 6.6 2.5 9.4L6.2 41.8l8.6-2.3C17.4 41.1 20.6 42 24 42c9.9 0 18-8.1 18-18S33.9 6 24 6z"/>
+      <path fill="#fff" d="M33.5 28.8c-.5-.2-2.9-1.4-3.3-1.6-.4-.2-.7-.2-1 .2-.3.5-1.1 1.4-1.4 1.7-.3.3-.5.3-1 .1-.5-.2-2-.7-3.8-2.3-1.4-1.2-2.3-2.8-2.6-3.2-.3-.5 0-.7.2-1 .2-.2.5-.5.7-.8.2-.3.3-.5.4-.8.1-.3 0-.6-.1-.8-.1-.2-1-2.5-1.4-3.4-.4-.9-.8-.8-1-.8h-.9c-.3 0-.8.1-1.2.6-.4.5-1.6 1.5-1.6 3.7s1.6 4.3 1.8 4.6c.2.3 3.1 4.9 7.6 6.7 1.1.5 1.9.7 2.6.9 1.1.3 2.1.3 2.9.2.9-.1 2.9-1.2 3.3-2.3.4-1.1.4-2.1.3-2.3-.1-.3-.4-.4-.9-.6z"/>
+    </svg>
+  </a>
+  <style>
+    #whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      background: #25D366;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37,211,102,.45);
+      transition: transform .2s, box-shadow .2s;
+      text-decoration: none;
+    }
+    #whatsapp-float:hover {
+      transform: scale(1.12);
+      box-shadow: 0 6px 24px rgba(37,211,102,.65);
+    }
+  </style>
 </body>
 </html>
