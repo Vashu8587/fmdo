@@ -104,7 +104,7 @@
       border-radius:30px; padding:0.38rem 1rem; font-size:0.82rem; color:var(--neon); font-weight:600;
     }
     .offer-popup-progress { height:3px; background:rgba(74,222,128,0.12); border-radius:3px; overflow:hidden; margin-bottom:1.2rem; }
-    .offer-popup-progress-bar { height:100%; background:var(--neon); border-radius:3px; width:100%; transform-origin:left; animation:offer-drain 3.6s linear forwards; }
+    .offer-popup-progress-bar { height:100%; background:var(--neon); border-radius:3px; width:100%; transform-origin:left; animation:offer-drain 5.6s linear forwards; }
     @keyframes offer-drain { from{transform:scaleX(1)} to{transform:scaleX(0)} }
     .offer-popup-dismiss { font-size:0.78rem; color:#555; }
     /* Confetti pieces */
@@ -1016,6 +1016,7 @@
     let lenis = null;
     if (!reduceMotion) {
       lenis = new Lenis({ duration: 1.15, smoothWheel: true, smoothTouch: false });
+      window.lenis = lenis;
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.add((t) => lenis.raf(t * 1000));
       gsap.ticker.lagSmoothing(0);
@@ -1440,11 +1441,19 @@
       setTimeout(function() { overlay.remove(); }, 450);
     }
 
+    function goToStarter() {
+      dismissPopup();
+      var target = document.querySelector('.price-card.starter');
+      if (!target) return;
+      if (window.lenis) window.lenis.scrollTo(target, { offset: -90 });
+      else target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     setTimeout(function() {
       overlay.classList.add('visible');
       spawnConfetti(70);
-      overlay.addEventListener('click', dismissPopup, { once: true });
-      setTimeout(dismissPopup, 3800);
+      overlay.addEventListener('click', goToStarter, { once: true });
+      setTimeout(dismissPopup, 5800);
     }, 400);
   })();
   </script>
