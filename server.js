@@ -180,6 +180,12 @@ app.post('/api/verify-payment', (req, res) => {
   }
 });
 
+// Clean shareable link for the application form (form-only, no payment).
+// Behind the proxy this is reached at /ads/b2b; the page opens the form on load.
+app.get('/b2b', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // --- Static site (index.html + Brand logo/, DSPs/, etc.) ---
 app.use(express.static(__dirname));
 

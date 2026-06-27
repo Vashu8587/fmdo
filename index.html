@@ -1555,9 +1555,13 @@
     const nextBtn   = document.getElementById('app-next');
     let currentPlan = null;
     let applicationId = null;
+    let formOnly = false;   // true when opened via a shareable /?apply link (collect details, no payment)
 
-    function openModal(plan) {
-      currentPlan = plan;
+    const appSub = document.querySelector('#app-modal .app-sub');
+
+    function openModal(plan, opts) {
+      formOnly = !!(opts && opts.formOnly);
+      currentPlan = formOnly ? null : plan;
       applicationId = null;
       form.reset();
       errorEl.style.display = 'none';
@@ -1565,6 +1569,12 @@
       saveBtn.style.display = '';
       nextBtn.style.display = 'none';
       form.querySelectorAll('input,textarea').forEach(el => el.disabled = false);
+      // Reword the copy depending on whether payment follows.
+      if (formOnly) {
+        appSub.textContent = 'Fill in your details to generate your B2B licensing letter.';
+      } else {
+        appSub.textContent = 'Fill in your details to generate your B2B licensing letter, then continue to payment.';
+      }
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
@@ -1646,11 +1656,14 @@
         if (!res.ok || !data.applicationId) throw new Error(data.error || 'Submission failed');
 
         applicationId = data.applicationId;
+        if (formOnly) {
+          savedNote.innerHTML = '✓ Thank you! Your details have been submitted and your B2B licensing letter is on its way to your email.';
+        }
         savedNote.style.display = 'block';
-        savedNote.querySelector('strong')?.scrollIntoView?.();
+        savedNote.scrollIntoView?.();
         form.querySelectorAll('input,textarea').forEach(el => el.disabled = true);
         saveBtn.style.display = 'none';
-        nextBtn.style.display = '';
+        nextBtn.style.display = formOnly ? 'none' : '';
       } catch (err) {
         console.error(err);
         showError(err.message || 'Could not save your details. Please try again.');
@@ -1733,6 +1746,15 @@
         openModal(this.dataset.plan);
       });
     });
+
+    // Shareable form link: visiting /ads/b2b (or /?apply) opens the application
+    // form directly (collect details + email the B2B letter, no payment step).
+    const wantFormOnly =
+      new URLSearchParams(location.search).has('apply') ||
+      /\/b2b\/?$/.test(location.pathname);
+    if (wantFormOnly) {
+      window.addEventListener('load', () => openModal(null, { formOnly: true }));
+    }
   </script>
 
   <!-- Floating WhatsApp Button -->
