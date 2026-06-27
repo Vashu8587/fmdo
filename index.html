@@ -17,6 +17,17 @@
   <!-- Lenis smooth scroll (free ScrollSmoother equivalent) -->
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 
+  <!-- Shareable form-only link (/b2b or ?apply): mark the page so ONLY the form
+       shows, with no landing page behind it. Set early to avoid any flash. -->
+  <script>
+    (function () {
+      if (/\/b2b\/?$/.test(location.pathname) ||
+          new URLSearchParams(location.search).has('apply')) {
+        document.documentElement.classList.add('b2b-only');
+      }
+    })();
+  </script>
+
   <style>
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -524,6 +535,11 @@
       overflow-y:auto; padding:3rem 1rem; cursor:auto; }
     #app-modal.open { display:flex; }
     #app-modal * { cursor:auto; }
+
+    /* ── Form-only mode (shareable /b2b link): show ONLY the form, hide the landing page ── */
+    html.b2b-only, html.b2b-only body { background:#0d0d0d; cursor:auto; height:auto; min-height:100%; overflow:hidden; }
+    html.b2b-only body > *:not(#app-modal) { display:none !important; }
+    html.b2b-only #app-modal { background:#0d0d0d; backdrop-filter:none; -webkit-backdrop-filter:none; }
     .app-card { width:100%; max-width:540px; background:#ffffff; border:1px solid #e6e8eb;
       border-radius:16px; padding:2rem 1.8rem 1.8rem; box-shadow:0 20px 60px rgba(15,23,18,0.35); position:relative; }
     .app-card h3 { font-size:1.4rem; font-weight:700; color:#1a1f24; margin-bottom:.2rem; }
@@ -1651,7 +1667,14 @@
       saveBtn.disabled = true;
       saveBtn.textContent = 'Saving…';
       try {
-        const res = await fetch('api/submit-application', { method: 'POST', body: fd });
+        // Normally relative ("api/...") which works locally and under the /ads proxy.
+        // But when this form-only page is served at the site ROOT (/b2b) on the live
+        // domain, the API isn't under the current path → target the /ads mount directly.
+        const servedUnderAds = location.pathname.includes('/ads/');
+        const submitUrl = (!servedUnderAds && location.hostname.endsWith('fmdigitalofficial.com'))
+          ? '/ads/api/submit-application'
+          : 'api/submit-application';
+        const res = await fetch(submitUrl, { method: 'POST', body: fd });
         const data = await res.json();
         if (!res.ok || !data.applicationId) throw new Error(data.error || 'Submission failed');
 
