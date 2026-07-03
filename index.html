@@ -20,6 +20,24 @@
   <meta name="twitter:description" content="Distribute your music worldwide with FM Digital Official. Get your songs on Spotify, Apple Music, YouTube and more." />
   <meta name="twitter:image" content="https://www.fmdigitalofficial.com/ads/Brand%20logo/FMDO.png" />
 
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1521047872348555');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1521047872348555&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
   <!-- Google Fonts: Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
 
@@ -1692,6 +1710,7 @@
         if (!res.ok || !data.applicationId) throw new Error(data.error || 'Submission failed');
 
         applicationId = data.applicationId;
+        if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: currentPlan });
         if (formOnly) {
           savedNote.innerHTML = '✓ Thank you! Your details have been submitted and your B2B licensing letter is on its way to your email.';
         }
@@ -1754,6 +1773,13 @@
             });
             const vData = await vRes.json();
             if (vData.verified) {
+              if (typeof fbq === 'function') {
+                fbq('track', 'Purchase', {
+                  value: meta.amount / 100,
+                  currency: data.currency || 'INR',
+                  content_name: meta.name,
+                });
+              }
               showSuccessModal(response.razorpay_payment_id);
             } else {
               alert('Payment received but verification failed. Please contact support with Payment ID: ' + response.razorpay_payment_id);
