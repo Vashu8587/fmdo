@@ -193,7 +193,7 @@ app.get('/b2b', (req, res) => {
 const PLAN_SLUGS = new Set(['starter', 'artist-pro', 'label']);
 app.get('/plan/:plan', (req, res) => {
   if (!PLAN_SLUGS.has(req.params.plan) || !req.query.app) {
-    return res.redirect('/');
+    return res.redirect('..');
   }
   res.sendFile(path.join(__dirname, 'plan.html'));
 });
