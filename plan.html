@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>FMDO Checkout</title>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1521047872348555');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1521047872348555&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --accent:#4ade80; --accent-rgb:74,222,128; }
+    body {
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% -5%, rgba(var(--accent-rgb),0.20) 0%, transparent 70%),
+        #0d0d0d;
+      color:#e0e0e0; font-family:'Poppins','Segoe UI',system-ui,sans-serif; padding:2.4rem 1.2rem;
+    }
+    a { text-decoration:none; color:inherit; }
+    .plan-card {
+      width:100%; max-width:460px; background:#0f1a14; border:1px solid rgba(var(--accent-rgb),0.35);
+      border-radius:22px; padding:2.6rem 2.2rem 2.2rem; text-align:center; box-shadow:0 30px 80px rgba(0,0,0,0.5);
+    }
+    .plan-eyebrow { font-size:.72rem; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:.9rem; }
+    .plan-name { font-size:2rem; font-weight:800; color:#fff; margin-bottom:.4rem; }
+    .plan-price { font-size:2.6rem; font-weight:800; color:var(--accent); margin-bottom:.3rem; }
+    .plan-price sup { font-size:1.3rem; position:relative; top:-.9em; }
+    .plan-price span { font-size:1rem; color:#888; font-weight:500; }
+    .plan-note { font-size:.92rem; color:#9aa1a9; margin-bottom:1.6rem; }
+    .plan-features { list-style:none; text-align:left; margin:0 0 2rem; padding:0; display:grid; gap:.6rem; }
+    .plan-features li { font-size:.92rem; color:#c7ccd1; padding-left:1.5rem; position:relative; }
+    .plan-features li::before { content:'✓'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+    .plan-error { background:#3a1414; border:1px solid #6b2020; color:#ffb4b4; border-radius:10px; padding:.8rem 1rem; font-size:.88rem; margin-bottom:1.2rem; }
+    .plan-cta { display:block; width:100%; padding:1.05rem; border-radius:14px; font-weight:700; font-size:1.05rem;
+      color:#0d0d0d; background:var(--accent); box-shadow:0 8px 26px rgba(var(--accent-rgb),0.35);
+      transition:transform .15s, box-shadow .2s; cursor:pointer; border:none; }
+    .plan-cta:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(var(--accent-rgb),0.45); }
+    .plan-cta:disabled { opacity:.6; pointer-events:none; }
+    .success-block h2 { font-size:1.4rem; font-weight:800; color:#fff; margin:1.1rem 0 .5rem; }
+    .success-block p { font-size:.92rem; color:#9aa1a9; line-height:1.55; margin-bottom:.6rem; }
+    .success-icon { width:64px; height:64px; margin:0 auto; border-radius:50%; background:var(--accent);
+      color:#0d0d0d; font-size:2rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+    .success-pid { display:block; font-size:.78rem; color:#6b7280; margin-bottom:1.4rem; }
+    .plan-back { display:inline-block; margin-top:1.6rem; font-size:.85rem; color:#6b7280; }
+    .plan-back:hover { color:var(--accent); }
+  </style>
+</head>
+<body>
+
+  <div class="plan-card">
+    <div class="plan-eyebrow">FMDO Checkout</div>
+    <h1 class="plan-name" id="plan-name"></h1>
+    <div class="plan-price" id="plan-price"></div>
+    <p class="plan-note" id="plan-note"></p>
+    <ul class="plan-features" id="plan-features"></ul>
+    <div class="plan-error" id="plan-error" style="display:none"></div>
+
+    <button class="plan-cta" id="pay-btn" style="display:none" type="button">Pay Now</button>
+    <a class="plan-cta" id="whatsapp-btn" style="display:none" target="_blank" rel="noopener noreferrer">Chat with us on WhatsApp →</a>
+
+    <div class="success-block" id="success-block" style="display:none">
+      <div class="success-icon">✓</div>
+      <h2>Payment Successful!</h2>
+      <p>Welcome aboard 🎉 Your payment is confirmed. Let's set up your account so you can start releasing your music.</p>
+      <span class="success-pid" id="success-pid"></span>
+      <a class="plan-cta" id="success-signup" href="https://app.fmdigitalofficial.com/sign-up">Continue to Sign Up →</a>
+    </div>
+
+    <a class="plan-back" id="back-link" href="/">← Back to FM Digital Official</a>
+  </div>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    const PLAN_INFO = {
+      'starter': {
+        planKey: 'starter',
+        name: 'Starter',
+        priceHtml: '<sup>₹</sup>449<span> / release</span>',
+        note: 'incl. GST · Annual special offer — lock in your price now',
+        accent: '#4ade80', accentRgb: '74,222,128',
+        features: ['1 song distribution','190+ DSPs & stores','Basic metadata tools','Free UPC & ISRC code','Standard delivery time','Revenue: 70% / 30%','Publishing rights & revenue','24/7 Support panel'],
+        amount: 44900,
+        cta: 'pay',
+      },
+      'artist-pro': {
+        planKey: 'artist_pro',
+        name: 'Artist Pro',
+        priceHtml: '<sup>₹</sup>2,399<span> / year</span>',
+        note: 'incl. GST · Unlimited releases, zero hidden fees',
+        accent: '#8b5cf6', accentRgb: '139,92,246',
+        features: ['Unlimited releases','190+ DSPs & stores','Advanced metadata tools','Monthly royalty report','Free UPC & ISRC code','Priority delivery','Revenue: 100% to Artist','Publishing rights & revenue','24/7 Support panel','Referral earnings'],
+        amount: 239900,
+        cta: 'pay',
+      },
+      'label': {
+        planKey: 'label',
+        name: 'Label',
+        priceHtml: 'Custom',
+        note: 'Tailored to your roster & volume',
+        accent: '#f59e0b', accentRgb: '245,158,11',
+        features: ['Everything in Artist Pro','Manage multiple artists & labels','Bulk release tools','Unlock new revenue streams','Dedicated account manager','Custom royalty splits','White-label dashboard'],
+        cta: 'whatsapp',
+      },
+    };
+
+    const UNDER_ADS = location.pathname.startsWith('/ads/');
+    const API_BASE = UNDER_ADS ? '/ads/api/' : '/api/';
+    document.getElementById('back-link').href = UNDER_ADS ? '/ads/' : '/';
+
+    const slug = location.pathname.split('/').filter(Boolean).pop();
+    const info = PLAN_INFO[slug];
+    // Parse to a number: the existing /api/create-order call always received a
+    // number here (from the Save response), not a string — keep that type.
+    const applicationId = Number(new URLSearchParams(location.search).get('app'));
+
+    if (!info || !applicationId || Number.isNaN(applicationId)) {
+      location.href = UNDER_ADS ? '/ads/' : '/';
+    } else {
+      document.title = `FMDO – ${info.name} Checkout`;
+      document.documentElement.style.setProperty('--accent', info.accent);
+      document.documentElement.style.setProperty('--accent-rgb', info.accentRgb);
+      document.getElementById('plan-name').textContent = info.name;
+      document.getElementById('plan-price').innerHTML = info.priceHtml;
+      document.getElementById('plan-note').textContent = info.note;
+
+      const featuresEl = document.getElementById('plan-features');
+      info.features.forEach(f => {
+        const li = document.createElement('li');
+        li.textContent = f;
+        featuresEl.appendChild(li);
+      });
+
+      if (typeof fbq === 'function') {
+        if (info.cta === 'pay') {
+          fbq('track', 'InitiateCheckout', { content_name: info.name, value: info.amount / 100, currency: 'INR' });
+        } else {
+          fbq('track', 'Contact');
+        }
+      }
+
+      const errorEl = document.getElementById('plan-error');
+      function showError(msg) { errorEl.textContent = msg; errorEl.style.display = 'block'; }
+
+      if (info.cta === 'whatsapp') {
+        const waBtn = document.getElementById('whatsapp-btn');
+        waBtn.href = 'https://wa.me/918512893854';
+        waBtn.textContent = 'Chat with us on WhatsApp →';
+        waBtn.style.display = '';
+      } else {
+        const payBtn = document.getElementById('pay-btn');
+        payBtn.style.display = '';
+
+        function restore() { payBtn.disabled = false; payBtn.textContent = 'Pay Now'; }
+
+        payBtn.addEventListener('click', async () => {
+          payBtn.disabled = true;
+          payBtn.textContent = 'Processing…';
+          errorEl.style.display = 'none';
+          try {
+            const res = await fetch(API_BASE + 'create-order', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ plan: info.planKey, applicationId }),
+            });
+            const data = await res.json();
+            if (!data.order_id) throw new Error(data.error || 'Order creation failed');
+
+            const options = {
+              key: data.key_id,
+              amount: data.amount,
+              currency: data.currency,
+              name: 'FMDO – FM Digital Operations',
+              description: info.name,
+              order_id: data.order_id,
+              theme: { color: info.accent },
+              handler: async function (response) {
+                restore();
+                const vRes = await fetch(API_BASE + 'verify-payment', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    razorpay_order_id:   response.razorpay_order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_signature:  response.razorpay_signature,
+                  }),
+                });
+                const vData = await vRes.json();
+                if (vData.verified) {
+                  if (typeof fbq === 'function') {
+                    fbq('track', 'Purchase', {
+                      value: info.amount / 100,
+                      currency: data.currency || 'INR',
+                      content_name: info.name,
+                    });
+                  }
+                  payBtn.style.display = 'none';
+                  document.getElementById('success-pid').textContent = 'Payment ID: ' + response.razorpay_payment_id;
+                  document.getElementById('success-block').style.display = '';
+                } else {
+                  alert('Payment received but verification failed. Please contact support with Payment ID: ' + response.razorpay_payment_id);
+                }
+              },
+              modal: { ondismiss: restore },
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.on('payment.failed', function (response) {
+              alert('Payment failed: ' + response.error.description + '. Please try again.');
+              restore();
+            });
+            rzp.open();
+          } catch (err) {
+            console.error(err);
+            showError(err.message || 'Could not initiate payment. Please try again or contact support.');
+            restore();
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>

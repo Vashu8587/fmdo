@@ -186,6 +186,18 @@ app.get('/b2b', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Dedicated checkout/contact page per plan. Reached at /ads/plan/<plan> behind
+// the proxy. Requires a valid plan slug and an applicationId (?app=) — both are
+// set by the application-form modal in index.html; guards against reaching
+// this page without having filled the mandatory form first.
+const PLAN_SLUGS = new Set(['starter', 'artist-pro', 'label']);
+app.get('/plan/:plan', (req, res) => {
+  if (!PLAN_SLUGS.has(req.params.plan) || !req.query.app) {
+    return res.redirect('/');
+  }
+  res.sendFile(path.join(__dirname, 'plan.html'));
+});
+
 // --- Static site (index.html + Brand logo/, DSPs/, etc.) ---
 app.use(express.static(__dirname));
 
