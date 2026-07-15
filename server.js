@@ -70,7 +70,7 @@ app.post('/api/submit-application', (req, res) => {
     }
     try {
       const b = req.body || {};
-      const required = ['name', 'email', 'phone', 'address', 'pincode', 'start_date', 'end_date'];
+      const required = ['name', 'email', 'phone', 'address', 'pincode', 'yt_channel', 'yt_link', 'start_date', 'end_date'];
       for (const f of required) {
         if (!b[f] || !String(b[f]).trim()) {
           return res.status(400).json({ error: `Missing required field: ${f}` });
