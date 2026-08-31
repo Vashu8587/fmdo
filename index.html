@@ -258,7 +258,7 @@
     .starter-claim-btn:hover { box-shadow:0 0 38px rgba(124,58,237,0.72) !important; transform:translateY(-2px); }
     .starter-trust { display:flex; justify-content:center; margin-top:0.9rem; font-size:0.72rem; color:#666; }
 
-    /* 20% OFF ribbon on Artist Pro */
+    /* 15% OFF ribbon on Artist Pro */
     .price-off-ribbon { position:absolute; top:20px; right:-46px; width:176px; background:linear-gradient(to bottom,#e74c3c,#c0392b); color:#fff; font-size:0.78rem; font-weight:900; letter-spacing:2px; text-transform:uppercase; padding:10px 0; transform:rotate(45deg); text-align:center; z-index:10; pointer-events:none; text-shadow:0 1px 3px rgba(0,0,0,0.5); box-shadow:0 3px 10px rgba(0,0,0,0.45),0 0 0 1px rgba(255,255,255,0.12) inset; line-height:1; }
     .price-off-ribbon::before, .price-off-ribbon::after { content:''; position:absolute; top:100%; border:5px solid #8b0000; }
     .price-off-ribbon::before { left:0; border-right-color:transparent; border-bottom-color:transparent; }
@@ -671,14 +671,14 @@
       <div class="pricing-grid">
 
         <div class="price-card featured reveal">
-          <div class="price-off-ribbon">20% OFF</div>
+          <div class="price-off-ribbon">15% OFF</div>
           <span class="price-badge">For Artists</span>
           <div class="price-name">Artist Pro</div>
           <div class="price-original-row">
             <span class="price-original">₹2,999</span>
             <span class="price-sale-tag">Limited Offer</span>
           </div>
-          <div class="price-amt"><sup>₹</sup>2,399<span> / year</span></div>
+          <div class="price-amt"><sup>₹</sup>2,549<span> / year</span></div>
           <div class="price-gst">incl. GST</div>
           <div class="price-note">Unlimited releases, zero hidden fees</div>
           <hr class="price-divider">
@@ -698,7 +698,7 @@
         </div>
 
         <div class="price-card starter reveal">
-          <div class="july-ribbon">✦ ONLY FOR AUGUST ✦</div>
+          <div class="july-ribbon">✦ ONLY FOR SEPTEMBER ✦</div>
           <div class="starter-popular-row">
             <span class="starter-green-dot"></span>
             <span class="price-badge">Most Popular</span>
@@ -1343,10 +1343,10 @@
     gsap.to('#cta-btn', { scrollTrigger: { trigger: '#cta', start: 'top 70%', toggleActions: 'play none none none' }, opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.5)', delay: 0.45 });
     gsap.to('#cta-btn', { boxShadow: '0 0 30px rgba(74,222,128,0.5)', duration: 1.4, ease: 'power1.inOut', repeat: -1, yoyo: true, delay: 2 });
 
-    /* ── Starter plan countdown (August 1 – August 31) ── */
+    /* ── Starter plan countdown (September 1 – September 30) ── */
     (function() {
-      var start = new Date('2026-08-01T00:00:00');
-      var end   = new Date('2026-08-31T23:59:59');
+      var start = new Date('2026-09-01T00:00:00');
+      var end   = new Date('2026-09-30T23:59:59');
       var labelEl = document.querySelector('.starter-countdown span:nth-child(2)');
 
       function fmt(diff) {
@@ -1394,7 +1394,7 @@
       <h2 class="offer-popup-title">Annual <em>Special Offer</em></h2>
       <p class="offer-popup-sub">Live July – September · Lock in your release price now before it's gone.</p>
       <div class="offer-popup-deal">
-        <span class="offer-popup-chip">🔥 20% OFF Artist Pro</span>
+        <span class="offer-popup-chip">🔥 15% OFF Artist Pro</span>
         <span class="offer-popup-chip">⚡ 40% OFF Starter</span>
         <span class="offer-popup-chip">💰 Save up to ₹360</span>
       </div>

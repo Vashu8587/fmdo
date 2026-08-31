@@ -140,7 +140,7 @@ app.post('/api/create-order', async (req, res) => {
   const { plan, applicationId } = req.body;
 
   const plans = {
-    artist_pro: { amount: 239900, currency: 'INR', description: 'FMDO Artist Pro – Annual Plan' },
+    artist_pro: { amount: 254900, currency: 'INR', description: 'FMDO Artist Pro – Annual Plan' },
     starter:    { amount:  53900, currency: 'INR', description: 'FMDO Starter – Per Release'    }, // ₹539
   };
 

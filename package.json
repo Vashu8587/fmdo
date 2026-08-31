@@ -14,5 +14,8 @@
     "nodemailer": "^9.0.1",
     "pizzip": "^3.2.0",
     "razorpay": "^2.9.6"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true
   }
 }
